@@ -1,7 +1,11 @@
-:root {
+/* :root {
   --bg: #282c34;
   --header: #fff;
   --link: blue;
   --text: hsla(0, 0%, 100%, 0.88);
-}
+} */
 
+body {
+background-color: rgb(199, 252, 252);
+padding: 20px
+}

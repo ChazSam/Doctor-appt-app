@@ -26,9 +26,8 @@ class Song(db.Model, SerializerMixin):
 class Library(db.Model, SerializerMixin):
     __tablename__ = "libraries"
 
-    __table_args__ = (db.CheckConstraint("length(title) >= 30"),)
     
     id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String(30), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     song_id = db.Column(db.Integer, db.ForeignKey('songs.id'))

@@ -1,4 +1,4 @@
-music library app
+<!-- music library app
 
 user -create user, update user, delete user(will delete associated libraries)
 song -add song(adds for everyone)
@@ -13,6 +13,10 @@ user > library > song
 sections - home / library / songs 
 
 
+
+genres, artists, order -->
 <!-- rating, review,  -->
 
-genres, artists, order
+doctor, patient, appointments 
+
+doc can have many pat
