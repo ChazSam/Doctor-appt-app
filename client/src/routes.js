@@ -2,6 +2,7 @@ import Home from "./pages/Home";
 import Doctors from "./pages/Doctors";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Appointment from "./pages/Appointment";
 import ErrorPage from "./pages/ErrorPage";
 
 
@@ -28,6 +29,12 @@ const routes = [
     {
         path: "/signup",
         element: <Signup />,
+        errorElement: <ErrorPage/>
+
+    },
+    {
+        path: "/appt",
+        element: <Appointment />,
         errorElement: <ErrorPage/>
 
     },

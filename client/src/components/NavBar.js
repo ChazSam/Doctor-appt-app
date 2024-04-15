@@ -25,6 +25,12 @@ function NavBar(){
             className="nav-link"
             >Signup
             </NavLink>
+            <NavLink
+            to="/appt"
+            className="nav-link"
+            >Appointment
+            </NavLink>
+            
         </nav>
     )
 }
