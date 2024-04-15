@@ -4,14 +4,14 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from config import db
 
-# Models go here!
-# class User(db.Model, SerializerMixin):
-#     __tablename__ = 'users'
+#Models go here!
+class User(db.Model, SerializerMixin):
+    __tablename__ = 'users'
         
-#     id = db.Column(db.Integer, primary_key =True)
-#     username = db.Column(db.Integer, unique=True, nullable=False)
-#     image_url = db.Column(db.String)
-#     bio = db.Column(db.String)
+    id = db.Column(db.Integer, primary_key =True)
+    username = db.Column(db.Integer, unique=True, nullable=False)
+    image_url = db.Column(db.String)
+    bio = db.Column(db.String)
 
 
 # class Song(db.Model, SerializerMixin):
