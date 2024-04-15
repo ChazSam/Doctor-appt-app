@@ -20,6 +20,11 @@ function NavBar(){
             className="nav-link"
             >Login
             </NavLink>
+            <NavLink
+            to="/signin"
+            className="nav-link"
+            >Signin
+            </NavLink>
         </nav>
     )
 }

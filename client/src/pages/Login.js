@@ -9,7 +9,8 @@ function Login(){
             <header>
                 <NavBar/>
             </header>
-            <h1>login page</h1>
+            <h1>Login page</h1>
+            
         </>
     )
 }
