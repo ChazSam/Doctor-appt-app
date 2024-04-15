@@ -1,8 +1,9 @@
 import Home from "./pages/Home";
 import Doctors from "./pages/Doctors";
 import Login from "./pages/Login";
-import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 import ErrorPage from "./pages/ErrorPage";
+
 
 const routes = [
 
@@ -25,8 +26,8 @@ const routes = [
 
     },
     {
-        path: "/signin",
-        element: <Signin />,
+        path: "/signup",
+        element: <Signup />,
         errorElement: <ErrorPage/>
 
     },

@@ -4,7 +4,7 @@ import "./NavBar.css";
 function NavBar(){
 
     return (
-        <nav>
+        <nav className="navbar">
             <NavLink
             to="/"
             className="nav-link"
@@ -21,9 +21,9 @@ function NavBar(){
             >Login
             </NavLink>
             <NavLink
-            to="/signin"
+            to="/signup"
             className="nav-link"
-            >Signin
+            >Signup
             </NavLink>
         </nav>
     )
