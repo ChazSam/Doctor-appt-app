@@ -1,17 +1,33 @@
-#!/usr/bin/env python3
 
-# Standard library imports
-from random import randint, choice as rc
+from models.doctor import Doctor
+from models.user import User
+from models.appointment import Appointment
+from config import db
 
-# Remote library imports
-from faker import Faker
+with app.app_context():
 
-# Local imports
-from app import app
-from server.models.models import db
+    doc1 = Doctor(
+        name = "Dr. Moe Howard",
+        image_url = "https://m.media-amazon.com/images/M/MV5BNjUwMjU4OTA4M15BMl5BanBnXkFtZTcwMzk4NjcxOA@@._V1_FMjpg_UX1000_.jpg",
+        department = "Surgery",
+        bio = "Dr. Howard is a doctor...",
+        tagline = "Well, at least you could be seeing someone worse."
+    )
+    db.session.add_all(doc1)
 
-if __name__ == '__main__':
-    fake = Faker()
-    with app.app_context():
-        print("Starting seed...")
-        # Seed code goes here!
+    user1 = User(
+        username = "John Doe",
+        age = 50,
+        sex = "M",
+        bio = "I'm not dead yet"
+    )
+    db.session.add_all(user1)
+
+    appt1 = Appointment(
+        user_id = 1,
+        doctor_id = 1
+    )
+
+    db.session.add_all(appt1)
+
+    db.session.commit()

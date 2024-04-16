@@ -8,6 +8,9 @@ class Doctor(db.Model, SerializerMixin):
     __tablename__ = 'doctors'
         
     id = db.Column(db.Integer, primary_key =True)
-    username = db.Column(db.Integer, unique=True, nullable=False)
+    name = db.Column(db.Integer, unique=True, nullable=False)
     image_url = db.Column(db.String)
+    department = db.Column(db.String, nullable=False)
+    specialty = db.Column(db.String, default="General")
     bio = db.Column(db.String)
+    tagline = db.Column(db.String)
