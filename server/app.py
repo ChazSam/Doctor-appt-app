@@ -7,6 +7,8 @@ from flask_restful import Resource
 
 # Remote library imports
 from models.user import User
+from models.doctor import Doctor
+from models.appointment import Appointment
 
 # Local imports
 from config import app, db, api
