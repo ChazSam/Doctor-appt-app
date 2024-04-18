@@ -6,6 +6,10 @@ from config import db
 from app import app
 
 with app.app_context():
+    Doctor.query.delete()
+    User.query.delete()
+    Appointment.query.delete()
+
 
     doc1 = Doctor(
         name = "Dr. Moe Howard",
@@ -36,19 +40,28 @@ with app.app_context():
         image_url = "https://is1-ssl.mzstatic.com/image/thumb/Video/v4/84/eb/a6/84eba6bc-f63b-1317-6cb9-0a827705cad3/1111103767080101VIC.jpg/1200x630mv.jpg",
         department = "Surgery",
         bio = " Dr. Albert Von Yank, a distinguished surgeon, stands at the forefront of surgical innovation, seamlessly blending technical prowess with a compassionate approach to patient care. With a wealth of experience and a commitment to excellence, Dr. Yankovich has garnered recognition for his expertise in complex surgical procedures, earning the trust of patients and colleagues alike. His unwavering dedication to advancing surgical techniques and improving patient outcomes underscores his reputation as a trailblazer in the field of surgery.",
-        tagline = "Well, at least you could be seeing someone worse."
+        tagline = "Here's a waver for you to sign."
     )
 
     doc5 = Doctor(
-        name = "Dr. Moe Howard",
+        name = "Dr. Hannibal Lecter",
         image_url = "https://media.newyorker.com/photos/5f4bd91225409f35fe113819/4:3/w_2559,h_1919,c_limit/Gupta-HannibalLecter.jpg",
         department = "Psychiatrist",
         bio = "Dr. Hannibal Lecter, a renowned psychiatrist, possesses an enigmatic allure coupled with a profound understanding of the human mind. With a keen intellect and a refined approach to therapy, Dr. Lecter navigates the intricacies of the psyche with unparalleled insight and precision. Though his unconventional methods may raise eyebrows, his reputation as a masterful healer and his ability to unearth the depths of the human condition are undeniable, leaving an indelible mark on those who seek his counsel. ",
-        tagline = "Well, at least you could be seeing someone worse."
+        tagline = "Discourtesy Is Unspeakably Ugly To Me."
     )
 
     db.session.add_all([doc1, doc2, doc3, doc4, doc5])
     
+    admin = User(
+        username = "Admin",
+        age = 50,
+        sex = "M",
+        bio = "Admin"
+    )
+    
+    admin.password_hash = 'Admin'
+
     user1 = User(
         username = "John Doe",
         age = 50,
@@ -59,16 +72,8 @@ with app.app_context():
     
     user1.password_hash = 'password'
 
-    admin = User(
-        username = "Admin",
-        age = 50,
-        sex = "M",
-        bio = "Admin"
-    )
-    
-    admin.password_hash = 'Admin'
 
-    db.session.add_all([user1, admin])
+    db.session.add_all([admin, user1])
 
     appt1 = Appointment(
         user_id = 1,
