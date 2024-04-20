@@ -1,8 +1,8 @@
-"""create tables
+"""Initial migration.
 
-Revision ID: f86fa8d5d7df
-Revises: 9852551c97b3
-Create Date: 2024-04-16 09:35:40.731638
+Revision ID: 2e7a6236b232
+Revises: 
+Create Date: 2024-04-20 18:22:40.973008
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f86fa8d5d7df'
-down_revision = '9852551c97b3'
+revision = '2e7a6236b232'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -23,7 +23,6 @@ def upgrade():
     sa.Column('name', sa.Integer(), nullable=False),
     sa.Column('image_url', sa.String(), nullable=True),
     sa.Column('department', sa.String(), nullable=False),
-    sa.Column('specialty', sa.String(), nullable=True),
     sa.Column('bio', sa.String(), nullable=True),
     sa.Column('tagline', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -32,10 +31,12 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
-    sa.Column('_password_hash', sa.String(), nullable=True),
-    sa.Column('age', sa.Integer(), nullable=True),
-    sa.Column('sex', sa.String(), nullable=True),
-    sa.Column('bio', sa.String(), nullable=True),
+    sa.Column('_password_hash', sa.String(), nullable=False),
+    sa.Column('first_name', sa.String(), nullable=False),
+    sa.Column('last_name', sa.String(), nullable=False),
+    sa.Column('birthdate', sa.DateTime(), nullable=False),
+    sa.Column('sex', sa.String(), nullable=False),
+    sa.Column('bio', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
     )

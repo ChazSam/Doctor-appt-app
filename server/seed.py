@@ -1,4 +1,5 @@
 
+from datetime import datetime
 from models.doctor import Doctor
 from models.user import User
 from models.appointment import Appointment
@@ -57,7 +58,7 @@ with app.app_context():
         username = "Admin",
         first_name = "Admin",
         last_name = "Admin",
-        birthdate = (2000, 1, 1),
+        birthdate = datetime(2000, 1, 1),
         sex = "M",
         bio = "Admin"
     )
@@ -68,7 +69,7 @@ with app.app_context():
         username = "JohnDoe",
         first_name = "John",
         last_name = "Doe",
-        birthdate = (2000, 1, 1),
+        birthdate = datetime(2000, 1, 1),
         sex = "M",
         bio = "I'm not dead yet"
         
