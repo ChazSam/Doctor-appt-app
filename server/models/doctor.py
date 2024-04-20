@@ -11,6 +11,5 @@ class Doctor(db.Model, SerializerMixin):
     name = db.Column(db.Integer, unique=True, nullable=False)
     image_url = db.Column(db.String)
     department = db.Column(db.String, nullable=False)
-    specialty = db.Column(db.String, default="General")
     bio = db.Column(db.String)
     tagline = db.Column(db.String)

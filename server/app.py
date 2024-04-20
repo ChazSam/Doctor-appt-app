@@ -5,6 +5,7 @@ from flask import Flask
 from flask import request, session
 from flask_restful import Resource
 
+
 # Remote library imports
 from models.user import User
 from models.doctor import Doctor
@@ -37,6 +38,8 @@ class Signup(Resource):
 
 # Views go here!
 api.add_resource(Signup, '/signup', endpoint='signup')
+
+
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'

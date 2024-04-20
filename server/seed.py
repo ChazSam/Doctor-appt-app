@@ -55,7 +55,9 @@ with app.app_context():
     
     admin = User(
         username = "Admin",
-        age = 50,
+        first_name = "Admin",
+        last_name = "Admin",
+        birthdate = (2000, 1, 1),
         sex = "M",
         bio = "Admin"
     )
@@ -63,8 +65,10 @@ with app.app_context():
     admin.password_hash = 'Admin'
 
     user1 = User(
-        username = "John Doe",
-        age = 50,
+        username = "JohnDoe",
+        first_name = "John",
+        last_name = "Doe",
+        birthdate = (2000, 1, 1),
         sex = "M",
         bio = "I'm not dead yet"
         

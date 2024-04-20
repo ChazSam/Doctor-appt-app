@@ -9,10 +9,12 @@ class User(db.Model, SerializerMixin):
         
     id = db.Column(db.Integer, primary_key =True)
     username = db.Column(db.String, unique=True, nullable=False)
-    _password_hash = db.Column(db.String)
-    age = db.Column(db.Integer)
-    sex = db.Column(db.String)
-    bio = db.Column(db.String)
+    _password_hash = db.Column(db.String, nullable=False)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    birthdate = db.Column(db.DateTime, nullable=False)
+    sex = db.Column(db.String, nullable=False)
+    bio = db.Column(db.String, nullable=False)
 
     @hybrid_property
     def password_hash(self):
