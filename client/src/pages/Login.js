@@ -9,15 +9,20 @@ function Login(){
             <header>
                 <NavBar/>
             </header>
-            <h1>Login page</h1>
-            <div>
-                <input/>
-                <p>Name</p>
-            </div>
-            <div>
-                <input/>
-                <p>Password</p>
-            </div>
+            <form>
+                <div>
+
+                    <h1>Login page</h1>
+            
+                    <input/>
+                    <p>Name</p>
+                
+                    <input/>
+                    <p>Password</p>
+                
+                <button type='Submit'>Submit</button>
+                </div>
+            </form>
 
         </>
     )

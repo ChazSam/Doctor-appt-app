@@ -17,4 +17,13 @@ remove drs
 change user appointments
 delete users
 
-routes - home/login, schedule, doctors 
+
+3 models - appointment, doctor, user
+user/admin > appointment < doctor
+
+appointment full crud
+user create and update admin can add and remove doctors
+doctor - admin can create and update doctors in user
+
+
+routes - home, signup, login, schedule, doctors 
