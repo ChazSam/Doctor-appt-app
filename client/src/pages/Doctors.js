@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 function Doctors(){
 
     const [listDoctors, setListDoctors] = useState([])
-    const [refreshPage, setRefreshPage] = useState(false);
+   
 
 
     useEffect(() => {
@@ -16,7 +16,7 @@ function Doctors(){
             setListDoctors(data);
             console.log(data);
           });
-      }, [refreshPage]);
+      }, []);
 
     return(
         <>
@@ -26,17 +26,13 @@ function Doctors(){
             <h1>Doctor Page</h1>
 
             {listDoctors.map((doctor)=>(
-                <div>
+                <div key={doctor.id}>
                     <h2>{doctor.name}</h2>
                     <img src={doctor.image_url}></img>
                     <p>Department: {doctor.department}</p>
                     <p>{doctor.bio}</p>
                     <p>{doctor.tagline}</p>
-
-
-
                 </div>
-             
             ))}
             {/* <h2>Dr. Howard</h2>
             <h2>Dr. Fine</h2>

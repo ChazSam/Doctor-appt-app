@@ -28,7 +28,12 @@ function NavBar(){
             <NavLink
             to="/appt"
             className="nav-link"
-            >Appointment
+            >Appointments
+            </NavLink>
+            <NavLink
+            to="/account"
+            className="nav-link"
+            >Account
             </NavLink>
             
         </nav>

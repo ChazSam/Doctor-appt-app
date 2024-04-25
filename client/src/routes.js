@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Appointment from "./pages/Appointment";
 import ErrorPage from "./pages/ErrorPage";
+import Account from "./pages/Account"
 
 
 const routes = [
@@ -35,6 +36,12 @@ const routes = [
     {
         path: "/appt",
         element: <Appointment />,
+        errorElement: <ErrorPage/>
+
+    },
+    {
+        path: "/account",
+        element: <Account />,
         errorElement: <ErrorPage/>
 
     },
