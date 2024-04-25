@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 import Datetime from 'react-datetime'
 import 'react-datetime/css/react-datetime.css'
 
- function Signup () {
+function Signup () {
 
     const [signUp, setSignUp] = useState([])
     
@@ -17,7 +17,7 @@ import 'react-datetime/css/react-datetime.css'
     const [refreshPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
-        console.log("FETCH! ");
+        // console.log("FETCH! ");
         fetch("/signup")
           .then((res) => res.json())
           .then((data) => {
@@ -26,7 +26,7 @@ import 'react-datetime/css/react-datetime.css'
           });
       }, [refreshPage]);
 
-      const formSchema = yup.object().shape({
+    const formSchema = yup.object().shape({
         userName: yup.string().required("Must enter a user name at least 8 characters long").min(8),
         password: yup.string().required("Must enter a user name at least 8 characters long").min(8),
         firstName: yup.string().required("Must enter a name").max(25),
@@ -47,7 +47,7 @@ import 'react-datetime/css/react-datetime.css'
             password:"",
             firstName:"",
             lastName:"",
-            birthday:"",
+            birthdate: new Date(2000,0,1),
             reason:"",
         },
 
@@ -73,11 +73,13 @@ import 'react-datetime/css/react-datetime.css'
     const years = Array.from({ length: 111 }, (_, index) => 2024 - index);
 
     const handleDateChange = (e) =>{
+        console.log(monthYear)
         setMonthYear({
             ...monthYear,
             [e.target.name]:e.target.value,
             
-        })
+        }
+        );
     }
 
     function listDays(month , year){
@@ -101,7 +103,7 @@ import 'react-datetime/css/react-datetime.css'
         )
     }
 
-    const dayInMonth = listDays(2,2000)
+    const dayInMonth = listDays(monthYear.month, monthYear.year)
     console.log(formik.values)
 
     return(
@@ -131,7 +133,7 @@ import 'react-datetime/css/react-datetime.css'
                             <p style={{ color: "red" }}> {formik.errors.lastName}</p>
 
                         <p>Birthday</p>
-                            <select >
+                            <select value={monthYear.month} onChange={handleDateChange}>
                                 <option value="">---</option>
                                 <option value='1' >Jan</option>
                                 <option value="2" >Feb</option>
@@ -153,7 +155,7 @@ import 'react-datetime/css/react-datetime.css'
                             {dayInMonth}
                         </select>
                         
-                        <select >
+                        <select value={monthYear.year} onChange={handleDateChange}>
                             <option value="">---</option>
                             {years.map((year)=>( 
                                 <option key={year} value={year}>{year}</option>
