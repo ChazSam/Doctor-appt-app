@@ -6,8 +6,6 @@ function Doctors(){
 
     const [listDoctors, setListDoctors] = useState([])
    
-
-
     useEffect(() => {
         console.log("FETCH! ");
         fetch("/doctor")
@@ -29,15 +27,11 @@ function Doctors(){
                 <div key={doctor.id}>
                     <h2>{doctor.name}</h2>
                     <img src={doctor.image_url}></img>
-                    <p>Department: {doctor.department}</p>
+                    <h3>Department: {doctor.department}</h3>
                     <p>{doctor.bio}</p>
-                    <p>{doctor.tagline}</p>
+                    <p style={{fontStyle: 'italic'}}>{doctor.tagline ? doctor.tagline : "doctor of medicine"}</p>
                 </div>
             ))}
-            {/* <h2>Dr. Howard</h2>
-            <h2>Dr. Fine</h2>
-            <h2>Dr. Howard</h2>
-            <img src='https://m.media-amazon.com/images/M/MV5BMzg1MzBjOGYtMjYyZi00YzM0LWIwMGQtMWU0NDc2ZGIxZGM1XkEyXkFqcGdeQXVyMDgyNjA5MA@@._V1_.jpg' alt='Some of the finest doctors!'></img> */}
         </>
     )
 }
