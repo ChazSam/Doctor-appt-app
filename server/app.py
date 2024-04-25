@@ -40,9 +40,15 @@ class Signup(Resource):
 
         except:
             return {'message': "Unprocessable Entity"}, 422
+        
+class Call_Doctor(Resource):
+    def get(self):
+        doctors= [doc.to_dict() for doc in Doctor.query.all()]
+        return doctors, 200
 
 # Views go here!
 api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
 
 
 # @app.route('/')

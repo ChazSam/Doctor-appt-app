@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react';
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 import NavBar from "../components/NavBar";
-
+import Datetime from 'react-datetime'
+import 'react-datetime/css/react-datetime.css'
 
  function Signup () {
 
@@ -72,13 +73,6 @@ import NavBar from "../components/NavBar";
     const years = Array.from({ length: 111 }, (_, index) => 2024 - index);
 
     const handleDateChange = (e) =>{
-        // const {name, value} = e.target
-        // console.log(e)
-        // setMonthYear(prevState=>({
-        //     ...prevState,
-        //     [name]:value
-        // }))
-        console.log(monthYear)
         setMonthYear({
             ...monthYear,
             [e.target.name]:e.target.value,
