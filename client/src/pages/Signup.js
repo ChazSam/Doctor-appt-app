@@ -3,15 +3,21 @@ import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 import NavBar from "../components/NavBar";
 
+
  function Signup () {
 
-    const [signUp, setSignUp] = useState([{}])
-    const [selectYear, setSelectYear] =  useState("")
+    const [signUp, setSignUp] = useState([])
+    
+    const [monthYear, setMonthYear] =  useState({
+        day:"",
+        month:"",
+        year:""
+    })
     const [refreshPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
         console.log("FETCH! ");
-        fetch("/users")
+        fetch("/signup")
           .then((res) => res.json())
           .then((data) => {
             setSignUp(data);
@@ -54,7 +60,7 @@ import NavBar from "../components/NavBar";
                 body: JSON.stringify(values, null, 2)
             }) .then(
                 (res) =>{
-                    if (res.status ==200){
+                    if (res.status == 200){
                         setRefreshPage(!refreshPage)
                     }
                     
@@ -65,14 +71,45 @@ import NavBar from "../components/NavBar";
 
     const years = Array.from({ length: 111 }, (_, index) => 2024 - index);
 
-    function isLeapYear(year) {
-        return((year % 4 === 0 && year % 100 !== 0) || year === 2000) ? 29 : 28}
-
-    const handleYearChange =(e) =>{
-        const year = parseInt(e.target.value)
-        setSelectYear(year)
-        isLeapYear(year)
+    const handleDateChange = (e) =>{
+        // const {name, value} = e.target
+        // console.log(e)
+        // setMonthYear(prevState=>({
+        //     ...prevState,
+        //     [name]:value
+        // }))
+        console.log(monthYear)
+        setMonthYear({
+            ...monthYear,
+            [e.target.name]:e.target.value,
+            
+        })
     }
+
+    function listDays(month , year){
+        let x = 31
+
+        if (month === 2 && ((year % 4 === 0 && year % 100 !== 0) || year === 2000)){
+            x = 29
+        }  
+        else if( month === 2){
+            x = 28
+        }     
+        else if( month === (4 || 6 || 11)){
+            x = 30
+        }
+
+        const days = Array.from({ length: x }, (_, index) => index + 1);
+
+        return days.map((day)=>( 
+                <option key={day} value={day}>{day}</option>
+            )
+        )
+    }
+
+    const dayInMonth = listDays(2,2000)
+    console.log(formik.values)
+
     return(
         <div>
             <header>
@@ -80,7 +117,7 @@ import NavBar from "../components/NavBar";
             </header>
             
             <h1>Signup page</h1>
-                <form onSubmit={Formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
 
                     <div>
                         <p>User Name</p>
@@ -92,7 +129,7 @@ import NavBar from "../components/NavBar";
                                 <p style={{ color: "red" }}> {formik.errors.password}</p>
 
                         <p>First Name</p>
-                            <input id='firstName' name='firstName' onChange={formik.handleChange} value={formik.values.lastName}/>
+                            <input id='firstName' name='firstName' onChange={formik.handleChange} value={formik.values.firstName}/>
                                 <p style={{ color: "red" }}> {formik.errors.firstName}</p>
 
                         <p>Last Name</p>
@@ -100,50 +137,53 @@ import NavBar from "../components/NavBar";
                             <p style={{ color: "red" }}> {formik.errors.lastName}</p>
 
                         <p>Birthday</p>
-                            <select>
+                            <select >
                                 <option value="">---</option>
-                                <option value='1' data-days="31">Jan</option>
-                                <option value="2" data-days={isLeapYear}>Feb</option>
-                                <option value="3" data-days="31">Mar</option>
-                                <option value="4" data-days="30">Apr</option>
-                                <option value="5" data-days="31">May</option>
-                                <option value="6" data-days="30">Jun</option>
-                                <option value="7" data-days="31">Jul</option>
-                                <option value="8" data-days="31">Aug</option>
-                                <option value="9" data-days="31">Sep</option>
-                                <option value="10" data-days="31">Oct</option>
-                                <option value="11" data-days="30">Nov</option>
-                                <option value="12" data-days="31">Dec</option>
-                
+                                <option value='1' >Jan</option>
+                                <option value="2" >Feb</option>
+                                <option value="3" >Mar</option>
+                                <option value="4" >Apr</option>
+                                <option value="5" >May</option>
+                                <option value="6" >Jun</option>
+                                <option value="7" >Jul</option>
+                                <option value="8" >Aug</option>
+                                <option value="9" >Sep</option>
+                                <option value="10" >Oct</option>
+                                <option value="11" >Nov</option>
+                                <option value="12" >Dec</option>
+    
                             </select>
                         
                         <select>
                             <option value="">---</option>
-                            {}
+                            {dayInMonth}
                         </select>
                         
-                        <select value={selectYear} onChange={handleYearChange}>
+                        <select >
                             <option value="">---</option>
                             {years.map((year)=>( 
                                 <option key={year} value={year}>{year}</option>
                             ))}
 
                         </select>
-
+                        <p style={{ color: "red" }}> {formik.errors.birthday}</p>
                         <p>Sex</p>
-                            <select name='sex' id='user-sex'>
+                            <select name='sex' id='user-sex' value={formik.values.sex} onChange={formik.handleChange}>
                                 <option value="">---</option>
                                 <option value="M">M</option>
                                 <option value="F">F</option>
                             </select>
+                            <p style={{ color: "red" }}> {formik.errors.sex}</p>
 
                         <p>The reason you need to see a doctor</p>
-                            <input/>
-        
+                            <input id="reason" value={formik.values.reason} onChange={formik.handleChange}/>
+                            <p style={{ color: "red" }}> {formik.errors.reason}</p>
+
                     </div>
 
                         <p></p>
                         <button type='Submit'>Submit</button>
+                        
                 </form>
         </div>
     )
