@@ -22,10 +22,10 @@ with app.app_context():
 
     doc2 = Doctor(
         name = "Dr. Andre Drey",
-        image_url = "https://static.wikia.nocookie.net/randomstuffthatsonhere/images/4/4d/DoctorDre.jpg/revision/latest?cb=20120505030932",
+        image_url = "https://www.billboard.com/wp-content/uploads/2024/03/dr-dre-dres-anatomy-sketch-jimmy-kimmel-live-1548.jpg?w=876",
         department = "Ophthalmology",
-        bio = "Dr. Drey, renowned in the medical community as an ophthalmologist, expertly navigates the delicate intricacies of eye care with precision and compassion. With a distinguished career spanning decades, Dr. Dre has become a trusted figure in restoring vision and improving ocular health for countless patients.",
-        tagline = "I'm not that dr. dre!"
+        bio = "Dr. Drey, renowned in the medical community as an ophthalmologist, expertly navigates the delicate intricacies of eye care with precision and compassion. With a distinguished career spanning decades, Dr. Drey has become a trusted figure in restoring vision and improving ocular health for countless patients.",
+        tagline = "I'm not that Dr. Dre!"
     )
 
     doc3 = Doctor(
