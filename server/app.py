@@ -9,6 +9,8 @@ from flask_migrate import Migrate
 from models.user import User
 from models.doctor import Doctor
 from models.appointment import Appointment
+from sqlalchemy.exc import IntegrityError
+import datetime
 
 # Local imports
 from config import app, db, api
@@ -22,15 +24,19 @@ class Signup(Resource):
 
     def post(self):
         password = request.get_json().get('password')
-
+        birthdate_string = request.get_json().get('birthdate'),
+        birthdate = datetime.datetime.strptime(birthdate_string[0],"%Y-%m-%d")
+   
         user = User(
         username = request.get_json().get('username'),
-        image_url = request.get_json().get('image_url'),
+        first_name = request.get_json().get('first_name'),
+        last_name = request.get_json().get('last_name'),
+        sex = request.get_json().get('sex'),
         bio = request.get_json().get('bio')
         )
 
         user.password_hash = password 
-
+        user.birthdate = birthdate
         try:
             session['user_id'] = user.id
             db.session.add(user)
@@ -38,8 +44,8 @@ class Signup(Resource):
 
             return user.to_dict(), 201
 
-        except:
-            return {'message': "Unprocessable Entity"}, 422
+        except ValueError as exc:
+            return {'message': exc}, 422
         
 class Login(Resource):
     def post(self):

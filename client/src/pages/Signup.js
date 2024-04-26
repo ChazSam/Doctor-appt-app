@@ -8,16 +8,15 @@ import 'react-datetime/css/react-datetime.css'
 function Signup () {
 
     const [signUp, setSignUp] = useState([])
-    
     const [monthYear, setMonthYear] =  useState({
         day:"",
         month:"",
         year:""
     })
+
     const [refreshPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
-        // console.log("FETCH! ");
         fetch("/signup")
           .then((res) => res.json())
           .then((data) => {
@@ -27,33 +26,42 @@ function Signup () {
       }, [refreshPage]);
 
     const formSchema = yup.object().shape({
-        userName: yup.string().required("Must enter a user name at least 8 characters long").min(8),
-        password: yup.string().required("Must enter a user name at least 8 characters long").min(8),
-        firstName: yup.string().required("Must enter a name").max(25),
-        lastName: yup.string().required("Must enter a name").max(25),
-        age: yup
-          .number()
-          .positive()
-          .integer()
-          .required("Must enter age")
-          .typeError("Please enter an Integer")
-          .max(125),
-        reason : yup.string().required("Must enter a reason")
+        username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
+        password: yup.string().required("Password must be at least 8 characters long").min(8),
+        first_name: yup.string().required("Must enter a name"),
+        last_name: yup.string().required("Must enter a name"),
+        // birthdate: yup
+        //   .number()
+        //   .positive()
+        //   .integer()
+        //   .required("Must enter age")
+        //   .typeError("Please enter an Integer")
+        //   .max(125),
+        // bio : yup.string().required("Must enter a reason")
       });
 
     const formik = useFormik({
+        // initialValues:{
+        //     username:"",
+        //     password:"",
+        //     first_Name:"",
+        //     last_Name:"",
+        //     birthdate: new Date(monthYear.year,monthYear.monthYear,monthYear.day),
+        //     sex: "",
+        //     bio:"", 00:00:00
         initialValues:{
-            userName:"",
-            password:"",
-            firstName:"",
-            lastName:"",
-            birthdate: new Date(2000,0,1),
-            reason:"",
+            username:"testtest",
+            password:"testtest",
+            first_name:"test",
+            last_name:"test",
+            birthdate: "2000-01-01",
+            sex:"F",
+            bio:"test",
         },
 
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("users", {
+            fetch("signup", {
                 method:"POST",
                 headers:{
                     "Content-Type": "application/json",
@@ -72,26 +80,19 @@ function Signup () {
 
     const years = Array.from({ length: 111 }, (_, index) => 2024 - index);
 
-    const handleDateChange = (e) =>{
-        console.log(monthYear)
-        setMonthYear({
-            ...monthYear,
-            [e.target.name]:e.target.value,
-            
-        }
-        );
-    }
 
-    function listDays(month , year){
+    function checkLeapYear(month , year){
         let x = 31
+        let m = parseInt(month)
+        let y = parseInt(year)
 
-        if (month === 2 && ((year % 4 === 0 && year % 100 !== 0) || year === 2000)){
+        if (m === 1 && ((y % 4 === 0 && y % 100 !== 0) || y === 2000)){
             x = 29
         }  
-        else if( month === 2){
+        else if( m === 1){
             x = 28
         }     
-        else if( month === (4 || 6 || 11)){
+        else if( m === 3 || m === 5 || m === 10){
             x = 30
         }
 
@@ -103,9 +104,17 @@ function Signup () {
         )
     }
 
-    const dayInMonth = listDays(monthYear.month, monthYear.year)
-    console.log(formik.values)
+    
+    function handleChange(e){
+        setMonthYear({
+            ...monthYear,
+            [e.target.name] : e.target.value
+        })
+    }
 
+    
+    const dayInMonth = checkLeapYear(monthYear.month, monthYear.year)
+    console.log(formik.values)
     return(
         <div>
             <h1>Signup page</h1>
@@ -113,52 +122,52 @@ function Signup () {
 
                     <div>
                         <p>User Name</p>
-                            <input id='userName' name='userName' onChange={formik.handleChange} value={formik.values.userName}/>
-                                <p style={{ color: "red" }}> {formik.errors.userName}</p>
+                            <input id='username' name='username' onChange={formik.handleChange} value={formik.values.username}/>
+                                <p style={{ color: "red" }}> {formik.errors.username}</p>
 
                         <p>Password</p>
                             <input id='password' name='password' onChange={formik.handleChange} value={formik.values.password}/>
                                 <p style={{ color: "red" }}> {formik.errors.password}</p>
 
                         <p>First Name</p>
-                            <input id='firstName' name='firstName' onChange={formik.handleChange} value={formik.values.firstName}/>
-                                <p style={{ color: "red" }}> {formik.errors.firstName}</p>
+                            <input id='first_name' name='first_name' onChange={formik.handleChange} value={formik.values.first_name}/>
+                                <p style={{ color: "red" }}> {formik.errors.first_name}</p>
 
                         <p>Last Name</p>
-                            <input id='lastName' name='lastName' onChange={formik.handleChange} value={formik.values.lastName}/>
-                            <p style={{ color: "red" }}> {formik.errors.lastName}</p>
+                            <input id='last_name' name='last_name' onChange={formik.handleChange} value={formik.values.last_name}/>
+                            <p style={{ color: "red" }}> {formik.errors.last_name}</p>
 
                         <p>Birthday</p>
-                            <select value={monthYear.month} onChange={handleDateChange}>
+                            <select name="month" value={monthYear.month} onChange={handleChange}>
                                 <option value="">---</option>
-                                <option value='1' >Jan</option>
-                                <option value="2" >Feb</option>
-                                <option value="3" >Mar</option>
-                                <option value="4" >Apr</option>
-                                <option value="5" >May</option>
-                                <option value="6" >Jun</option>
-                                <option value="7" >Jul</option>
-                                <option value="8" >Aug</option>
-                                <option value="9" >Sep</option>
-                                <option value="10" >Oct</option>
-                                <option value="11" >Nov</option>
-                                <option value="12" >Dec</option>
+                                <option id="Jan" value='0' >Jan</option>
+                                <option id="Feb" value="1" >Feb</option>
+                                <option id="Mar" value="2" >Mar</option>
+                                <option id="Apr" value="3" >Apr</option>
+                                <option id="May" value="4" >May</option>
+                                <option id="Jun" value="5" >Jun</option>
+                                <option id="Jul" value="6" >Jul</option>
+                                <option id="Aug" value="7" >Aug</option>
+                                <option id="Sep" value="8" >Sep</option>
+                                <option id="Oct" value="9" >Oct</option>
+                                <option id="Nov" value="10" >Nov</option>
+                                <option id="Dec" value="11" >Dec</option>
     
                             </select>
                         
-                        <select>
+                        <select name='day' value={monthYear.day} onChange={handleChange}>
                             <option value="">---</option>
                             {dayInMonth}
                         </select>
                         
-                        <select value={monthYear.year} onChange={handleDateChange}>
+                        <select name="year" value={monthYear.year} onChange={handleChange}>
                             <option value="">---</option>
                             {years.map((year)=>( 
-                                <option key={year} value={year}>{year}</option>
+                                <option key={year}  value={year}>{year}</option>
                             ))}
 
                         </select>
-                        <p style={{ color: "red" }}> {formik.errors.birthday}</p>
+                        <p style={{ color: "red" }}> {formik.errors.birthdate}</p>
                         <p>Sex</p>
                             <select name='sex' id='user-sex' value={formik.values.sex} onChange={formik.handleChange}>
                                 <option value="">---</option>
@@ -168,14 +177,13 @@ function Signup () {
                             <p style={{ color: "red" }}> {formik.errors.sex}</p>
 
                         <p>The reason you need to see a doctor</p>
-                            <input id="reason" value={formik.values.reason} onChange={formik.handleChange}/>
-                            <p style={{ color: "red" }}> {formik.errors.reason}</p>
+                            <input id="bio" value={formik.values.bio} onChange={formik.handleChange}/>
+                            <p style={{ color: "red" }}> {formik.errors.bio}</p>
 
                     </div>
 
                         <p></p>
                         <button type='Submit'>Submit</button>
-                        
                 </form>
         </div>
     )
