@@ -6,34 +6,39 @@ function NavBar(){
     return (
         <nav className="navbar">
             <NavLink
-            to="/"
-            className="nav-link"
-            >Home
+                to="/"
+                className="nav-link"
+                >Home
             </NavLink>
+
             <NavLink
-            to="/doctors"
-            className="nav-link"
-            >Doctors
+                to="/doctors"
+                className="nav-link"
+                >Doctors
             </NavLink>
+
             <NavLink
-            to="/login"
-            className="nav-link"
-            >Login
+                to="/login"
+                className="nav-link"
+                >Login
             </NavLink>
+
             <NavLink
-            to="/signup"
-            className="nav-link"
-            >Signup
+                to="/signup"
+                className="nav-link"
+                >Signup
             </NavLink>
+
             <NavLink
-            to="/appt"
-            className="nav-link"
-            >Appointments
+                to="/appt"
+                className="nav-link"
+                >Appointments
             </NavLink>
+
             <NavLink
-            to="/account"
-            className="nav-link"
-            >Account
+                to="/account"
+                className="nav-link"
+                >Account
             </NavLink>
             
         </nav>

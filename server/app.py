@@ -42,18 +42,47 @@ class Signup(Resource):
             return {'message': "Unprocessable Entity"}, 422
         
 class Login(Resource):
-    def get(self):
-        pass
+    def post(self):
         
+        user = User.query.filter(User.username == request.get_json()['username']).first()
+
+        if not user:
+            return {'error': 'Unauthorized'}, 401
+        
+        session['user_id'] = user.id
+        return user.to_dict()
+
+    
 class Call_Doctor(Resource):
     def get(self):
+
         doctors= [doc.to_dict() for doc in Doctor.query.all()]
         return doctors, 200
+    
+class CheckSession(Resource):
+    def get(self):
 
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict()
+        else:
+            return {'message': '401: Not Authorized'}, 401
+        
+class Logout(Resource):
+    def delete(self): 
+
+        if not session['user_id']:
+            return {'error': 'Unauthorized'}, 401
+
+        session['user_id'] = None
+        return {'message': '204: No Content'}, 204
+    
 # Views go here!
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
-
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 # @app.route('/')
 # def index():

@@ -1,29 +1,17 @@
 import {useState, useEffect} from 'react';
 import NavBar from "../components/NavBar";
+import { Outlet, useOutletContext } from "react-router-dom"
 
 
-function Doctors(){
+function Doctors({listDoctors}){
+    const doctors = useOutletContext()
 
-    const [listDoctors, setListDoctors] = useState([])
-   
-    useEffect(() => {
-        console.log("FETCH! ");
-        fetch("/doctor")
-          .then((res) => res.json())
-          .then((data) => {
-            setListDoctors(data);
-            console.log(data);
-          });
-      }, []);
 
     return(
         <>
-            <header>
-                <NavBar/>
-            </header>
-            <h1>Doctor Page</h1>
 
-            {listDoctors.map((doctor)=>(
+            <h1>Doctor Page</h1>
+            {doctors.map((doctor)=>(
                 <div key={doctor.id}>
                     <h2>{doctor.name}</h2>
                     <img src={doctor.image_url}></img>

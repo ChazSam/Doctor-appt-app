@@ -5,10 +5,6 @@ function Account(){
 
     return (
         <>
-            <header>
-                <NavBar/>
-            </header>
-            
             <div>
                 <h1>Account Page</h1>
                 <h2>Name: </h2>

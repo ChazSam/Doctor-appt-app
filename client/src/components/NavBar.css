@@ -6,7 +6,9 @@
 .navbar > a{
     display: inline-block;
     box-sizing: border-box;
-    width: 90px;
+   
+    min-width: 90px;
+    max-width: 300px;
     padding: 10px;
     margin: 0 10px 10px;
     background: rgb(255, 255, 255);

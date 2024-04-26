@@ -5,44 +5,47 @@ import Signup from "./pages/Signup";
 import Appointment from "./pages/Appointment";
 import ErrorPage from "./pages/ErrorPage";
 import Account from "./pages/Account"
+import App from "./components/App";
 
 
 const routes = [
 
     {
         path: "/",
-        element: <Home />,
-        errorElement: <ErrorPage/>
+        element: <App />,
+        errorElement: <ErrorPage/>,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+    
+            },
+            {
+                path: "/doctors",
+                element: <Doctors />,
+    
+            },
+            {
+                path: "/login",
+                element: <Login />,
 
-    },
-    {
-        path: "/doctors",
-        element: <Doctors />,
-        errorElement: <ErrorPage/>
-
-    },
-    {
-        path: "/login",
-        element: <Login />,
-        errorElement: <ErrorPage/>
-
-    },
-    {
-        path: "/signup",
-        element: <Signup />,
-        errorElement: <ErrorPage/>
-
-    },
-    {
-        path: "/appt",
-        element: <Appointment />,
-        errorElement: <ErrorPage/>
-
-    },
-    {
-        path: "/account",
-        element: <Account />,
-        errorElement: <ErrorPage/>
+            },
+            {
+                path: "/signup",
+                element: <Signup />,
+            
+            },
+            {
+                path: "/appt",
+                element: <Appointment />,
+        
+            },
+            {
+                path: "/account",
+                element: <Account />,
+            
+            },
+        ]
 
     },
 ]

@@ -108,10 +108,6 @@ function Signup () {
 
     return(
         <div>
-            <header>
-                <NavBar/>
-            </header>
-            
             <h1>Signup page</h1>
                 <form onSubmit={formik.handleSubmit}>
 
