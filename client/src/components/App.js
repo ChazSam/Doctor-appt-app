@@ -4,23 +4,34 @@ import NavBar from "./NavBar";
 
 function App() {
   const [listDoctors, setListDoctors] = useState([])
+  const [user, setUser] = useState(null)
    
   useEffect(() => {
-      console.log("FETCH! ");
+      // console.log("FETCH! ");
       fetch("/doctor")
         .then((res) => res.json())
         .then((data) => {
           setListDoctors(data);
-          console.log(data);
+          // console.log(data);
         });
     }, []);
+
+  useEffect(() => {
+      fetch("/check_session").then((r) => {
+        if (r.ok) {
+          r.json().then((user) => setUser(user));
+          console.log(user)
+        }
+      });
+    }, []);
+
 
   return(
     <div>
       <header>
-        <NavBar/>
+        <NavBar user={user} setUser={setUser}/>
       </header>
-      <Outlet context={listDoctors}/>
+      <Outlet context={listDoctors} onLogin={setUser}/>
 
     </div>
 

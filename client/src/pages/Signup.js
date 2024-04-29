@@ -7,23 +7,23 @@ import 'react-datetime/css/react-datetime.css'
 
 function Signup () {
 
-    const [signUp, setSignUp] = useState([])
+    const [refreshPage, setRefreshPage] = useState(false);
     const [monthYear, setMonthYear] =  useState({
         day:"",
         month:"",
         year:""
     })
+    const [signUp, setSignUp] = useState([])
 
-    const [refreshPage, setRefreshPage] = useState(false);
 
-    useEffect(() => {
-        fetch("/signup")
-          .then((res) => res.json())
-          .then((data) => {
-            setSignUp(data);
-            console.log(data);
-          });
-      }, [refreshPage]);
+    // useEffect(() => {
+    //     fetch("/signup")
+    //       .then((res) => res.json())
+    //       .then((data) => {
+    //         setSignUp(data);
+    //         console.log(data);
+    //       });
+    //   }, [refreshPage]);
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
@@ -41,24 +41,17 @@ function Signup () {
       });
 
     const formik = useFormik({
-        // initialValues:{
-        //     username:"",
-        //     password:"",
-        //     first_Name:"",
-        //     last_Name:"",
-        //     birthdate: new Date(monthYear.year,monthYear.monthYear,monthYear.day),
-        //     sex: "",
-        //     bio:"", 00:00:00
-        initialValues:{
-            username:"testtest",
-            password:"testtest",
-            first_name:"test",
-            last_name:"test",
-            birthdate: "2000-01-01",
-            sex:"F",
-            bio:"test",
-        },
 
+        initialValues:{
+            username:"",
+            password:"",
+            first_name:"",
+            last_name:"",
+            birthdate:'' ,
+            sex:"",
+            bio:"",
+        },
+        // `${monthYear.month}-${monthYear.day}-${monthYear.year}`
         validationSchema: formSchema,
         onSubmit: (values) => {
             fetch("signup", {
@@ -114,7 +107,7 @@ function Signup () {
 
     
     const dayInMonth = checkLeapYear(monthYear.month, monthYear.year)
-    console.log(formik.values)
+    console.log()
     return(
         <div>
             <h1>Signup page</h1>

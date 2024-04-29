@@ -58,6 +58,14 @@ class Login(Resource):
         session['user_id'] = user.id
         return user.to_dict()
 
+class Logout(Resource):
+    def delete(self): 
+
+        if not session['user_id']:
+            return {'error': 'Unauthorized'}, 401
+
+        session['user_id'] = None
+        return {'message': '204: No Content'}, 204
     
 class Call_Doctor(Resource):
     def get(self):
@@ -70,18 +78,10 @@ class CheckSession(Resource):
 
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
-            return user.to_dict()
+            return user.to_dict(), 200
         else:
             return {'message': '401: Not Authorized'}, 401
         
-class Logout(Resource):
-    def delete(self): 
-
-        if not session['user_id']:
-            return {'error': 'Unauthorized'}, 401
-
-        session['user_id'] = None
-        return {'message': '204: No Content'}, 204
     
 # Views go here!
 api.add_resource(Signup, '/signup', endpoint='signup')
