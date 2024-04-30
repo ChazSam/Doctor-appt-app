@@ -16,11 +16,21 @@ import datetime
 from config import app, db, api
 # Add your model imports
 
-class Signup(Resource):
-
+class GetUsers(Resource):
     def get(self):
         users = [user.to_dict() for user in User.query.all()]
         return users, 200 
+    
+class UserDetails(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first().to_dict()
+        return user, 200
+            
+class Signup(Resource):
+
+    # def get(self):
+    #     users = [user.to_dict() for user in User.query.all()]
+    #     return users, 200 
 
     def post(self):
         password = request.get_json().get('password')
@@ -72,10 +82,13 @@ class Call_Doctor(Resource):
 
         doctors= [doc.to_dict() for doc in Doctor.query.all()]
         return doctors, 200
+class DoctorDetails(Resource):
+    def get(self, id):
+        doctor = Doctor.query.filter_by(id=id).first().to_dict()
+        return doctor, 200
     
 class CheckSession(Resource):
     def get(self):
-
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
             return user.to_dict(), 200
@@ -89,10 +102,12 @@ api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
-
-# @app.route('/')
-# def index():
-#     return '<h1>Project Server</h1>'
+api.add_resource(GetUsers, '/users', endpoint="users")
+api.add_resource(UserDetails, '/users/<int:id>')
+api.add_resource(DoctorDetails, '/doctor/<int:id>')
+@app.route('/')
+def index():
+    return '<h1>Project Server</h1>'
 
 # @app.route("/signup", methods=['GET','POST'])
 # def signup():

@@ -55,7 +55,7 @@ with app.app_context():
     db.session.add_all([doc1, doc2, doc3, doc4, doc5])
     
     admin = User(
-        username = "Admin",
+        username = "Admin123",
         first_name = "Admin",
         last_name = "Admin",
         birthdate = datetime(2000, 1, 1),
@@ -66,7 +66,7 @@ with app.app_context():
     admin.password_hash = 'Admin'
 
     user1 = User(
-        username = "JohnDoe",
+        username = "JohnDoe1",
         first_name = "John",
         last_name = "Doe",
         birthdate = datetime(2000, 1, 1),

@@ -47,7 +47,7 @@ function Signup () {
             password:"",
             first_name:"",
             last_name:"",
-            birthdate:'' ,
+            birthdate:'2000-1-1' ,
             sex:"",
             bio:"",
         },
@@ -161,6 +161,7 @@ function Signup () {
 
                         </select>
                         <p style={{ color: "red" }}> {formik.errors.birthdate}</p>
+                        
                         <p>Sex</p>
                             <select name='sex' id='user-sex' value={formik.values.sex} onChange={formik.handleChange}>
                                 <option value="">---</option>

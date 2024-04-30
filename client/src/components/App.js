@@ -5,6 +5,8 @@ import NavBar from "./NavBar";
 function App() {
   const [listDoctors, setListDoctors] = useState([])
   const [user, setUser] = useState(null)
+  const [login, setLogin] = useState(false)
+  
    
   useEffect(() => {
       // console.log("FETCH! ");
