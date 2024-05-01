@@ -1,9 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
-import NavBar from "../components/NavBar";
-import Datetime from 'react-datetime'
-import 'react-datetime/css/react-datetime.css'
+
 
 function Signup () {
 

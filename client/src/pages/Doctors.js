@@ -1,17 +1,16 @@
 import {useState, useEffect} from 'react';
-import NavBar from "../components/NavBar";
 import { Outlet, useOutletContext } from "react-router-dom"
 
 
-function Doctors({listDoctors}){
-    const doctors = useOutletContext()
+function Doctors(){
+    const {listDoctors} = useOutletContext()
 
 
     return(
         <>
 
             <h1>Doctor Page</h1>
-            {doctors.map((doctor)=>(
+            {listDoctors.map((doctor)=>(
                 <div key={doctor.id}>
                     <h2>{doctor.name}</h2>
                     <img src={doctor.image_url}></img>

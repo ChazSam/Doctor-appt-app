@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import NavBar from "../components/NavBar";
 import Calendar from 'react-calendar'
 
 // type ValuePiece = Date | null;

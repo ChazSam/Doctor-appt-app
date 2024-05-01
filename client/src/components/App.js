@@ -4,8 +4,8 @@ import NavBar from "./NavBar";
 
 function App() {
   const [listDoctors, setListDoctors] = useState([])
-  const [user, setUser] = useState(null)
-  const [login, setLogin] = useState(false)
+  const [user, setUser] = useState("")
+  // const [login, setLogin] = useState(false)
   
    
   useEffect(() => {
@@ -18,14 +18,14 @@ function App() {
         });
     }, []);
 
-  useEffect(() => {
-      fetch("/check_session").then((r) => {
-        if (r.ok) {
-          r.json().then((user) => setUser(user));
-          console.log(user)
-        }
-      });
-    }, []);
+  // useEffect(() => {
+  //     fetch("/check_session").then((r) => {
+  //       if (r.ok) {
+  //         r.json().then((user) => setUser(user));
+  //         // console.log(user)
+  //       }
+  //     });
+  //   }, []);
 
 
   return(
@@ -33,8 +33,8 @@ function App() {
       <header>
         <NavBar user={user} setUser={setUser}/>
       </header>
-      <Outlet context={listDoctors} onLogin={setUser}/>
-
+      <Outlet context={{listDoctors, user:user, onLogin: setUser}} />
+      
     </div>
 
   ) 

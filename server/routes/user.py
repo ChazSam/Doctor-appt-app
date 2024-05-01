@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask_migrate import Migrate
 from models.user import User
 from config import api
-from flask import Flask, request, session, jsonify, make_response
+# from flask import Flask, request, session, jsonify, make_response
 
 class GetUsers(Resource):
     def get(self):
