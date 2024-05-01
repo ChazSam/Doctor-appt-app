@@ -103,7 +103,7 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(GetUsers, '/users', endpoint="users")
-api.add_resource(UserDetails, '/users/<int:id>')
+api.add_resource(UserDetails, '/account/<int:id>')
 api.add_resource(DoctorDetails, '/doctor/<int:id>')
 @app.route('/')
 def index():

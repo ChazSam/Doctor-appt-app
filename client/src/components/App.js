@@ -18,14 +18,14 @@ function App() {
         });
     }, []);
 
-  // useEffect(() => {
-  //     fetch("/check_session").then((r) => {
-  //       if (r.ok) {
-  //         r.json().then((user) => setUser(user));
-  //         // console.log(user)
-  //       }
-  //     });
-  //   }, []);
+  useEffect(() => {
+      fetch("/check_session").then((r) => {
+        if (r.ok) {
+          r.json().then((user) => setUser(user));
+          console.log(user)
+        }
+      });
+    }, []);
 
 
   return(

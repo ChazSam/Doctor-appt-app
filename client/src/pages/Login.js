@@ -3,11 +3,11 @@ import { Outlet, useOutletContext } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
-function Login({}){
+function Login(){
     const {user, onLogin} = useOutletContext()
     
     const [errors, setErrors] = useState([])
-    console.log(user)
+    // console.log(user)
 
     const formSchema = yup.object().shape({
         // username: yup.string().required("Uesrname must be at least 8 characters long").min(8),

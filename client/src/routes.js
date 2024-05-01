@@ -18,7 +18,14 @@ const routes = [
             {
                 path: "/",
                 element: <Home />,
-    
+                // children: [       
+                // {
+                //     path: "/account/:id",
+                //     element: <Account />,
+                
+                // },
+                    
+                // ]
             },
             {
                 path: "/doctors",
@@ -40,6 +47,7 @@ const routes = [
                 element: <Appointment />,
         
             },
+            
             {
                 path: "/account",
                 element: <Account />,
