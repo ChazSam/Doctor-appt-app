@@ -7,9 +7,10 @@ function Account(){
     function handleLogout() {
         fetch("/logout", {
           method: "DELETE",
-        });
+        }).then(() => onLogin(""));
       }
-
+    console.log(user)
+    
     return (
         <>
             <div>
@@ -22,9 +23,9 @@ function Account(){
             <div>
                 <button>Make An Appointment</button>
                 <p></p>
-                <button>Log out</button>
+                <button onClick={handleLogout}>Log out</button>
                 <p></p>
-                <button onClick={handleLogout}>Delete Account</button>
+                <button >Delete Account</button>
             </div>
         </>
     )

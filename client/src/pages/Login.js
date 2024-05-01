@@ -33,7 +33,7 @@ function Login({}){
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((user) => console.log(user))
+                    r.json().then((user) => onLogin(user))
 
                 }else{
                     r.json().then((err) => setErrors(err.error))
@@ -42,7 +42,7 @@ function Login({}){
         }
     })
 
-    console.log(formik.values)
+    // console.log(formik.values)
     return(
         <>
         <h1>Login page</h1>
