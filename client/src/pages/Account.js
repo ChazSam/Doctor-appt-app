@@ -26,13 +26,20 @@ function Account(){
     // console.log(user)
     
     return (
-        <>
+        <>           
+        <h1>Account Page</h1>
             <div>
-                
-                <h1>Account Page</h1>
+                <h2>Please log in or sign up to create an account</h2>
+            </div>
+
+            <div>
                 <h2>Name: {userDetails.username}</h2>
-                <h3>Appointments: </h3>
-                <p>None</p>
+                <h3>Upcoming Appointments: </h3>
+                
+                <div>
+                    <p>None</p>
+                </div>
+
             </div>
 
             <div>

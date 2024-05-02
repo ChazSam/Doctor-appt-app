@@ -82,6 +82,7 @@ class Call_Doctor(Resource):
 
         doctors= [doc.to_dict() for doc in Doctor.query.all()]
         return doctors, 200
+    
 class DoctorDetails(Resource):
     def get(self, id):
         doctor = Doctor.query.filter_by(id=id).first().to_dict()
@@ -95,6 +96,21 @@ class CheckSession(Resource):
         else:
             return {'message': '401: Not Authorized'}, 401
         
+class CreateAppointment(Resource):
+    def post(self):
+        appointment = Appointment(
+            user_id = request.get_json().get("user_id"),
+            doctor_id = request.get_json().get("doctor_id")
+        )
+        try:
+            session['user_id'] = appointment.id
+            db.session.add(appointment)
+            db.session.commit()
+
+            return appointment.to_dict(), 201
+
+        except ValueError as exc:
+            return {'message': exc}, 422
     
 # Views go here!
 api.add_resource(Signup, '/signup', endpoint='signup')
@@ -105,6 +121,8 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(GetUsers, '/users', endpoint="users")
 api.add_resource(UserDetails, '/account/<int:id>')
 api.add_resource(DoctorDetails, '/doctor/<int:id>')
+api.add_resource(CreateAppointment, '/create', endpoint="create")
+
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'

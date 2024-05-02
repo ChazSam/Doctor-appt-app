@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react';
 import Calendar from 'react-calendar'
 import { Outlet, useOutletContext } from "react-router-dom"
+import {Formik, useFormik} from 'formik'
+import * as yup from 'yup';
 
 // type ValuePiece = Date | null;
 
@@ -8,6 +10,41 @@ import { Outlet, useOutletContext } from "react-router-dom"
 function Appointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
     const [calendar, setCalendar] = useState(new Date())
+    const [errors, setErrors] = useState([])
+    
+    
+    const formSchema = yup.object().shape({
+        // username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
+        // password: yup.string().required("Password must be at least 8 characters long").min(8),
+      });
+    const formik = useFormik({
+
+        initialValues:{
+            user_id:"",
+            doctor_id:"",
+        },
+
+        validationSchema: formSchema,
+        onSubmit: (values) => {
+            fetch("/login", {
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                // body: JSON.stringify({ username: formik.values.username })
+                body: JSON.stringify({ username: formik.values.username, password: formik.values.password })
+            }) .then((r) => {
+ 
+                if(r.ok){
+                    r.json().then((user) => onLogin(user))
+
+                }else{
+                    r.json().then((err) => setErrors(err.error))
+                }})
+            
+        }
+    })
+
 
     return(
         <>
