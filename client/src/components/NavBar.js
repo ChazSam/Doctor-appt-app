@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
     
-function NavBar({isLoggedIn}){
+function NavBar({isLoggedIn, user}){
 
     return (
         <nav className="navbar">
@@ -49,6 +49,16 @@ function NavBar({isLoggedIn}){
                 </NavLink>
             </>
             )}
+            {user.id===1 &&(
+
+                <>
+                <NavLink
+                    to="/add-doctor"
+                    className="nav-link"
+                    >Add Doctor
+                </NavLink>
+                </>
+                )}
             
         </nav>
     )

@@ -1,11 +1,13 @@
 import {useState, useEffect} from 'react';
 import {Formik, useFormik} from 'formik'
+import { Outlet, useOutletContext } from "react-router-dom"
 import * as yup from 'yup';
 
 
-function Signup () {
-
-    const [refreshPage, setRefreshPage] = useState(false);
+function Signup ({onlogin}) {
+    const {onLogin} = useOutletContext()
+    const [refreshPage, setRefreshPage] = useState(false)
+    const [errors, setErrors] = useState([])
     const [monthYear, setMonthYear] =  useState({
         day:"",
         month:"",
@@ -58,14 +60,14 @@ function Signup () {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(values, null, 2)
-            }) .then(
-                (res) =>{
-                    if (res.status == 200){
-                        setRefreshPage(!refreshPage)
-                    }
-                    
-                }
-            )
+            }) .then((r) => {
+ 
+                if(r.ok){
+                    r.json().then((user) => onLogin(user))
+
+                }else{
+                    r.json().then((err) => console.log(err.error))
+                }})
         }
     })
 

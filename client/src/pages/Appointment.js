@@ -4,18 +4,12 @@ import { Outlet, useOutletContext } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
-// type ValuePiece = Date | null;
 
-// type Value = ValuePiece | [ValuePiece, ValuePiece];
 function Appointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
     const [calendar, setCalendar] = useState(new Date())
     const [errors, setErrors] = useState([])
     
-    // function handleChange(e){
-    //     setCalendar(e.target.)
-    //    formik.handleChange(JSON.stringify(e.target.value))
-    // }
     
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
@@ -45,7 +39,7 @@ function Appointment(){
                     r.json().then((user) => onLogin(user))
 
                 }else{
-                    r.json().then((err) => console.log(err.error))
+                    r.json().then((err) => setErrors(err.error))
                 }})
         }
     })
