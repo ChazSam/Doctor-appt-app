@@ -16,7 +16,7 @@ function App() {
           setListDoctors(data);
           // console.log(data);
         });
-    }, []);
+    }, [listDoctors]);
 
   useEffect(() => {
       fetch("/check_session").then((r) => {
@@ -33,7 +33,7 @@ function App() {
       <header>
         <NavBar user={user} setUser={setUser} isLoggedIn={isLoggedIn}/>
       </header>
-      <Outlet context={{listDoctors, user:user, onLogin: setUser, setIsLoggedIn}} />
+      <Outlet context={{listDoctors,setListDoctors, user:user, onLogin: setUser, setIsLoggedIn}} />
       
     </div>
 

@@ -49,6 +49,7 @@ function Account(){
                 <button onClick={handleLogout}>Log out</button>
                 <p></p>
                 <button >Delete Account</button>
+                
             </div>
         </>
     )

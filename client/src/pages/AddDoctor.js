@@ -2,11 +2,12 @@ import React from "react";
 import  {useState} from "react";
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
+import { Outlet, useOutletContext } from "react-router-dom"
 
 function AddDoctor(){
-    
     const [errors, setErrors] = useState([])
-
+    const {listDoctors, setListDoctors} = useOutletContext()
+    
     const formSchema = yup.object().shape({
         name: yup.string().required("Please enter an Doctor name"),
         image_url: yup.string(),
@@ -61,7 +62,29 @@ function AddDoctor(){
             <p></p>
             <button type='submit'>submit</button>
         </form>
-        </>
+
+        <p></p>
+        <h1>Edit Doctor</h1>
+            <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
+                            <option id='' value="">--</option>
+                            {listDoctors.map((doctor)=> (
+                                
+                                <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
+                            ))}
+                        </select>
+            <button>Edit doctor</button>
+        <p></p>     
+
+         <h1>Delete Doctor</h1>           
+            <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
+                                <option id='' value="">--</option>
+                                {listDoctors.map((doctor)=> (
+                                    
+                                    <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
+                                ))}
+                            </select>
+            <button>Delete Doctor</button>
+            </>
     )
 }
 
