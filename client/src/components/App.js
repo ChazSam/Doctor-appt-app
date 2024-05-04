@@ -31,7 +31,7 @@ function App() {
   return(
     <div>
       <header>
-        <NavBar user={user} setUser={setUser}/>
+        <NavBar user={user} setUser={setUser} isLoggedIn={isLoggedIn}/>
       </header>
       <Outlet context={{listDoctors, user:user, onLogin: setUser, setIsLoggedIn}} />
       

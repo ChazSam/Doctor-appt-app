@@ -3,9 +3,9 @@ import { Outlet, useOutletContext } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 
 function Account(){
-    const {user, onLogin} = useOutletContext()
+    const {user, onLogin, setIsLoggedIn} = useOutletContext()
     const [userDetails, setUserDetails] = useState("")
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
 
   useEffect(() => {
         fetch(`/account/${user.id}`)
@@ -21,7 +21,8 @@ function Account(){
     function handleLogout() {
         fetch("/logout", {
           method: "DELETE",
-        }).then(() => onLogin(""));
+        }).then(() => onLogin(""))
+          .then(setIsLoggedIn(false))
       }
     // console.log(user)
     

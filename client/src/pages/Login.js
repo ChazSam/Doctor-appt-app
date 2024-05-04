@@ -34,7 +34,7 @@ function Login(){
  
                 if(r.ok){
                     r.json().then((user) => onLogin(user))
-
+                    .then(setIsLoggedIn(true))
                 }else{
                     r.json().then((err) => setErrors(err.error))
                 }})

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
-
-function NavBar(){
+    
+function NavBar({isLoggedIn}){
 
     return (
         <nav className="navbar">
@@ -14,32 +14,41 @@ function NavBar(){
             <NavLink
                 to="/doctors"
                 className="nav-link"
+                
                 >Doctors
             </NavLink>
+            {!isLoggedIn&& (
 
-            <NavLink
-                to="/login"
-                className="nav-link"
-                >Login
-            </NavLink>
+                <>
+                <NavLink
+                    to="/login"
+                    className="nav-link"
+                    >Login
+                </NavLink>
 
-            <NavLink
-                to="/signup"
-                className="nav-link"
-                >Signup
-            </NavLink>
+                <NavLink
+                    to="/signup"
+                    className="nav-link"
+                    >Signup
+                </NavLink>
+            </>
+                )}
+            {isLoggedIn &&(
 
-            <NavLink
-                to="/appt"
-                className="nav-link"
-                >Appointments
-            </NavLink>
+                <>
+                <NavLink
+                    to="/appt"
+                    className="nav-link"
+                    >Appointments
+                </NavLink>
 
-            <NavLink
-                to="/account"
-                className="nav-link"
-                >Account
-            </NavLink>
+                <NavLink
+                    to="/account"
+                    className="nav-link"
+                    >Account
+                </NavLink>
+            </>
+            )}
             
         </nav>
     )
