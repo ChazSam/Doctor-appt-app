@@ -124,6 +124,24 @@ class CreateAppointment(Resource):
             return {'message': exc}, 422
     
 
+class AddDoctor(Resource):
+    def post(self):
+
+        doctor = Doctor(
+            name = request.get_json().get('name'),
+            image_url = request.get_json().get('image_url'),
+            department = request.get_json().get('department'),
+            bio = request.get_json().get('bio'),
+            tagline = request.get_json().get('tagline'),
+            )
+        
+        try:
+            db.session.add(doctor)
+            db.session.commit(), 201
+            return doctor.to_dict()
+
+        except IntegrityError as exc:
+            return {"Error": exc}, 422
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
@@ -134,6 +152,7 @@ api.add_resource(GetUsers, '/users', endpoint="users")
 api.add_resource(UserDetails, '/account/<int:id>')
 api.add_resource(DoctorDetails, '/doctor/<int:id>')
 api.add_resource(CreateAppointment, '/create', endpoint="create")
+api.add_resource(AddDoctor, '/add-doctor', endpoint='add-doctor')
 
 
 @app.route('/')

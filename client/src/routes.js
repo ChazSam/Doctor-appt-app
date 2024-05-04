@@ -6,6 +6,7 @@ import Appointment from "./pages/Appointment";
 import ErrorPage from "./pages/ErrorPage";
 import Account from "./pages/Account"
 import App from "./components/App";
+import AddDoctor from "./pages/AddDoctor"
 
 
 const routes = [
@@ -51,6 +52,11 @@ const routes = [
             {
                 path: "/account",
                 element: <Account />,
+            
+            },
+            {
+                path: "/add-doctor",
+                element: <AddDoctor />,
             
             },
         ]
