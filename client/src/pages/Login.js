@@ -4,7 +4,7 @@ import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
 function Login(){
-    const {user, onLogin} = useOutletContext()
+    const {user, onLogin, setIsLoggedIn} = useOutletContext()
     
     const [errors, setErrors] = useState([])
     // console.log(user)
@@ -28,8 +28,8 @@ function Login(){
                 headers:{
                     "Content-Type": "application/json",
                 },
-                // body: JSON.stringify({ username: formik.values.username })
-                body: JSON.stringify({ username: formik.values.username, password: formik.values.password })
+                
+                body: JSON.stringify(values, null, 2)
             }) .then((r) => {
  
                 if(r.ok){

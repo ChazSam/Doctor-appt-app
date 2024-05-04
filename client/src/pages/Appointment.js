@@ -12,39 +12,45 @@ function Appointment(){
     const [calendar, setCalendar] = useState(new Date())
     const [errors, setErrors] = useState([])
     
+    // function handleChange(e){
+    //     setCalendar(e.target.)
+    //    formik.handleChange(JSON.stringify(e.target.value))
+    // }
     
     const formSchema = yup.object().shape({
-        // username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
-        // password: yup.string().required("Password must be at least 8 characters long").min(8),
+        user_id: yup.number().required("Please log in"),
+        doctor_id: yup.string().required("Please select a doctor"),
+        date: yup.date().required("Select a doctor and date for an appointment")
       });
+
     const formik = useFormik({
 
         initialValues:{
-            user_id:"",
+            user_id:user.id,
             doctor_id:"",
+            date:null
         },
 
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/login", {
+            fetch("/create", {
                 method:"POST",
                 headers:{
                     "Content-Type": "application/json",
                 },
-                // body: JSON.stringify({ username: formik.values.username })
-                body: JSON.stringify({ username: formik.values.username, password: formik.values.password })
+                body: JSON.stringify(values, null, 2)
             }) .then((r) => {
  
                 if(r.ok){
                     r.json().then((user) => onLogin(user))
 
                 }else{
-                    r.json().then((err) => setErrors(err.error))
+                    r.json().then((err) => console.log(err.error))
                 }})
-            
         }
     })
 
+    console.log(formik.values)
 
     return(
         <>
@@ -52,20 +58,23 @@ function Appointment(){
             <div>
                 <h2>Please log in or create an account to schedule an appointment</h2>
             </div>
-
-            <div>
-                <h2>Select a Doctor</h2>
-                <select>
-                    <option>--</option>
-                    {listDoctors.map((doctor)=> (
-                        
-                            <option key={doctor.id} value={doctor.id}>{doctor.name}</option>
-                    ))}
-                </select>
+            <form onSubmit={formik.handleSubmit}>
+                <div>
+                    <h2>Select a Doctor</h2>
+                    <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
+                        <option id='' value="">--</option>
+                        {listDoctors.map((doctor)=> (
+                            
+                            <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
+                        ))}
+                    </select>
+                    <p></p>
+                    <Calendar value={calendar} onChange={(date) => formik.setFieldValue('date', date)}></Calendar>
+                </div>
                 <p></p>
-                <Calendar value={calendar} onChange={setCalendar}></Calendar>
-            </div>
-        </>
+                <button type='Submit'>Add Appointment</button>
+            </form>
+            </>
     )
 }
 

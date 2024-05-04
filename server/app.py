@@ -16,6 +16,15 @@ import datetime
 from config import app, db, api
 # Add your model imports
 
+# @app.before_request
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict(), 200
+        else:
+            return {'message': '401: Not Authorized'}, 401
+        
 class GetUsers(Resource):
     def get(self):
         users = [user.to_dict() for user in User.query.all()]
@@ -23,8 +32,10 @@ class GetUsers(Resource):
     
 class UserDetails(Resource):
     def get(self, id):
-        user = User.query.filter_by(id=id).first().to_dict()
-        return user, 200
+        if not session["user_id"]:
+            return {"error":"unauthorized"}, 
+        user = User.query.filter(User.id == id).first()
+        return user.to_dict(), 200
             
 class Signup(Resource):
 
@@ -88,20 +99,18 @@ class DoctorDetails(Resource):
         doctor = Doctor.query.filter_by(id=id).first().to_dict()
         return doctor, 200
     
-class CheckSession(Resource):
-    def get(self):
-        user = User.query.filter(User.id == session.get('user_id')).first()
-        if user:
-            return user.to_dict(), 200
-        else:
-            return {'message': '401: Not Authorized'}, 401
+
         
 class CreateAppointment(Resource):
     def post(self):
+        date = request.get_json().get("date"),
+        date_string=datetime.datetime.strptime(date[0], '%Y-%m-%dT%H:%M:%S.%fZ') 
+        breakpoint()
         appointment = Appointment(
             user_id = request.get_json().get("user_id"),
-            doctor_id = request.get_json().get("doctor_id")
-        )
+            doctor_id = request.get_json().get("doctor_id"),
+    )
+        appointment.date = date_string
         try:
             session['user_id'] = appointment.id
             db.session.add(appointment)

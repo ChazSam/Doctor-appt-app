@@ -5,7 +5,7 @@ import NavBar from "./NavBar";
 function App() {
   const [listDoctors, setListDoctors] = useState([])
   const [user, setUser] = useState("")
-  // const [login, setLogin] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   
    
   useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
       <header>
         <NavBar user={user} setUser={setUser}/>
       </header>
-      <Outlet context={{listDoctors, user:user, onLogin: setUser}} />
+      <Outlet context={{listDoctors, user:user, onLogin: setUser, setIsLoggedIn}} />
       
     </div>
 
