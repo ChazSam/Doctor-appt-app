@@ -33,7 +33,7 @@ function NavBar({isLoggedIn, user}){
                 </NavLink>
             </>
                 )}
-            {isLoggedIn &&(
+            {isLoggedIn && user.id!==1 && (
 
                 <>
                 <NavLink
@@ -49,13 +49,13 @@ function NavBar({isLoggedIn, user}){
                 </NavLink>
             </>
             )}
-            {user.id===1 &&(
+            {user.id === 1 &&(
 
                 <>
                 <NavLink
-                    to="/add-doctor"
+                    to="/admin"
                     className="nav-link"
-                    >Add Doctor
+                    >Admin
                 </NavLink>
                 </>
                 )}

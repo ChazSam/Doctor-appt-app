@@ -16,7 +16,7 @@ function App() {
           setListDoctors(data);
           // console.log(data);
         });
-    }, [listDoctors]);
+    }, []);
 
   useEffect(() => {
       fetch("/check_session").then((r) => {

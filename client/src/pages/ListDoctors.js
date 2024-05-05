@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { Outlet, useOutletContext } from "react-router-dom"
 
 
-function Doctors(){
+function ListDoctors(){
     const {listDoctors} = useOutletContext()
 
 
@@ -23,4 +23,4 @@ function Doctors(){
     )
 }
 
-export default Doctors
+export default ListDoctors

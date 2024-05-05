@@ -1,5 +1,5 @@
 import Home from "./pages/Home";
-import Doctors from "./pages/Doctors";
+import Doctors from "./pages/ListDoctors";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Appointment from "./pages/Appointment";
@@ -7,7 +7,8 @@ import ErrorPage from "./pages/ErrorPage";
 import Account from "./pages/Account"
 import App from "./components/App";
 import AddDoctor from "./pages/AddDoctor"
-
+import EditDoctor from "./pages/EditDoctor"
+import Admin from "./pages/Admin"
 
 const routes = [
 
@@ -19,14 +20,6 @@ const routes = [
             {
                 path: "/",
                 element: <Home />,
-                // children: [       
-                // {
-                //     path: "/account/:id",
-                //     element: <Account />,
-                
-                // },
-                    
-                // ]
             },
             {
                 path: "/doctors",
@@ -55,8 +48,19 @@ const routes = [
             
             },
             {
-                path: "/add-doctor",
-                element: <AddDoctor />,
+                path: "/admin",
+                element: <Admin />,
+                children:[
+                    {
+                        path: '/admin/add-doctor',
+                        element: <AddDoctor/>
+                    }, 
+                    {
+                        path: '/admin/edit-doctor',
+                        element: <EditDoctor/>
+                    }, 
+
+                ]
             
             },
         ]

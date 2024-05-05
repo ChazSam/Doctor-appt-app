@@ -107,7 +107,7 @@ class CreateAppointment(Resource):
     def post(self):
         date = request.get_json().get("date"),
         date_string=datetime.datetime.strptime(date[0], '%Y-%m-%dT%H:%M:%S.%fZ') 
-        breakpoint()
+        
         appointment = Appointment(
             user_id = request.get_json().get("user_id"),
             doctor_id = request.get_json().get("doctor_id"),

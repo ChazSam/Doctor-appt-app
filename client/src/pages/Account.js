@@ -24,7 +24,7 @@ function Account(){
         }).then(() => onLogin(""))
           .then(setIsLoggedIn(false))
       }
-    // console.log(user)
+    // console.log(userDetails)
     
     return (
         <>           
@@ -35,16 +35,23 @@ function Account(){
 
             <div>
                 <h2>Name: {userDetails.username}</h2>
-                <h3>Upcoming Appointments: </h3>
+                <h3>Upcoming Appointments: 
+                {/* {userDetails.map((appt)=>(
+                    <p>{appt.appointment}</p>
+                ))} */}
+                {userDetails.appointment}
+                </h3>
                 
                 <div>
-                    <p>None</p>
+                    <p></p>
                 </div>
 
             </div>
 
             <div>
                 <button>Make An Appointment</button>
+                <p></p>
+                <button>Change An Appointment</button>
                 <p></p>
                 <button onClick={handleLogout}>Log out</button>
                 <p></p>
