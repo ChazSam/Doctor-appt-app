@@ -32,8 +32,8 @@ class GetUsers(Resource):
 
 class UserDetails(Resource):
     def get(self, id):
-        if not session["user_id"]:
-            return {"error":"unauthorized"}, 
+        # if not session["user_id"]:
+        #     return {"error":"unauthorized"}, 
         user = User.query.filter(User.id == id).first()
         return user.to_dict(), 200
             
