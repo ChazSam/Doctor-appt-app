@@ -101,7 +101,20 @@ class DoctorDetails(Resource):
         doctor = Doctor.query.filter_by(id=id).first().to_dict()
         return doctor, 200
     
+    def patch(self, id):
+        doctor = Doctor.query.filter(Doctor.id == id).first()
+        for attr in request.form:
+            setattr(doctor, attr, request.form[attr])
 
+        db.session.add(doctor)
+        db.session.commit()
+        
+        response_dict = doctor.to_dict()
+
+        response =make_response(
+            response_dict,
+            200
+        )
         
 class CreateAppointment(Resource):
     def post(self):
