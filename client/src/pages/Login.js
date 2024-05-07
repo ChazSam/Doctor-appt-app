@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Outlet, useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
@@ -7,6 +7,8 @@ function Login(){
     const {user, onLogin, setIsLoggedIn} = useOutletContext()
     
     const [errors, setErrors] = useState([])
+    const navigate = useNavigate()
+   
     // console.log(user)
 
     const formSchema = yup.object().shape({
@@ -35,6 +37,7 @@ function Login(){
                 if(r.ok){
                     r.json().then((user) => onLogin(user))
                     .then(setIsLoggedIn(true))
+                    .then(navigate('/'))
                 }else{
                     r.json().then((err) => setErrors(err.error))
                 }})

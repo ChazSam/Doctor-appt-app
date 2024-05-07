@@ -3,7 +3,7 @@ import Calendar from 'react-calendar'
 import { Outlet, useOutletContext } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
-
+import 'react-calendar/dist/Calendar.css';
 
 function Appointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
@@ -49,9 +49,14 @@ function Appointment(){
     return(
         <>
         <h1>Appointment Page</h1>
+        {!user && (
+
             <div>
                 <h2>Please log in or create an account to schedule an appointment</h2>
             </div>
+            )}
+        {user && (
+
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <h2>Select a Doctor</h2>
@@ -68,6 +73,7 @@ function Appointment(){
                 <p></p>
                 <button type='Submit'>Add Appointment</button>
             </form>
+            )}
             </>
     )
 }

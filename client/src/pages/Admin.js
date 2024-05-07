@@ -13,7 +13,7 @@ function Admin(){
     return (
         <div>
             <h1>Admin Page</h1>
-            <Link to="add-doctor">
+            <Link to="/admin/add-doctor">
                 <button>Add Doctor</button>
             </Link>
             <Link to='edit-doctor'>
