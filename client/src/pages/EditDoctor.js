@@ -6,20 +6,21 @@ import { Outlet, useOutletContext } from "react-router-dom"
 
 function AddDoctor(){
     const [errors, setErrors] = useState([])
-    const [selectDoctor, setSelectDoctor] = useState()
+    const [selectDoctor, setSelectDoctor] = useState(null)
     const [doctor, setDoctor] = useState([])
     const {listDoctors, setListDoctors} = useOutletContext()
     
-    function handlePatch(){
-        fetch(`/doctor/${selectDoctor}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setDoctor(data);
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error('Error fetching user details:', error)});
-
+    function handleSelectDoctor(e){
+        const selectedDoctorId = e.target.value
+        const doctor = listDoctors[selectedDoctorId-1]
+        setSelectDoctor(doctor)
+        formik.setValues({
+            name:doctor.name,
+            image_url:doctor.image_url,
+            department:doctor.department,
+            bio:doctor.bio,
+            tagline:doctor.tagline
+        })
     }
 
     const formSchema = yup.object().shape({
@@ -34,16 +35,16 @@ function AddDoctor(){
     const formik = useFormik({
 
         initialValues:{
-            name:`${doctor.name}`,
-            image_url:`${doctor.image_url}`,
-            department:`${doctor.department}`,
-            bio:`${doctor.bio}`,
-            tagline:`${doctor.tagline}`
+            name:"",
+            image_url:"",
+            department:"",
+            bio:"",
+            tagline:""
         },
 
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/edit-doctor", {
+            fetch(`/edit-doctor/${selectDoctor.id}`, {
                 method:"PATCH",
                 headers:{
                     "Content-Type": "application/json",
@@ -59,19 +60,19 @@ function AddDoctor(){
                 }})
         }
     })
-    console.log(doctor)
+    
     return (
         <>
         <h1>Edit Doctor</h1>
 
-            <select id="doctor_id" onChange={(e)=>setSelectDoctor(e.target.value)} >
-                            <option id='' value="">--</option>
+            <select id="doctor_id" onChange={handleSelectDoctor} >
+                            <option id='' value="">--Select a Doctor--</option>
                             {listDoctors.map((doctor)=> (
                                 
                                 <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
                             ))}
                         </select>
-            <button onClick={handlePatch}>Edit doctor</button>
+            {/* <button onClick={handlePatch}>Edit doctor</button> */}
         <p></p>
 
         <form onSubmit={formik.handleSubmit}> 
