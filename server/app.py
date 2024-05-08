@@ -102,19 +102,36 @@ class DoctorDetails(Resource):
         return doctor, 200
     
     def patch(self, id):
-        doctor = Doctor.query.filter(Doctor.id == id).first()
+        record = Doctor.query.filter(Doctor.id == id).first()
         for attr in request.form:
-            setattr(doctor, attr, request.form[attr])
-
-        db.session.add(doctor)
-        db.session.commit()
+            setattr(record, attr, request.form[attr])
+        breakpoint()
         
-        response_dict = doctor.to_dict()
+        db.session.add(record)
+        db.session.commit()
 
-        response =make_response(
+        response_dict = record.to_dict()
+
+        response = make_response(
             response_dict,
             200
         )
+        return response
+    
+    def delete(self, id):
+        record = Doctor.query.filter(Doctor.id == id).first()
+
+        db.session.delete(record)
+        db.session.commit()
+
+        response_dict = {"message": "record successfully deleted"}
+        
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
         
 class CreateAppointment(Resource):
     def post(self):

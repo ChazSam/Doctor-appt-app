@@ -22,7 +22,7 @@ function AddDoctor(){
             tagline:doctor.tagline
         })
     }
-
+    // console.log(selectDoctor.id)
     const formSchema = yup.object().shape({
         name: yup.string().required("Please enter an Doctor name"),
         image_url: yup.string(),
@@ -44,7 +44,8 @@ function AddDoctor(){
 
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch(`/edit-doctor/${selectDoctor.id}`, {
+            console.log(values)
+            fetch(`/doctor/${selectDoctor.id}`, {
                 method:"PATCH",
                 headers:{
                     "Content-Type": "application/json",
@@ -60,6 +61,8 @@ function AddDoctor(){
                 }})
         }
     })
+
+    console.log(formik.values)
     
     return (
         <>
