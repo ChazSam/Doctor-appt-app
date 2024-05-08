@@ -36,7 +36,22 @@ class UserDetails(Resource):
         #     return {"error":"unauthorized"}, 
         user = User.query.filter(User.id == id).first()
         return user.to_dict(), 200
-            
+    
+    def delete(self, id):
+           
+        record = User.query.filter(User.id == id).first()
+
+        db.session.delete(record)
+        db.session.commit()
+
+        response_dict = {"message": "record successfully deleted"}
+        
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
 
 class Signup(Resource):
 
@@ -152,7 +167,28 @@ class CreateAppointment(Resource):
 
         except ValueError as exc:
             return {'message': exc}, 422
+
+class AppointmentDetails(Resource):
     
+    
+    def patch(self, id):
+        pass
+
+    def delete(self, id):
+
+        record = Appointment.query.filter(Appointment.id == id).first()
+
+        db.session.delete(record)
+        db.session.commit()
+
+        response_dict = {"message": "record successfully deleted"}
+        
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
 
 class AddDoctor(Resource):
     def post(self):
@@ -174,15 +210,16 @@ class AddDoctor(Resource):
             return {"Error": exc}, 422
 
 api.add_resource(Signup, '/signup', endpoint='signup')
-api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(GetUsers, '/users', endpoint="users")
 api.add_resource(UserDetails, '/account/<int:id>')
 api.add_resource(DoctorDetails, '/doctor/<int:id>')
-api.add_resource(CreateAppointment, '/create', endpoint="create")
+api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
 api.add_resource(AddDoctor, '/add-doctor', endpoint='add-doctor')
+api.add_resource(CreateAppointment, '/create', endpoint="create")
+api.add_resource(AppointmentDetails, '/appointment/<int:id>')
 
 
 @app.route('/')

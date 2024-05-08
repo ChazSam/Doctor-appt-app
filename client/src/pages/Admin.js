@@ -22,6 +22,7 @@ function Admin(){
             }
         });
     }
+    
     console.log(selectDoctor)
 
     function handleLogout() {
