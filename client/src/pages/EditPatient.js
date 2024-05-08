@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 
 function Signup ({onlogin}) {
-    const {onLogin} = useOutletContext()
+    const {user, onLogin} = useOutletContext()
     const [refreshPage, setRefreshPage] = useState(false)
     const [errors, setErrors] = useState([])
     const [monthYear, setMonthYear] =  useState({
@@ -15,15 +15,6 @@ function Signup ({onlogin}) {
     })
     const [signUp, setSignUp] = useState([])
 
-
-    // useEffect(() => {
-    //     fetch("/signup")
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         setSignUp(data);
-    //         console.log(data);
-    //       });
-    //   }, [refreshPage]);
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
@@ -43,15 +34,15 @@ function Signup ({onlogin}) {
     const formik = useFormik({
 
         initialValues:{
-            username:"",
+            username:user.username,
             password:"",
-            first_name:"",
-            last_name:"",
+            first_name:user.first_name,
+            last_name:user.last_name,
             birthdate:'2000-1-1' ,
-            sex:"",
-            bio:"",
+            sex:user.sex,
+            bio:user.bio,
         },
-        // `${monthYear.month}-${monthYear.day}-${monthYear.year}`
+        
         validationSchema: formSchema,
         onSubmit: (values) => {
             fetch("signup", {
@@ -105,12 +96,11 @@ function Signup ({onlogin}) {
         })
     }
 
-    
     const dayInMonth = checkLeapYear(monthYear.month, monthYear.year)
-    console.log()
+    
     return(
         <div>
-            <h1>Signup page</h1>
+            <h1>Account Information</h1>
                 <form onSubmit={formik.handleSubmit}>
 
                     <div>
