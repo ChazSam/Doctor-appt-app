@@ -5,7 +5,7 @@ import {useState} from 'react'
 function Admin(){
     const {onLogin, setIsLoggedIn, listDoctors, setListDoctors} = useOutletContext()
     const navigate = useNavigate()
-    const [selectDoctor, setSelectDoctor]=useState()
+    const [selectDoctor, setSelectDoctor]= useState()
 
     function handleDelete(e){
         console.log(e.target.value)

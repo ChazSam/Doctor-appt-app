@@ -9,6 +9,8 @@ import App from "./components/App";
 import AddDoctor from "./pages/AddDoctor"
 import EditDoctor from "./pages/EditDoctor"
 import Admin from "./pages/Admin"
+import EditPatient from './pages/EditPatient'
+import EditAppointment from './pages/EditAppointment'
 
 const routes = [
 
@@ -45,6 +47,16 @@ const routes = [
             {
                 path: "/account",
                 element: <Account />,
+            
+            },
+            {
+                path: "/account/settings",
+                element: <EditPatient />,
+            
+            },
+            {
+                path: "/account/appointment",
+                element: <EditAppointment />,
             
             },
             {

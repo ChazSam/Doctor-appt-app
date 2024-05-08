@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { Outlet, useOutletContext, Link } from "react-router-dom"
+import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 
 function Account(){
     const {user, onLogin, setIsLoggedIn} = useOutletContext()
+    const navigate = useNavigate()
     // const [userDetails, setUserDetails] = useState("")
 
 
@@ -23,6 +24,7 @@ function Account(){
           method: "DELETE",
         }).then(() => onLogin(""))
           .then(setIsLoggedIn(false))
+          .then(navigate('/'))
       }
 
     console.log(user)
@@ -51,11 +53,14 @@ function Account(){
                             ))}
                         </ul>
 
-                    <button id="edit-appointment">Change An Appointment</button>
+                    <button id="edit-account" onClick={()=>navigate("/account/settings")}>Change Account Details</button>
                         <p></p>
-                    <Link to='/'>
+                        
+                    <button id="edit-appointment" onClick={()=>navigate("/account/appointment")}>Change An Appointment</button>
+                        <p></p>
+                    
                         <button id='logout' onClick={handleLogout} >Log out</button>
-                    </Link>
+                    
                         <p></p>
                     <button id='delete-account'>Delete Account</button>
                     
