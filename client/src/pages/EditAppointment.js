@@ -1,10 +1,17 @@
 import React, {useState} from "react";
 import { Outlet, useOutletContext } from "react-router-dom"
 import App from "../components/App";
+import {Formik, useFormik} from 'formik'
+import * as yup from 'yup';
+import 'react-calendar/dist/Calendar.css';
+import Calendar from 'react-calendar'
 
 function EditAppointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
     const [selectAppt, setSelectAppt] = useState()
+    const [calendar, setCalendar] = useState(new Date())
+    const [errors, setErrors] = useState([])
+    const [isChangeSelcted, SetIsChangeSelected] = useState(false)
 
     console.log(selectAppt)
 
@@ -30,7 +37,38 @@ function EditAppointment(){
             });
         }
     
-
+        const formSchema = yup.object().shape({
+            user_id: yup.number().required("Please log in"),
+            doctor_id: yup.string().required("Please select a doctor"),
+            date: yup.date().required("Select a doctor and date for an appointment")
+          });
+    
+        const formik = useFormik({
+    
+            initialValues:{
+                user_id:user.id,
+                doctor_id:"",
+                date:null
+            },
+    
+            validationSchema: formSchema,
+            onSubmit: (values) => {
+                fetch("/create", {
+                    method:"PATCH",
+                    headers:{
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(values, null, 2)
+                }) .then((r) => {
+     
+                    if(r.ok){
+                        r.json().then((user) => onLogin(user))
+    
+                    }else{
+                        r.json().then((err) => setErrors(err.error))
+                    }})
+            }
+        })
     return(
         <>
         
@@ -42,10 +80,30 @@ function EditAppointment(){
                 ))}
             </select>
             <p></p>
-                <button>Change Appointment</button>
+                <button onClick={()=>SetIsChangeSelected(true)}>Change Appointment</button>
                 <p></p>
+            {!isChangeSelcted &&(
                 <button onClick={handleDelete}>Delete Appointment</button>
-            
+            )}
+            {isChangeSelcted &&(
+
+                <form onSubmit={formik.handleSubmit}>
+                <div>
+                    <h2>Select a Doctor</h2>
+                    <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
+                        <option id='' value="">--</option>
+                        {listDoctors.map((doctor)=> (
+                            
+                            <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
+                        ))}
+                    </select>
+                    <p></p>
+                    <Calendar value={calendar} onChange={(date) => formik.setFieldValue('date', date)}></Calendar>
+                </div>
+                <p></p>
+                <button type='Submit'>Change Appointment</button>
+            </form>
+            )}
         </>
     )
 }
