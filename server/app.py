@@ -14,6 +14,17 @@ import datetime
 
 from config import app, db, api
 
+class Login(Resource):
+    def post(self):
+        
+        user = User.query.filter(User.username == request.get_json()['username']).first()
+        
+        if not user:
+            return {'error': 'Unauthorized'}, 401
+        
+        session['user_id'] = user.id
+        return user.to_dict()
+        
 # @app.before_request
 class CheckSession(Resource):
     def get(self):
@@ -32,29 +43,42 @@ class GetUsers(Resource):
 
 class UserDetails(Resource):
     def get(self, id):
-        # if not session["user_id"]:
-        #     return {"error":"unauthorized"}, 
+        if not session["user_id"]:
+            return {"error":"401: unauthorized"}, 401
         user = User.query.filter(User.id == id).first()
         return user.to_dict(), 200
     
     def patch(self, id):
-        print(id)
-        breakpoint()
-        user = User.query.filter_by(id=id).first()
-        for attr in request.session:
-            setattr(user, attr, request.session[attr])
+        # user = User.query.filter_by(id=id).first()
 
-        db.session.add(user)
+        # for attr in request.form:
+        #     setattr(user, attr, request.form[attr])
+
+        # db.session.add(user)
+        # db.session.commit()
+
+        # response_dict = {"message": "User successfully Updated"}
+        
+        # response = make_response(
+        #     response_dict,
+        #     200
+        # )
+
+        # return response
+        record = User.query.get(id)
+        if not record:
+            return {"error": "Appointment not found"}, 404
+
+        data = request.json
+        if 'date' in data:
+            data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%dT%H:%M:%S.%fZ')
+        for key, value in data.items():
+            setattr(record, key, value)
+
         db.session.commit()
 
-        response_dict = {"message": "User successfully Updated"}
-        
-        response = make_response(
-            response_dict,
-            200
-        )
-
-        return response
+        response_dict = record.to_dict()
+        return response_dict, 200
 
     def delete(self, id):
            
@@ -100,19 +124,6 @@ class Signup(Resource):
         except IntegrityError as exc:
             return {'message': exc}, 422
         
-
-class Login(Resource):
-    def post(self):
-        
-        user = User.query.filter(User.username == request.get_json()['username']).first()
-        
-        if not user:
-            return {'error': 'Unauthorized'}, 401
-        
-        session['user_id'] = user.id
-        return user.to_dict()
-
-
 class Logout(Resource):
     def delete(self): 
 
@@ -136,22 +147,36 @@ class DoctorDetails(Resource):
         return doctor, 200
     
     def patch(self, id):
-        record = Doctor.query.filter_by(id == id).first()
-        for attr in request.form:
-            setattr(record, attr, request.form[attr])
+    #     record = Doctor.query.filter(Doctor.id == id).first()
+    #     for attr in request.form:
+    #         setattr(record, attr, request.form[attr])
 
-        breakpoint()
+    #     breakpoint()
         
-        db.session.add(record)
+    #     db.session.add(record)
+    #     db.session.commit()
+
+    #     response_dict = record.to_dict()
+
+    #     response = make_response(
+    #         response_dict,
+    #         200
+    #     )
+    #     return response
+        record = Doctor.query.get(id)
+        if not record:
+            return {"error": "Doctor not found"}, 404
+
+        data = request.json
+        # if 'date' in data:
+        #     data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%dT%H:%M:%S.%fZ')
+        for key, value in data.items():
+            setattr(record, key, value)
+
         db.session.commit()
 
         response_dict = record.to_dict()
-
-        response = make_response(
-            response_dict,
-            200
-        )
-        return response
+        return response_dict, 200
     
     def delete(self, id):
         record = Doctor.query.filter(Doctor.id == id).first()
@@ -171,7 +196,7 @@ class DoctorDetails(Resource):
 class CreateAppointment(Resource):
     def post(self):
         date = request.get_json().get("date"),
-        date_string=datetime.datetime.strptime(date[0], '%Y-%m-%dT%H:%M:%S.%fZ') 
+        date_string=datetime.datetime.strptime(date[0], '%Y-%m-%d') 
         
         appointment = Appointment(
             user_id = request.get_json().get("user_id"),
@@ -191,24 +216,38 @@ class CreateAppointment(Resource):
 class AppointmentDetails(Resource):
     
     def patch(self, id):
-        print(id)
-        record = Appointment.query.filter(Appointment.id == id).first()
-        # breakpoint()
-        for attr in request.form:
-            setattr(record, attr, request.form[attr])
+        # # print(id)
+        # record = Appointment.query.filter(Appointment.id == id).first()
+        # # breakpoint()
+        # for attr in request.form:
+        #     setattr(record, attr, request.form[attr])
             
         
-        db.session.add(record)
+        # db.session.add(record)
+        # db.session.commit()
+
+        # response_dict = record.to_dict()
+
+        # response = make_response(
+        #     response_dict,
+        #     200
+        # )
+        # return response
+        record = Appointment.query.get(id)
+        if not record:
+            return {"error": "Appointment not found"}, 404
+
+        data = request.json
+        if 'date' in data:
+            data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%dT%H:%M:%S.%fZ')
+        for key, value in data.items():
+            setattr(record, key, value)
+
         db.session.commit()
 
         response_dict = record.to_dict()
-
-        response = make_response(
-            response_dict,
-            200
-        )
-        return response
-
+        return response_dict, 200
+    
     def delete(self, id):
 
         record = Appointment.query.filter(Appointment.id == id).first()

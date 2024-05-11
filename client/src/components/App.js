@@ -22,7 +22,7 @@ function App() {
       fetch("/check_session").then((r) => {
         if (r.ok) {
           r.json().then((user) => setUser(user));
-          console.log(user)
+          setIsLoggedIn(true)
         }
       });
     }, []);
@@ -33,7 +33,7 @@ function App() {
       <header>
         <NavBar user={user} setUser={setUser} isLoggedIn={isLoggedIn}/>
       </header>
-      <Outlet context={{listDoctors,setListDoctors, user:user, onLogin: setUser, setIsLoggedIn}} />
+      <Outlet context={{listDoctors,setListDoctors, user:user, onLogin: setUser, isLoggedIn, setIsLoggedIn}} />
       
     </div>
 
