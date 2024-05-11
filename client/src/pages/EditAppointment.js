@@ -13,7 +13,7 @@ function EditAppointment(){
     const [errors, setErrors] = useState([])
     const [isChangeSelcted, SetIsChangeSelected] = useState(false)
 
-    console.log(selectAppt)
+    
 
     function handleDelete(e){
         
@@ -39,7 +39,7 @@ function EditAppointment(){
     
         const formSchema = yup.object().shape({
             user_id: yup.number().required("Please log in"),
-            doctor_id: yup.string().required("Please select a doctor"),
+            doctor_id: yup.number().required("Please select a doctor"),
             date: yup.date().required("Select a doctor and date for an appointment")
           });
     
@@ -47,13 +47,13 @@ function EditAppointment(){
     
             initialValues:{
                 user_id:user.id,
-                doctor_id:"",
+                doctor_id:null,
                 date:null
             },
     
             validationSchema: formSchema,
             onSubmit: (values) => {
-                fetch("/create", {
+                fetch(`/appointment/${selectAppt}`, {
                     method:"PATCH",
                     headers:{
                         "Content-Type": "application/json",
@@ -62,13 +62,14 @@ function EditAppointment(){
                 }) .then((r) => {
      
                     if(r.ok){
-                        r.json().then((user) => onLogin(user))
+                        r.json().then((user) => console.log(user))
     
                     }else{
-                        r.json().then((err) => setErrors(err.error))
+                        r.json().then((err) => console.log(err.error))
                     }})
             }
         })
+        console.log(formik.values)
     return(
         <>
         

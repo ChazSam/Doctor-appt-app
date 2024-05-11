@@ -37,6 +37,25 @@ class UserDetails(Resource):
         user = User.query.filter(User.id == id).first()
         return user.to_dict(), 200
     
+    def patch(self, id):
+        print(id)
+        breakpoint()
+        user = User.query.filter_by(id=id).first()
+        for attr in request.session:
+            setattr(user, attr, request.session[attr])
+
+        db.session.add(user)
+        db.session.commit()
+
+        response_dict = {"message": "User successfully Updated"}
+        
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
+
     def delete(self, id):
            
         record = User.query.filter(User.id == id).first()
@@ -117,9 +136,10 @@ class DoctorDetails(Resource):
         return doctor, 200
     
     def patch(self, id):
-        record = Doctor.query.filter(Doctor.id == id).first()
+        record = Doctor.query.filter_by(id == id).first()
         for attr in request.form:
             setattr(record, attr, request.form[attr])
+
         breakpoint()
         
         db.session.add(record)
@@ -170,9 +190,24 @@ class CreateAppointment(Resource):
 
 class AppointmentDetails(Resource):
     
-    
     def patch(self, id):
-        pass
+        print(id)
+        record = Appointment.query.filter(Appointment.id == id).first()
+        # breakpoint()
+        for attr in request.form:
+            setattr(record, attr, request.form[attr])
+            
+        
+        db.session.add(record)
+        db.session.commit()
+
+        response_dict = record.to_dict()
+
+        response = make_response(
+            response_dict,
+            200
+        )
+        return response
 
     def delete(self, id):
 

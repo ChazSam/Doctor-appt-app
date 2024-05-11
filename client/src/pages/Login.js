@@ -12,7 +12,7 @@ function Login(){
     // console.log(user)
 
     const formSchema = yup.object().shape({
-        // username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
+        username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
         // password: yup.string().required("Password must be at least 8 characters long").min(8),
       });
    

@@ -45,8 +45,8 @@ function Signup ({onlogin}) {
         
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("signup", {
-                method:"POST",
+            fetch(`/account/${user.id}`, {
+                method:"PATCH",
                 headers:{
                     "Content-Type": "application/json",
                 },

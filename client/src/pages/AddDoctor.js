@@ -37,7 +37,9 @@ function AddDoctor(){
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((doc) => setListDoctors(doc))
+                    r.json().then((doc) => setListDoctors((prevDocs)=>[...prevDocs, doc]
+                        
+                    )) 
 
                 }else{
                     r.json().then((err) => console.log(err.error))

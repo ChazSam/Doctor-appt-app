@@ -36,7 +36,15 @@ function Appointment(){
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((user) => onLogin(user))
+                    r.json().then((appt) => {
+          
+                        onLogin((prevUser) => {
+                            return {
+                                ...prevUser,
+                                appointments: [...prevUser.appointments, appt]
+                            };
+                        });
+                    });
 
                 }else{
                     r.json().then((err) => setErrors(err.error))
@@ -44,7 +52,7 @@ function Appointment(){
         }
     })
 
-    console.log(formik.values)
+    // console.log(formik.values)
 
     return(
         <>
