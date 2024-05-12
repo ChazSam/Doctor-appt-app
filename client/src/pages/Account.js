@@ -27,7 +27,16 @@ function Account(){
           .then(navigate('/'))
       }
 
-    console.log(user)
+    function handleDelete(){
+        if(window.confirm("Are you sure you want to delete your account?")){
+            fetch(`/account/${user.id}`, {
+                method: "DELETE",
+              }).then(() => onLogin(""))
+                .then(setIsLoggedIn(false))
+                .then(navigate('/'))
+        }
+    }
+    
     
     return (
         <>           
@@ -62,7 +71,7 @@ function Account(){
                         <button id='logout' onClick={handleLogout} >Log out</button>
                     
                         <p></p>
-                    <button id='delete-account'>Delete Account</button>
+                    <button id='delete-account' onClick={handleDelete}>Delete Account</button>
                     
                 </div>
              )}

@@ -80,6 +80,7 @@ class UserDetails(Resource):
         response_dict = record.to_dict()
         return response_dict, 200
 
+
     def delete(self, id):
            
         record = User.query.filter(User.id == id).first()

@@ -7,8 +7,7 @@ import * as yup from 'yup';
 function Signup () {
     const {onLogin, setIsLoggedIn} = useOutletContext()
     const [refreshPage, setRefreshPage] = useState(false)
-    const [errors, setErrors] = useState([])
-    const [monthYear, setMonthYear] =  useState({
+    const [birthday, setbirthday] =  useState({
         day:"",
         month:"",
         year:""
@@ -26,7 +25,7 @@ function Signup () {
     //       });
     //   }, [refreshPage]);
 
-    console.log(new Date(monthYear.year, monthYear.month, monthYear.date))
+    console.log(new Date(birthday.year, birthday.month, birthday.date))
     
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
@@ -59,7 +58,7 @@ function Signup () {
         validationSchema: formSchema,
         onSubmit: (values) => {
 
-            values.birthdate =`${monthYear.year}-${monthYear.month}-${monthYear.day}`
+            values.birthdate =`${birthday.year}-${birthday.month}-${birthday.day}`
 
             fetch("signup", {
                 method:"POST",
@@ -107,15 +106,15 @@ function Signup () {
     }
     
     function handleChange(e){
-        setMonthYear({
-            ...monthYear,
+        setbirthday({
+            ...birthday,
             [e.target.name] : e.target.value
         })
 
     }
 
     
-    const dayInMonth = checkLeapYear(monthYear.month, monthYear.year)
+    const dayInMonth = checkLeapYear(birthday.month, birthday.year)
     
     return(
         <div>
@@ -140,7 +139,7 @@ function Signup () {
                             <p style={{ color: "red" }}> {formik.errors.last_name}</p>
 
                         <p>Birthday</p>
-                            <select name="month" value={monthYear.month} onChange={handleChange}>
+                            <select name="month" value={birthday.month} onChange={handleChange}>
                                 <option value="">---</option>
                                 <option id="Jan" value='01' >Jan</option>
                                 <option id="Feb" value="02" >Feb</option>
@@ -157,12 +156,12 @@ function Signup () {
     
                             </select>
                         
-                        <select name='day' value={monthYear.day} onChange={handleChange}>
+                        <select name='day' value={birthday.day} onChange={handleChange}>
                             <option value="">---</option>
                             {dayInMonth}
                         </select>
                         
-                        <select name="year" value={monthYear.year} onChange={handleChange}>
+                        <select name="year" value={birthday.year} onChange={handleChange}>
                             <option value="">---</option>
                             {years.map((year)=>( 
                                 <option key={year}  value={year}>{year}</option>
