@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import {Formik, useFormik} from 'formik'
-import { Outlet, useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 import * as yup from 'yup';
 
 
-function Signup ({onlogin}) {
-    const {onLogin} = useOutletContext()
+function Signup () {
+    const {onLogin, setIsLoggedIn} = useOutletContext()
     const [refreshPage, setRefreshPage] = useState(false)
     const [errors, setErrors] = useState([])
     const [monthYear, setMonthYear] =  useState({
@@ -14,6 +14,7 @@ function Signup ({onlogin}) {
         year:""
     })
     const [signUp, setSignUp] = useState([])
+    const navigate = useNavigate()
 
 
     // useEffect(() => {
@@ -25,19 +26,22 @@ function Signup ({onlogin}) {
     //       });
     //   }, [refreshPage]);
 
+    console.log(new Date(monthYear.year, monthYear.month, monthYear.date))
+    
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
         password: yup.string().required("Password must be at least 8 characters long").min(8),
         first_name: yup.string().required("Must enter a name"),
         last_name: yup.string().required("Must enter a name"),
-        // birthdate: yup
+        birthdate: yup
+        .date()
+        .required
         //   .number()
         //   .positive()
         //   .integer()
         //   .required("Must enter age")
         //   .typeError("Please enter an Integer")
         //   .max(125),
-        // bio : yup.string().required("Must enter a reason")
       });
 
     const formik = useFormik({
@@ -47,13 +51,16 @@ function Signup ({onlogin}) {
             password:"",
             first_name:"",
             last_name:"",
-            birthdate:'2000-1-1' ,
+            birthdate:"",
             sex:"",
             bio:"",
         },
-        // `${monthYear.month}-${monthYear.day}-${monthYear.year}`
+        
         validationSchema: formSchema,
         onSubmit: (values) => {
+
+            values.birthdate =`${monthYear.year}-${monthYear.month}-${monthYear.day}`
+
             fetch("signup", {
                 method:"POST",
                 headers:{
@@ -64,6 +71,8 @@ function Signup ({onlogin}) {
  
                 if(r.ok){
                     r.json().then((user) => onLogin(user))
+                    .then(setIsLoggedIn(true))
+                    .then(navigate('/'))
 
                 }else{
                     r.json().then((err) => console.log(err.error))
@@ -79,10 +88,10 @@ function Signup ({onlogin}) {
         let m = parseInt(month)
         let y = parseInt(year)
 
-        if (m === 1 && ((y % 4 === 0 && y % 100 !== 0) || y === 2000)){
+        if (m === 2 && ((y % 4 === 0 && y % 100 !== 0) || y === 2000)){
             x = 29
         }  
-        else if( m === 1){
+        else if( m === 2){
             x = 28
         }     
         else if( m === 3 || m === 5 || m === 10){
@@ -96,18 +105,18 @@ function Signup ({onlogin}) {
             )
         )
     }
-
     
     function handleChange(e){
         setMonthYear({
             ...monthYear,
             [e.target.name] : e.target.value
         })
+
     }
 
     
     const dayInMonth = checkLeapYear(monthYear.month, monthYear.year)
-    console.log()
+    
     return(
         <div>
             <h1>Signup page</h1>
@@ -133,18 +142,18 @@ function Signup ({onlogin}) {
                         <p>Birthday</p>
                             <select name="month" value={monthYear.month} onChange={handleChange}>
                                 <option value="">---</option>
-                                <option id="Jan" value='0' >Jan</option>
-                                <option id="Feb" value="1" >Feb</option>
-                                <option id="Mar" value="2" >Mar</option>
-                                <option id="Apr" value="3" >Apr</option>
-                                <option id="May" value="4" >May</option>
-                                <option id="Jun" value="5" >Jun</option>
-                                <option id="Jul" value="6" >Jul</option>
-                                <option id="Aug" value="7" >Aug</option>
-                                <option id="Sep" value="8" >Sep</option>
-                                <option id="Oct" value="9" >Oct</option>
-                                <option id="Nov" value="10" >Nov</option>
-                                <option id="Dec" value="11" >Dec</option>
+                                <option id="Jan" value='01' >Jan</option>
+                                <option id="Feb" value="02" >Feb</option>
+                                <option id="Mar" value="03" >Mar</option>
+                                <option id="Apr" value="04" >Apr</option>
+                                <option id="May" value="05" >May</option>
+                                <option id="Jun" value="06" >Jun</option>
+                                <option id="Jul" value="07" >Jul</option>
+                                <option id="Aug" value="08" >Aug</option>
+                                <option id="Sep" value="09" >Sep</option>
+                                <option id="Oct" value="10" >Oct</option>
+                                <option id="Nov" value="11" >Nov</option>
+                                <option id="Dec" value="12" >Dec</option>
     
                             </select>
                         
@@ -170,7 +179,7 @@ function Signup ({onlogin}) {
                             </select>
                             <p style={{ color: "red" }}> {formik.errors.sex}</p>
 
-                        <p>The reason you need to see a doctor</p>
+                        <p>The reason you need to see a doctor (optional)</p>
                             <input id="bio" value={formik.values.bio} onChange={formik.handleChange}/>
                             <p style={{ color: "red" }}> {formik.errors.bio}</p>
 
