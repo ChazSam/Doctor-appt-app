@@ -5,19 +5,6 @@ import {Formik, useFormik} from 'formik'
 function Account(){
     const {user, onLogin, setIsLoggedIn} = useOutletContext()
     const navigate = useNavigate()
-    // const [userDetails, setUserDetails] = useState("")
-
-
-//   useEffect(() => {
-//         fetch(`/account/${user.id}`)
-//           .then((res) => res.json())
-//           .then((data) => {
-//             setUserDetails(data);
-//             console.log(data);
-//           })
-//           .catch((error) => {
-//             console.error('Error fetching user details:', error)});
-//       }, []);
 
     function handleLogout() {
         fetch("/logout", {

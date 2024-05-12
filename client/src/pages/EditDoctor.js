@@ -54,7 +54,7 @@ function AddDoctor(){
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((doc) => console.log(doc))
+                    r.json().then((doc) => console.log(doc)) //update doctor list
 
                 }else{
                     r.json().then((err) => console.log(err.error))

@@ -3,7 +3,7 @@ import { Outlet, useOutletContext, Link, useNavigate } from "react-router-dom"
 import {useState} from 'react'
 
 function Admin(){
-    const {onLogin, setIsLoggedIn, listDoctors, setListDoctors} = useOutletContext()
+    const {user, onLogin, setIsLoggedIn, listDoctors, setListDoctors} = useOutletContext()
     const navigate = useNavigate()
     const [selectDoctor, setSelectDoctor]= useState()
 
@@ -36,7 +36,15 @@ function Admin(){
     return (
         <div>
             <h1>Admin Page</h1>
-        
+            {!user.id ===1 &&(
+                <div>
+                    <h2>Unauthorized</h2>
+                </div>
+            )}
+            {user.id===1&&(
+
+                <div>
+
                 <button onClick={()=>navigate('/admin/add-doctor')}>Add Doctor</button>
     
          
@@ -51,7 +59,9 @@ function Admin(){
                 <button id="delete" onClick={handleDelete}>Delete Doctor</button>  
 
                 <button onClick={handleLogout}>Log Out</button>  
+            </div>
             
+            )}
         </div>
     )
 }

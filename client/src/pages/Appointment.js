@@ -10,13 +10,13 @@ function Appointment(){
     const [calendar, setCalendar] = useState(new Date())
     const [errors, setErrors] = useState([])
     
-    
+
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
         doctor_id: yup.string().required("Please select a doctor"),
         date: yup.date().required("Select a doctor and date for an appointment")
       });
-
+    // console.log(calendar)
     const formik = useFormik({
 
         initialValues:{
@@ -26,7 +26,13 @@ function Appointment(){
         },
 
         validationSchema: formSchema,
+
         onSubmit: (values) => {
+            const selectedDate = new Date(calendar);
+            selectedDate.setHours(0, 0, 0, 0);
+            values.date = selectedDate.toISOString().split('T')[0]
+
+            debugger
             fetch("/create", {
                 method:"POST",
                 headers:{
@@ -52,7 +58,7 @@ function Appointment(){
         }
     })
 
-    // console.log(formik.values)
+//    console.log(formik.values)
 
     return(
         <>
@@ -76,7 +82,10 @@ function Appointment(){
                         ))}
                     </select>
                     <p></p>
-                    <Calendar value={calendar} onChange={(date) => formik.setFieldValue('date', date)}></Calendar>
+                    <Calendar value={calendar} 
+                    // onChange={(date) => formik.setFieldValue('date', date)}
+                    onChange={setCalendar}
+                    ></Calendar>
                 </div>
                 <p></p>
                 <button type='Submit'>Add Appointment</button>

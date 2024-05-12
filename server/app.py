@@ -214,6 +214,7 @@ class CreateAppointment(Resource):
         except ValueError as exc:
             return {'message': exc}, 422
 
+
 class AppointmentDetails(Resource):
     
     def patch(self, id):
@@ -240,7 +241,7 @@ class AppointmentDetails(Resource):
 
         data = request.json
         if 'date' in data:
-            data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%dT%H:%M:%S.%fZ')
+            data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%d')
         for key, value in data.items():
             setattr(record, key, value)
 
