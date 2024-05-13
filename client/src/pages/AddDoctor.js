@@ -2,11 +2,12 @@ import React from "react";
 import  {useState} from "react";
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
-import { Outlet, useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 
 function AddDoctor(){
     const [errors, setErrors] = useState([])
     const {listDoctors, setListDoctors} = useOutletContext()
+    const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
         name: yup.string().required("Please enter an Doctor name"),
@@ -38,8 +39,8 @@ function AddDoctor(){
  
                 if(r.ok){
                     r.json().then((doc) => setListDoctors((prevDocs)=>[...prevDocs, doc]
-                        
-                    )) 
+                        )) 
+                        .then(navigate('/doctors'))
 
                 }else{
                     r.json().then((err) => console.log(err.error))

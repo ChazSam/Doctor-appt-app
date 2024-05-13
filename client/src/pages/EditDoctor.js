@@ -54,7 +54,15 @@ function AddDoctor(){
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((doc) => console.log(doc)) //update doctor list
+                    r.json().then((updatedDoctor)=> {
+
+                        setListDoctors((prevDocs) => {
+                            return prevDocs.map((doc)=>{
+                                (doc.id === updatedDoctor.id) ? updatedDoctor : doc
+                                })
+                            })
+                    })
+                        
 
                 }else{
                     r.json().then((err) => console.log(err.error))
@@ -75,7 +83,7 @@ function AddDoctor(){
                                 <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
                             ))}
                         </select>
-            {/* <button onClick={handlePatch}>Edit doctor</button> */}
+     
         <p></p>
 
         <form onSubmit={formik.handleSubmit}> 
@@ -103,9 +111,3 @@ function AddDoctor(){
 
 export default AddDoctor
 
-// id = db.Column(db.Integer, primary_key =True)
-// name = db.Column(db.Integer, unique=True, nullable=False)
-// image_url = db.Column(db.String)
-// department = db.Column(db.String, nullable=False)
-// bio = db.Column(db.String)
-// tagline = db.Column(db.String)
