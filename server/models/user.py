@@ -23,6 +23,7 @@ class User(db.Model, SerializerMixin):
     appointments = db.relationship('Appointment', back_populates="user", cascade = 'all, delete-orphan')
 
     doctors = association_proxy('appointments', 'doctor')
+    
     @hybrid_property
     def password_hash(self):
         raise AttributeError ("No permission to access data")

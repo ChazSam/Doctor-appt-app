@@ -22,7 +22,7 @@ function AddDoctor(){
             tagline:doctor.tagline
         })
     }
-    // console.log(selectDoctor.id)
+   
     const formSchema = yup.object().shape({
         name: yup.string().required("Please enter an Doctor name"),
         image_url: yup.string(),
@@ -55,22 +55,23 @@ function AddDoctor(){
  
                 if(r.ok){
                     r.json().then((updatedDoctor)=> {
-
-                        setListDoctors((prevDocs) => {
-                            return prevDocs.map((doc)=>{
-                                (doc.id === updatedDoctor.id) ? updatedDoctor : doc
-                                })
-                            })
-                    })
-                        
-
+                        setListDoctors((prevDoctors) => {
+                            return prevDoctors.map((doctor) => {
+                                if (doctor.id === updatedDoctor.id) {
+                                    return updatedDoctor
+                                } else {
+                                    return doctor
+                                }
+                            });
+                        });
+                    })   
                 }else{
                     r.json().then((err) => console.log(err.error))
                 }})
         }
     })
 
-    console.log(formik.values)
+ 
     
     return (
         <>

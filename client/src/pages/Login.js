@@ -39,7 +39,8 @@ function Login(){
                     .then(setIsLoggedIn(true))
                     .then(navigate('/'))
                 }else{
-                    r.json().then((err) => setErrors(err.error))
+                    r.json().then((err) => console.log(err.error))
+                    .then(navigate('/login'))
                 }})
             
         }

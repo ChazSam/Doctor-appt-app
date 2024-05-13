@@ -40,7 +40,7 @@ function Account(){
                     <h2>Name: {user.username}</h2>
                     <h3>Upcoming Appointments:</h3>
                     <ul>
-                            {user.appointments.map((appointment, index) => (
+                            {user?.appointments.map((appointment, index) => (
                                 <li key={index}>
                                     <strong>Doctor:</strong> {appointment.doctor.name}<br />
                                     <strong>Date:</strong> {appointment.date}<br />

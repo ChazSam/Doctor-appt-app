@@ -4,6 +4,7 @@
 from flask import Flask, request, session, jsonify, make_response
 from flask_restful import Resource
 from flask_migrate import Migrate
+from sqlalchemy_serializer import SerializerMixin
 
 # Remote library imports
 from models.user import User
@@ -14,25 +15,35 @@ import datetime
 
 from config import app, db, api
 
-class Login(Resource):
-    def post(self):
-        
-        user = User.query.filter(User.username == request.get_json()['username']).first()
-        
-        if not user:
-            return {'error': 'Unauthorized'}, 401
-        
-        session['user_id'] = user.id
-        return user.to_dict()
-        
 # @app.before_request
-class CheckSession(Resource):
+class CheckSession(Resource, SerializerMixin):
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
-            return user.to_dict(), 200
+            
+            return {"message" : "success "}, user.to_dict(), 200
         else:
             return {'message': '401: Not Authorized'}, 401
+        
+class Login(Resource):
+    def post(self):
+          
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        user = User.query.filter_by(username = username).first()
+        print(username, password)
+ 
+        if not user:
+            return {'error': 'Unauthorized'}, 401
+        
+        if user and user.authenticate(password): 
+            session['user_id'] = user.id
+            return user.to_dict(), 200
+        else:
+            return {"error": "Username or Password didn't match."}, 401
+        
+
         
 
 class GetUsers(Resource):
