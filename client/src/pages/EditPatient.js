@@ -4,10 +4,10 @@ import { Outlet, useOutletContext } from "react-router-dom"
 import * as yup from 'yup';
 
 
-function Signup ({onlogin}) {
+function Signup () {
     const {user, onLogin} = useOutletContext()
-    const [refreshPage, setRefreshPage] = useState(false)
-    const [errors, setErrors] = useState([])
+    // const [refreshPage, setRefreshPage] = useState(false)
+    // const [errors, setErrors] = useState([])
     const [monthYear, setMonthYear] =  useState({
         day:"",
         month:"",
@@ -21,7 +21,7 @@ function Signup ({onlogin}) {
         password: yup.string().required("Password must be at least 8 characters long").min(8),
         first_name: yup.string().required("Must enter a name"),
         last_name: yup.string().required("Must enter a name"),
-        // birthdate: yup
+        // birthdate: yup  // <- crashes formik for some reason
         //   .number()
         //   .positive()
         //   .integer()
@@ -38,7 +38,7 @@ function Signup ({onlogin}) {
             password:"",
             first_name:user.first_name,
             last_name:user.last_name,
-            birthdate:'2000-1-1' ,
+            birthdate:'' ,
             sex:user.sex,
             bio:user.bio,
         },
@@ -70,10 +70,10 @@ function Signup ({onlogin}) {
         let m = parseInt(month)
         let y = parseInt(year)
 
-        if (m === 1 && ((y % 4 === 0 && y % 100 !== 0) || y === 2000)){
+        if (m === 2 && ((y % 4 === 0 && y % 100 !== 0) || y === 2000)){
             x = 29
         }  
-        else if( m === 1){
+        else if( m === 2){
             x = 28
         }     
         else if( m === 3 || m === 5 || m === 10){

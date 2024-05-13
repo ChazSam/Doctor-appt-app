@@ -14,27 +14,13 @@ function Signup () {
     })
     const [signUp, setSignUp] = useState([])
     const navigate = useNavigate()
-
-
-    // useEffect(() => {
-    //     fetch("/signup")
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         setSignUp(data);
-    //         console.log(data);
-    //       });
-    //   }, [refreshPage]);
-
-    console.log(new Date(birthday.year, birthday.month, birthday.date))
     
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
         password: yup.string().required("Password must be at least 8 characters long").min(8),
         first_name: yup.string().required("Must enter a name"),
         last_name: yup.string().required("Must enter a name"),
-        birthdate: yup
-        .date()
-        .required
+        // birthdate: yup.date().required().format('YYYY-MM-DD'),
         //   .number()
         //   .positive()
         //   .integer()

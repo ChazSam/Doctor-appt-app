@@ -27,15 +27,16 @@ function EditAppointment(){
                      ...prevUser,
                     
                     appointments: prevUser.appointments.filter(
-                        (appt) => appt.id !== parseInt(selectAppt)
+                        (appt, index) => index !== parseInt(selectAppt)
                     )
-                    
                 }))
+                // debugger
                 setSelectAppt(null);
                 setIsChangeSelected(false);
+                navigate("/account")
             } else {
                 
-                console.error("Failed to delete doctor")
+                console.error("Failed to delete appointment")
             }
         });
     }

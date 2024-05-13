@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import Calendar from 'react-calendar'
-import { Outlet, useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext, useNavigate} from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 import 'react-calendar/dist/Calendar.css';
@@ -9,7 +9,7 @@ function Appointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
     const [calendar, setCalendar] = useState(new Date())
     const [errors, setErrors] = useState([])
-    
+    const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
@@ -32,7 +32,7 @@ function Appointment(){
             selectedDate.setHours(0, 0, 0, 0);
             values.date = selectedDate.toISOString().split('T')[0]
 
-            debugger
+            
             fetch("/create", {
                 method:"POST",
                 headers:{
@@ -48,9 +48,10 @@ function Appointment(){
                             return {
                                 ...prevUser,
                                 appointments: [...prevUser.appointments, appt]
-                            };
-                        });
-                    });
+                            }
+                        })
+                    })
+                    .then(navigate('/account'))
 
                 }else{
                     r.json().then((err) => setErrors(err.error))
@@ -58,7 +59,7 @@ function Appointment(){
         }
     })
 
-//    console.log(formik.values)
+    console.log(formik.values)
 
     return(
         <>
@@ -83,8 +84,8 @@ function Appointment(){
                     </select>
                     <p></p>
                     <Calendar value={calendar} 
-                    // onChange={(date) => formik.setFieldValue('date', date)}
-                    onChange={setCalendar}
+                     onChange={(date) => formik.setFieldValue('date', date)}
+                    // onChange={setCalendar}
                     ></Calendar>
                 </div>
                 <p></p>
