@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 
 function Appointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
-    const [calendar, setCalendar] = useState(new Date())
+    // const [calendar, setCalendar] = useState(new Date())
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
@@ -28,7 +28,7 @@ function Appointment(){
         validationSchema: formSchema,
 
         onSubmit: (values) => {
-            const selectedDate = new Date(calendar);
+            const selectedDate = new Date(formik.values.date);
             selectedDate.setHours(0, 0, 0, 0);
             values.date = selectedDate.toISOString().split('T')[0]
 
@@ -59,7 +59,7 @@ function Appointment(){
         }
     })
 
-    console.log(formik.values)
+    // console.log(formik.values)
 
     return(
         <>
@@ -83,10 +83,8 @@ function Appointment(){
                         ))}
                     </select>
                     <p></p>
-                    <Calendar value={calendar} 
-                     onChange={(date) => formik.setFieldValue('date', date)}
-                    // onChange={setCalendar}
-                    ></Calendar>
+                    <Calendar value={formik.values.date} 
+                     onChange={(date) => formik.setFieldValue('date', date)}></Calendar>
                 </div>
                 <p></p>
                 <button type='Submit'>Add Appointment</button>
