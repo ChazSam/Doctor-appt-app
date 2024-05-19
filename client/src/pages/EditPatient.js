@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 function Signup () {
     const { user, onLogin } = useOutletContext()
-    const [monthYear, setMonthYear] =  useState({
+    const [birthday, setBirthday] =  useState({
         day:"",
         month:"",
         year:""
@@ -41,7 +41,10 @@ function Signup () {
         },
         
         validationSchema: formSchema,
+
         onSubmit: (values) => {
+            values.birthdate =`${birthday.year}-${birthday.month}-${birthday.day}`
+
             fetch(`/account/${user.id}`, {
                 method:"PATCH",
                 headers:{
@@ -87,14 +90,14 @@ function Signup () {
 
     
     function handleChange(e){
-        setMonthYear({
-            ...monthYear,
+        setBirthday({
+            ...birthday,
             [e.target.name] : e.target.value
         })
     }
 
-    const dayInMonth = checkLeapYear(monthYear.month, monthYear.year)
-    
+    const dayInMonth = checkLeapYear(birthday.month, birthday.year)
+    console.log(birthday)
     return(
         <div>
             <h1>Account Information</h1>
@@ -118,7 +121,7 @@ function Signup () {
                             <p style={{ color: "red" }}> {formik.errors.last_name}</p>
 
                         <p>Birthday</p>
-                            <select name="month" value={monthYear.month} onChange={handleChange}>
+                            <select name="month" value={birthday.month} onChange={handleChange}>
                                 <option value="">---</option>
                                 <option id="Jan" value='0' >Jan</option>
                                 <option id="Feb" value="1" >Feb</option>
@@ -135,12 +138,12 @@ function Signup () {
     
                             </select>
                         
-                        <select name='day' value={monthYear.day} onChange={handleChange}>
+                        <select name='day' value={birthday.day} onChange={handleChange}>
                             <option value="">---</option>
                             {dayInMonth}
                         </select>
                         
-                        <select name="year" value={monthYear.year} onChange={handleChange}>
+                        <select name="year" value={birthday.year} onChange={handleChange}>
                             <option value="">---</option>
                             {years.map((year)=>( 
                                 <option key={year}  value={year}>{year}</option>

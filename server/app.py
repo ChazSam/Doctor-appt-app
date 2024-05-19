@@ -21,7 +21,7 @@ class CheckSession(Resource, SerializerMixin):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
             
-            return {"message" : "success "}, user.to_dict(), 200
+            return user.to_dict(), 200
         else:
             return {'message': '401: Not Authorized'}, 401
         
@@ -42,8 +42,6 @@ class Login(Resource):
             return user.to_dict(), 200
         else:
             return {"error": "Username or Password didn't match."}, 401
-        
-
         
 
 class GetUsers(Resource):
@@ -76,20 +74,30 @@ class UserDetails(Resource):
         # )
 
         # return response
+
+
         record = User.query.get(id)
         if not record:
             return {"error": "Appointment not found"}, 404
 
         data = request.json
-        if 'date' in data:
-            data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%dT%H:%M:%S.%fZ')
-        for key, value in data.items():
-            setattr(record, key, value)
+        
+        if 'birthdate' in data:
+            data['birthdate'] = datetime.datetime.strptime(data['birthdate'],'%Y-%m-%d')
 
-        db.session.commit()
+        
+        try:
+            for key, value in data.items():
+                setattr(record, key, value)
 
-        response_dict = record.to_dict()
-        return response_dict, 200
+            db.session.commit()
+
+            response_dict = record.to_dict()
+            return response_dict, 200
+        
+        except IntegrityError as exc:
+            return {"error": exc}, 422
+
 
 
     def delete(self, id):
@@ -156,6 +164,7 @@ class Call_Doctor(Resource):
 class DoctorDetails(Resource):
     def get(self, id):
         doctor = Doctor.query.filter_by(id=id).first().to_dict()
+      
         return doctor, 200
     
     def patch(self, id):

@@ -10,13 +10,12 @@ function EditAppointment(){
     const [selectAppt, setSelectAppt] = useState()
     const [calendar, setCalendar] = useState(new Date())
     const [isChangeSelcted, setIsChangeSelected] = useState(false)
-    const [appt, setAppt] = useState({})
     const navigate = useNavigate()
 
     
     function handleDelete(e){
         
-        console.log(e.target.value)
+    
         fetch(`/appointment/${user.appointments[selectAppt].id}`, {
             method: "DELETE"
         }).then((r)=>{
@@ -41,7 +40,8 @@ function EditAppointment(){
     
     function handleSelect(){
         setIsChangeSelected(true)
-        setAppt(user.appointments[selectAppt])
+    
+
         formik.setValues({
             user_id:user.id,
             doctor_id:user.appointments[selectAppt].doctor_id,
