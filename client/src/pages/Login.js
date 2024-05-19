@@ -4,7 +4,7 @@ import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
 function Login(){
-    const {user, onLogin, setIsLoggedIn} = useOutletContext()
+    const {user, setUser, setIsLoggedIn} = useOutletContext()
     const navigate = useNavigate()
    
     const formSchema = yup.object().shape({
@@ -31,7 +31,7 @@ function Login(){
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((user) => onLogin(user))
+                    r.json().then((user) => setUser(user))
                     .then(setIsLoggedIn(true))
                     .then(navigate('/'))
                 }else{

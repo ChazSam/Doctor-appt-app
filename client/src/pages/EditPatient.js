@@ -5,14 +5,13 @@ import * as yup from 'yup';
 
 
 function Signup () {
-    const { user, onLogin } = useOutletContext()
+    const { user, setUser } = useOutletContext()
     const [birthday, setBirthday] =  useState({
         day:"",
         month:"",
         year:""
     })
     
-
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
@@ -54,7 +53,7 @@ function Signup () {
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((user) => onLogin(user))
+                    r.json().then((user) => setUser(user))
 
                 }else{
                     r.json().then((err) => console.log(err.error))

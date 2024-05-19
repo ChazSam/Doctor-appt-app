@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import 'react-calendar/dist/Calendar.css';
 
 function Appointment(){
-    const {user, onLogin, listDoctors} = useOutletContext()
+    const {user, setUser, listDoctors} = useOutletContext()
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
@@ -43,7 +43,7 @@ function Appointment(){
                 if(r.ok){
                     r.json().then((appt) => {
           
-                        onLogin((prevUser) => {
+                        setUser((prevUser) => {
                             return {
                                 ...prevUser,
                                 appointments: [...prevUser.appointments, appt]

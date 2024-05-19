@@ -3,7 +3,7 @@ import { useOutletContext, useNavigate } from "react-router-dom"
 import {useState} from 'react'
 
 function Admin(){
-    const {user, onLogin, setIsLoggedIn, listDoctors, setListDoctors} = useOutletContext()
+    const {user, setUser, setIsLoggedIn, listDoctors, setListDoctors} = useOutletContext()
     const navigate = useNavigate()
     const [selectDoctor, setSelectDoctor]= useState()
 
@@ -28,7 +28,7 @@ function Admin(){
     function handleLogout() {
         fetch("/logout", {
           method: "DELETE",
-        }).then(() => onLogin(""))
+        }).then(() => setUser(""))
           .then(setIsLoggedIn(false))
           .then(navigate('/'))
       }

@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 
 function Signup () {
-    const {onLogin, setIsLoggedIn} = useOutletContext()
+    const {setUser, setIsLoggedIn} = useOutletContext()
     const [birthday, setbirthday] =  useState({
         day:"",
         month:"",
@@ -48,7 +48,7 @@ function Signup () {
             }) .then((r) => {
  
                 if(r.ok){
-                    r.json().then((user) => onLogin(user))
+                    r.json().then((user) => setUser(user))
                     .then(setIsLoggedIn(true))
                     .then(navigate('/'))
 
@@ -91,7 +91,6 @@ function Signup () {
         })
 
     }
-
     
     const dayInMonth = checkLeapYear(birthday.month, birthday.year)
     

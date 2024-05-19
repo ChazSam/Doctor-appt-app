@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from "react";
+
 import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
-import {Formik, useFormik} from 'formik'
+
 
 function Account(){
-    const {user, onLogin, setIsLoggedIn} = useOutletContext()
+    const {user, setUser, setIsLoggedIn} = useOutletContext()
     const navigate = useNavigate()
 
     function handleLogout() {
         fetch("/logout", {
           method: "DELETE",
-        }).then(() => onLogin(""))
+        }).then(() => setUser(""))
           .then(setIsLoggedIn(false))
           .then(navigate('/'))
       }
@@ -18,7 +18,7 @@ function Account(){
         if(window.confirm("Are you sure you want to delete your account?")){
             fetch(`/account/${user.id}`, {
                 method: "DELETE",
-              }).then(() => onLogin(""))
+              }).then(() => setUser(""))
                 .then(setIsLoggedIn(false))
                 .then(navigate('/'))
         }

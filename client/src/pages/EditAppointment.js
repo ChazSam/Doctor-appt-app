@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar'
 
 function EditAppointment(){
-    const {user, onLogin, listDoctors} = useOutletContext()
+    const {user, setUser, listDoctors} = useOutletContext()
     const [selectAppt, setSelectAppt] = useState()
     const [calendar, setCalendar] = useState(new Date())
     const [isChangeSelcted, setIsChangeSelected] = useState(false)
@@ -20,7 +20,7 @@ function EditAppointment(){
             method: "DELETE"
         }).then((r)=>{
             if(r.ok){
-                onLogin((prevUser) => ({
+                setUser((prevUser) => ({
                      ...prevUser,
                     
                     appointments: prevUser.appointments.filter(
@@ -81,7 +81,7 @@ function EditAppointment(){
                                 index === parseInt(selectAppt) ? updatedAppt : appt
                             );
                          
-                            onLogin((prevUser) => ({
+                            setUser((prevUser) => ({
                                 ...prevUser,
                                 appointments: updatedAppointments
                             }));
