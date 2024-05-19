@@ -1,5 +1,5 @@
 
-import { Outlet, useOutletContext, Link, useNavigate } from "react-router-dom"
+import { useOutletContext, useNavigate } from "react-router-dom"
 import {useState} from 'react'
 
 function Admin(){

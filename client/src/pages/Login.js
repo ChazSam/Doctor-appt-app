@@ -1,19 +1,15 @@
-import {useState, useEffect} from 'react';
+
 import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
 function Login(){
     const {user, onLogin, setIsLoggedIn} = useOutletContext()
-    
-    const [errors, setErrors] = useState([])
     const navigate = useNavigate()
    
-    // console.log(user)
-
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
-        // password: yup.string().required("Password must be at least 8 characters long").min(8),
+        password: yup.string().required("Password must be at least 8 characters long").min(8),
       });
    
     const formik = useFormik({
@@ -46,7 +42,7 @@ function Login(){
         }
     })
 
-    // console.log(formik.values)
+
     return(
         <>
         <h1>Login page</h1>
@@ -54,11 +50,11 @@ function Login(){
                 <div>
                     <p>Name</p>
                     <input id="username" value={formik.values.username} onChange={formik.handleChange} />
-                    {/* <p style={{ color: "red" }} > {formik.errors.username}</p> */}
+                    <p style={{ color: "red" }} > {formik.errors.username}</p>
 
                     <p>Password</p>
                     <input id='password' value={formik.values.password} onChange={formik.handleChange}/>
-                    {/* <p style={{ color: "red" }} > {formik.errors.username}</p> */}
+                    <p style={{ color: "red" }} > {formik.errors.username}</p>
 
                 </div>
                 <p></p>

@@ -5,8 +5,7 @@ import * as yup from 'yup';
 import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 
 function AddDoctor(){
-    const [errors, setErrors] = useState([])
-    const {listDoctors, setListDoctors} = useOutletContext()
+    const {setListDoctors} = useOutletContext()
     const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
@@ -70,10 +69,3 @@ function AddDoctor(){
 }
 
 export default AddDoctor
-
-// id = db.Column(db.Integer, primary_key =True)
-// name = db.Column(db.Integer, unique=True, nullable=False)
-// image_url = db.Column(db.String)
-// department = db.Column(db.String, nullable=False)
-// bio = db.Column(db.String)
-// tagline = db.Column(db.String)

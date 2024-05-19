@@ -1,19 +1,17 @@
-import {useState, useEffect} from 'react';
-import {Formik, useFormik} from 'formik'
-import { Outlet, useOutletContext } from "react-router-dom"
+import { useState } from 'react';
+import { Formik, useFormik } from 'formik'
+import { useOutletContext } from "react-router-dom"
 import * as yup from 'yup';
 
 
 function Signup () {
-    const {user, onLogin} = useOutletContext()
-    // const [refreshPage, setRefreshPage] = useState(false)
-    // const [errors, setErrors] = useState([])
+    const { user, onLogin } = useOutletContext()
     const [monthYear, setMonthYear] =  useState({
         day:"",
         month:"",
         year:""
     })
-    const [signUp, setSignUp] = useState([])
+    
 
 
     const formSchema = yup.object().shape({
@@ -28,7 +26,6 @@ function Signup () {
         //   .required("Must enter age")
         //   .typeError("Please enter an Integer")
         //   .max(125),
-        // bio : yup.string().required("Must enter a reason")
       });
 
     const formik = useFormik({

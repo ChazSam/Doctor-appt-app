@@ -62,17 +62,6 @@ const routes = [
             {
                 path: "/admin",
                 element: <Admin />,
-                // children:[
-                //     {
-                //         path: '/admin/add-doctor',
-                //         element: <AddDoctor/>
-                //     }, 
-                //     {
-                //         path: '/admin/edit-doctor',
-                //         element: <EditDoctor/>
-                //     }, 
-
-                // ]
             
             },
             {

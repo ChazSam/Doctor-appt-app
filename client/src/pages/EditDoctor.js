@@ -5,15 +5,14 @@ import * as yup from 'yup';
 import { Outlet, useOutletContext } from "react-router-dom"
 
 function AddDoctor(){
-    const [errors, setErrors] = useState([])
     const [selectDoctor, setSelectDoctor] = useState(null)
-    const [doctor, setDoctor] = useState([])
     const {listDoctors, setListDoctors} = useOutletContext()
     
     function handleSelectDoctor(e){
         const selectedDoctorId = e.target.value
         const doctor = listDoctors[selectedDoctorId-1]
         setSelectDoctor(doctor)
+
         formik.setValues({
             name:doctor.name,
             image_url:doctor.image_url,
@@ -72,7 +71,6 @@ function AddDoctor(){
     })
 
  
-    
     return (
         <>
         <h1>Edit Doctor</h1>
@@ -105,7 +103,6 @@ function AddDoctor(){
         <p></p>
 
 
-  
             </>
     )
 }

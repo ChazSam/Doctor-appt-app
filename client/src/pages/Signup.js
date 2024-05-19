@@ -6,13 +6,12 @@ import * as yup from 'yup';
 
 function Signup () {
     const {onLogin, setIsLoggedIn} = useOutletContext()
-    const [refreshPage, setRefreshPage] = useState(false)
     const [birthday, setbirthday] =  useState({
         day:"",
         month:"",
         year:""
     })
-    const [signUp, setSignUp] = useState([])
+
     const navigate = useNavigate()
     
     const formSchema = yup.object().shape({
@@ -20,13 +19,7 @@ function Signup () {
         password: yup.string().required("Password must be at least 8 characters long").min(8),
         first_name: yup.string().required("Must enter a name"),
         last_name: yup.string().required("Must enter a name"),
-        // birthdate: yup.date().required().format('YYYY-MM-DD'),
-        //   .number()
-        //   .positive()
-        //   .integer()
-        //   .required("Must enter age")
-        //   .typeError("Please enter an Integer")
-        //   .max(125),
+
       });
 
     const formik = useFormik({

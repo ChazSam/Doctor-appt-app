@@ -1,13 +1,12 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import Calendar from 'react-calendar'
-import { Outlet, useOutletContext, useNavigate} from "react-router-dom"
+import { useOutletContext, useNavigate} from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 import 'react-calendar/dist/Calendar.css';
 
 function Appointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
-    // const [calendar, setCalendar] = useState(new Date())
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
@@ -16,7 +15,7 @@ function Appointment(){
         doctor_id: yup.string().required("Please select a doctor"),
         date: yup.date().required("Select a doctor and date for an appointment")
       });
-    // console.log(calendar)
+
     const formik = useFormik({
 
         initialValues:{
@@ -59,7 +58,7 @@ function Appointment(){
         }
     })
 
-    // console.log(formik.values)
+   
 
     return(
         <>

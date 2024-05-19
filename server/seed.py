@@ -63,7 +63,7 @@ with app.app_context():
         bio = "Admin"
     )
     
-    admin.password_hash = 'Admin'
+    admin.password_hash = 'AdminAdmin'
 
     user1 = User(
         username = "JohnDoe1",

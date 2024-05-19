@@ -1,10 +1,9 @@
-import {useState, useEffect} from 'react';
-import { Outlet, useOutletContext } from "react-router-dom"
+
+import { useOutletContext } from "react-router-dom"
 
 
 function ListDoctors(){
     const {listDoctors} = useOutletContext()
-
 
     return(
         <>

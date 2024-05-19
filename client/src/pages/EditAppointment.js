@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
-import App from "../components/App";
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 import 'react-calendar/dist/Calendar.css';
@@ -10,7 +9,6 @@ function EditAppointment(){
     const {user, onLogin, listDoctors} = useOutletContext()
     const [selectAppt, setSelectAppt] = useState()
     const [calendar, setCalendar] = useState(new Date())
-    const [errors, setErrors] = useState([])
     const [isChangeSelcted, setIsChangeSelected] = useState(false)
     const [appt, setAppt] = useState({})
     const navigate = useNavigate()
@@ -30,7 +28,7 @@ function EditAppointment(){
                         (appt, index) => index !== parseInt(selectAppt)
                     )
                 }))
-                // debugger
+            
                 setSelectAppt(null);
                 setIsChangeSelected(false);
                 navigate("/account")
@@ -106,7 +104,6 @@ function EditAppointment(){
             setCalendar(formik.values.date);
         }, [formik.values.date]);
 
-         console.log(formik.values)
     return(
         <>
         
@@ -137,9 +134,7 @@ function EditAppointment(){
                     </select>
                     <p></p>
                     <Calendar value={calendar} 
-                    onChange={(date) => formik.setFieldValue('date', date)}
-                    // onChange={formik.handleChange}
-                    >
+                    onChange={(date) => formik.setFieldValue('date', date)}>
                         
                     </Calendar>
                 </div>
