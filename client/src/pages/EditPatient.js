@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Formik, useFormik } from 'formik'
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext, useNavigate } from "react-router-dom"
 import * as yup from 'yup';
 
 
 function Signup () {
     const { user, setUser } = useOutletContext()
+    const navigate = useNavigate()
+
     const [birthday, setBirthday] =  useState({
         day:"",
         month:"",
@@ -18,13 +20,6 @@ function Signup () {
         password: yup.string().required("Password must be at least 8 characters long").min(8),
         first_name: yup.string().required("Must enter a name"),
         last_name: yup.string().required("Must enter a name"),
-        // birthdate: yup  // <- crashes formik for some reason
-        //   .number()
-        //   .positive()
-        //   .integer()
-        //   .required("Must enter age")
-        //   .typeError("Please enter an Integer")
-        //   .max(125),
       });
 
     const formik = useFormik({
@@ -54,6 +49,7 @@ function Signup () {
  
                 if(r.ok){
                     r.json().then((user) => setUser(user))
+                    .then(navigate('/account'))
 
                 }else{
                     r.json().then((err) => console.log(err.error))
@@ -96,7 +92,7 @@ function Signup () {
     }
 
     const dayInMonth = checkLeapYear(birthday.month, birthday.year)
-    console.log(birthday)
+    // console.log(birthday)
     return(
         <div>
             <h1>Account Information</h1>
@@ -122,18 +118,18 @@ function Signup () {
                         <p>Birthday</p>
                             <select name="month" value={birthday.month} onChange={handleChange}>
                                 <option value="">---</option>
-                                <option id="Jan" value='0' >Jan</option>
-                                <option id="Feb" value="1" >Feb</option>
-                                <option id="Mar" value="2" >Mar</option>
-                                <option id="Apr" value="3" >Apr</option>
-                                <option id="May" value="4" >May</option>
-                                <option id="Jun" value="5" >Jun</option>
-                                <option id="Jul" value="6" >Jul</option>
-                                <option id="Aug" value="7" >Aug</option>
-                                <option id="Sep" value="8" >Sep</option>
-                                <option id="Oct" value="9" >Oct</option>
-                                <option id="Nov" value="10" >Nov</option>
-                                <option id="Dec" value="11" >Dec</option>
+                                <option id="Jan" value='01' >Jan</option>
+                                <option id="Feb" value="02" >Feb</option>
+                                <option id="Mar" value="03" >Mar</option>
+                                <option id="Apr" value="04" >Apr</option>
+                                <option id="May" value="05" >May</option>
+                                <option id="Jun" value="06" >Jun</option>
+                                <option id="Jul" value="07" >Jul</option>
+                                <option id="Aug" value="08" >Aug</option>
+                                <option id="Sep" value="09" >Sep</option>
+                                <option id="Oct" value="10" >Oct</option>
+                                <option id="Nov" value="11" >Nov</option>
+                                <option id="Dec" value="12" >Dec</option>
     
                             </select>
                         

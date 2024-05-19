@@ -109,9 +109,9 @@ function EditAppointment(){
         
             <h1>Patient Appointments</h1>
             <select id='appt-id' onChange={(e)=>setSelectAppt(e.target.value)}>
-                <option value="">--Select Appointment--</option>
+                <option key="-" value="">--Select Appointment--</option>
                 {user.appointments.map((appt, index)=>(
-                    <option id={appt.id} value={index} >{appt.doctor.name} - {appt.date}</option>
+                    <option key={appt.id} id={appt.id} value={index} >{appt.doctor.name} - {appt.date}</option>
                 ))}
             </select>
             <p></p>

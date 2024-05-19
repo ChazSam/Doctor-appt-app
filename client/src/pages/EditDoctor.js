@@ -2,12 +2,12 @@ import React from "react";
 import  {useState} from "react";
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
-import { Outlet, useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 
 function AddDoctor(){
     const [selectDoctor, setSelectDoctor] = useState(null)
     const {listDoctors, setListDoctors} = useOutletContext()
-    
+    const navigate = useNavigate()
     function handleSelectDoctor(e){
         const selectedDoctorId = e.target.value
         const doctor = listDoctors[selectedDoctorId-1]
@@ -63,7 +63,7 @@ function AddDoctor(){
                                 }
                             });
                         });
-                    })   
+                    }).then(navigate("/admin"))   
                 }else{
                     r.json().then((err) => console.log(err.error))
                 }})

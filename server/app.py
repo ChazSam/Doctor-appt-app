@@ -15,7 +15,7 @@ import datetime
 
 from config import app, db, api
 
-# @app.before_request
+
 class CheckSession(Resource, SerializerMixin):
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
@@ -32,7 +32,7 @@ class Login(Resource):
         username = data.get('username')
         password = data.get('password')
         user = User.query.filter_by(username = username).first()
-        print(username, password)
+        
  
         if not user:
             return {'error': 'Unauthorized'}, 401
