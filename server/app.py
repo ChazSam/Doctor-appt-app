@@ -57,6 +57,7 @@ class UserDetails(Resource):
         user = User.query.filter(User.id == id).first()
         return user.to_dict(), 200
     
+    
     def patch(self, id):
         # user = User.query.filter_by(id=id).first()
 
@@ -154,7 +155,7 @@ class Logout(Resource):
         return {'message': '204: No Content'}, 204
     
 
-class Call_Doctor(Resource):
+class CallDoctor(Resource):
     def get(self):
 
         doctors= [doc.to_dict() for doc in Doctor.query.all()]
@@ -189,8 +190,7 @@ class DoctorDetails(Resource):
             return {"error": "Doctor not found"}, 404
 
         data = request.json
-        # if 'date' in data:
-        #     data['date'] = datetime.datetime.strptime(data['date'],'%Y-%m-%dT%H:%M:%S.%fZ')
+
         for key, value in data.items():
             setattr(record, key, value)
 
@@ -312,7 +312,7 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(GetUsers, '/users', endpoint="users")
 api.add_resource(UserDetails, '/account/<int:id>')
 api.add_resource(DoctorDetails, '/doctor/<int:id>')
-api.add_resource(Call_Doctor, '/doctor', endpoint='doctor')
+api.add_resource(CallDoctor, '/doctor', endpoint='doctor')
 api.add_resource(AddDoctor, '/add-doctor', endpoint='add-doctor')
 api.add_resource(CreateAppointment, '/create', endpoint="create")
 api.add_resource(AppointmentDetails, '/appointment/<int:id>')
