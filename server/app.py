@@ -61,8 +61,8 @@ class UserDetails(Resource):
     def patch(self, id):
         # user = User.query.filter_by(id=id).first()
 
-        # for attr in request.form:
-        #     setattr(user, attr, request.form[attr])
+        # for attr in request.json:
+        #     setattr(user, attr, request.json[attr])
 
         # db.session.add(user)
         # db.session.commit()
@@ -158,7 +158,7 @@ class Logout(Resource):
 class CallDoctor(Resource):
     def get(self):
 
-        doctors= [doc.to_dict() for doc in Doctor.query.all()]
+        doctors = [doc.to_dict() for doc in Doctor.query.all()]
         return doctors, 200
     
 
