@@ -7,7 +7,7 @@ from config import db
 class Doctor(db.Model, SerializerMixin):
     __tablename__ = 'doctors'
     
-    serialize_rules = ('-appointment.doctor','-review.doctor')
+    serialize_rules = ('-appointment.doctor','-reviews.doctor')
 
     id = db.Column(db.Integer, primary_key =True)
     name = db.Column(db.Integer, unique=True, nullable=False)
@@ -18,7 +18,7 @@ class Doctor(db.Model, SerializerMixin):
 
     appointments = db.relationship('Appointment', back_populates="doctor", cascade="all, delete-orphan")
     reviews = db.relationship('Review', back_populates="doctor", cascade="all, delete-orphan")
-
+    
     patients = association_proxy("appointments", 'user')
 
     def __repr__(self):

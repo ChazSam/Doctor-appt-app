@@ -8,7 +8,7 @@ from config import db
 class Appointment(db.Model, SerializerMixin):
     __tablename__ = 'appointments'
         
-    serialize_rules = ("-doctor.appointments", '-doctor.patients', '-user.appointments', '-user.doctors')
+    serialize_rules = ("-doctor.appointments", '-user.appointments')
 
     id = db.Column(db.Integer, primary_key =True)
     date = db.Column(db.DateTime, server_default=db.func.now())

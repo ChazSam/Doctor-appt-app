@@ -11,6 +11,7 @@ with app.app_context():
     Doctor.query.delete()
     User.query.delete()
     Appointment.query.delete()
+    Review.query.delete()
 
 
     doc1 = Doctor(
@@ -91,7 +92,7 @@ with app.app_context():
     user2.password_hash = 'password'
 
 
-    db.session.add_all([admin, user1])
+    db.session.add_all([admin, user1, user2])
 
     appt1 = Appointment(
         user_id = 1,
@@ -106,7 +107,7 @@ with app.app_context():
         score = 5,
         review = "He saved my leg and has a beautiful singing voice!"
     )
-    
+
     review2 = Review(
         user_id = 3,
         doctor_id = 5,

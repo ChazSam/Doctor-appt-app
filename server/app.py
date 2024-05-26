@@ -305,6 +305,66 @@ class AddDoctor(Resource):
 
         except IntegrityError as exc:
             return {"Error": exc}, 422
+        
+class AddReview(Resource):
+    def get(self):
+        reviews = [review.to_dict() for review in Review.query.all()]
+        return reviews, 200
+
+    def post(self):
+        review = Review(
+            score = request.get_json().get('score'),
+            review = request.get_json().get('review'),
+            user_id = request.get_json().get('user_id'),
+            doctor_id = request.get_json().get('doctor_id')
+        )
+        try:
+            db.session.add(review)
+            db.session.commit(), 201
+            return review.to_dict()
+
+        except IntegrityError as exc:
+            return {"Error": exc}, 422
+        
+class ChangeReview(Resource):
+    def get(self, id):
+        review = Review.query.filter_by(id=id).first().to_dict()
+      
+        return review, 200
+    
+    def patch(self, id):
+        user = Review.query.filter_by(id=id).first()
+
+        for attr in request.json:
+            setattr(user, attr, request.json[attr])
+
+        db.session.add(user)
+        db.session.commit()
+
+        response_dict = {"message": "User successfully Updated"}
+        
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
+
+    def delete(self, id):
+        record = Review.query.filter(Review.id == id).first()
+
+        db.session.delete(record)
+        db.session.commit()
+
+        response_dict = {"message": "record successfully deleted"}
+        
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
+
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
@@ -317,6 +377,8 @@ api.add_resource(CallDoctor, '/doctor', endpoint='doctor')
 api.add_resource(AddDoctor, '/add-doctor', endpoint='add-doctor')
 api.add_resource(CreateAppointment, '/create', endpoint="create")
 api.add_resource(AppointmentDetails, '/appointment/<int:id>')
+api.add_resource(AddReview, '/reviews', endpoint='reviews')
+api.add_resource(ChangeReview, '/reviews/<int:id>')
 
 
 @app.route('/')
