@@ -3,13 +3,14 @@
 # Standard library imports
 from flask import Flask, request, session, jsonify, make_response
 from flask_restful import Resource
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 from sqlalchemy_serializer import SerializerMixin
 
 # Remote library imports
 from models.user import User
 from models.doctor import Doctor
 from models.appointment import Appointment
+from models.review import Review
 from sqlalchemy.exc import IntegrityError
 import datetime
 

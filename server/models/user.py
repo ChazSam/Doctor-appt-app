@@ -9,7 +9,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
         
-    serialize_rules = ("-_password_hash", "-appointment.user",)
+    serialize_rules = ("-_password_hash", "-appointment.user", "-review.user")
 
     id = db.Column(db.Integer, primary_key =True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -21,7 +21,7 @@ class User(db.Model, SerializerMixin):
     bio = db.Column(db.String, nullable=False)
 
     appointments = db.relationship('Appointment', back_populates="user", cascade = 'all, delete-orphan')
-
+    reviews = db.relationship('Review', back_populates="user", cascade="all, delete-orphan")
     doctors = association_proxy('appointments', 'doctor')
     
     @hybrid_property

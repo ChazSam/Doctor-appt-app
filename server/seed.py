@@ -3,6 +3,7 @@ from datetime import datetime
 from models.doctor import Doctor
 from models.user import User
 from models.appointment import Appointment
+from models.review import Review
 from config import db
 from app import app
 
@@ -74,8 +75,20 @@ with app.app_context():
         bio = "I'm not dead yet"
         
     )
-    
     user1.password_hash = 'password'
+
+    user2 = User(
+        username = "JaneDoe1",
+        first_name = "Jane",
+        last_name = "Doe",
+        birthdate = datetime(1966, 7, 6),
+        sex = "F",
+        bio = "I'm part robot."
+        
+    )
+    
+    
+    user2.password_hash = 'password'
 
 
     db.session.add_all([admin, user1])
@@ -86,5 +99,20 @@ with app.app_context():
     )
 
     db.session.add(appt1)
+
+    review1 = Review(
+        user_id = 2,
+        doctor_id = 4,
+        score = 5,
+        review = "He saved my leg and has a beautiful singing voice!"
+    )
+    
+    review2 = Review(
+        user_id = 3,
+        doctor_id = 5,
+        score = 4,
+        review = "My mind is so clear now."
+    )
+    db.session.add_all([review1, review2])
 
     db.session.commit()
