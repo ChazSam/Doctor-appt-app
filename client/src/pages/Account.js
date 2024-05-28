@@ -53,6 +53,8 @@ function Account(){
                         
                     <button id="edit-appointment" onClick={()=>navigate("/account/appointment")}>Change An Appointment</button>
                         <p></p>
+                    <button id="review" onClick={()=>navigate("/account/reviews")}>Reviews</button>
+                        <p></p>
                     
                         <button id='logout' onClick={handleLogout} >Log out</button>
                     
