@@ -9,7 +9,7 @@ function Review(){
     const navigate = useNavigate()
     const numbers=[1,2,3,4,5]
     const [selectReview, setSelectReview] = useState("")
-    // console.log(user)
+    console.log(user)
 
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
@@ -29,10 +29,31 @@ function Review(){
         })
     }
 
-    function handleDelete(){
-        
-    }
 
+    // function handleDelete(e){
+        
+    
+    //     fetch(`/appointment/${user.reviews[selectReview].id}`, {
+    //         method: "DELETE"
+    //     }).then((r)=>{
+    //         if(r.ok){
+    //             setUser((prevUser) => ({
+    //                  ...prevUser,
+                    
+    //                 reviews: prevUser.reviews.filter(
+    //                     (appt, index) => index !== parseInt(selectReview)
+    //                 )
+    //             }))
+            
+    //             // setSelectAppt(null);
+    //             // setIsChangeSelected(false);
+    //             navigate("/account")
+    //         } else {
+                
+    //             console.error("Failed to delete appointment")
+    //         }
+    //     });
+    // }
     const formik = useFormik({
 
         initialValues:{
@@ -54,39 +75,39 @@ function Review(){
                 },
                 body: JSON.stringify(values, null, 2)
             }) .then((r) => {
- 
-                if(r.ok){
-                    r.json().then((newReview) => {
-          
-                        setUser((prevUser) => {
-                            return {
-                                ...prevUser,
-                                review: [...prevUser.reviews, newReview]
-                            }
-                        })
-                    })
-                    .then(navigate('/account'))
 
-                }else{
-                    r.json().then((err) => console.log(err.error))
-                }})
+                if (r.ok) {
+                    r.json().then((newReview) => {
+                        setUser((prevUser) => ({
+                            ...prevUser,
+                            reviews: [...prevUser.reviews, newReview]
+                        }))
+                        navigate('/account')
+                    })
+                } else {
+                    r.json().then((err) => console.log(err.error));
+                }
+            })
         }
     })
-    console.log(formik.values)
 
+    
+    if (!user) {
+        return <div>Loading...</div>;
+      }
     return (
         <>
 
         <h1>Review Page</h1>
 
         <div>
-            {/* {user.reviews.map((review)=>(
+            {user.reviews.map((review)=>(
                     <div key={review.id}>
                         <p>Doctor: {review.doctor.name}</p>
                         <p>Score: {review.score}</p>
                         <p>Review: {review.review}</p>
                     </div>
-                ))} */}
+                ))}
             <button>Add a Review</button>
         </div>
 

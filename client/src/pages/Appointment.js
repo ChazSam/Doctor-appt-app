@@ -10,6 +10,8 @@ function Appointment(){
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
+    console.log(user)
+    
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
         doctor_id: yup.string().required("Please select a doctor"),
