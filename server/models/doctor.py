@@ -7,7 +7,7 @@ from config import db
 class Doctor(db.Model, SerializerMixin):
     __tablename__ = 'doctors'
     
-    serialize_rules = ('-appointment.doctor','-reviews.doctor')
+    serialize_rules = ('-appointments.doctor','-reviews.doctor')
 
     id = db.Column(db.Integer, primary_key =True)
     name = db.Column(db.Integer, unique=True, nullable=False)
