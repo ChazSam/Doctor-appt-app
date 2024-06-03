@@ -341,18 +341,13 @@ class ChangeReview(Resource):
         db.session.add(user)
         db.session.commit()
 
-        response_dict = {"message": "User successfully Updated"}
+        response_dict = user.to_dict()
+        return response_dict, 200
         
-        response = make_response(
-            response_dict,
-            200
-        )
-
-        return response
-
+   
     def delete(self, id):
+        
         record = Review.query.filter(Review.id == id).first()
-
         db.session.delete(record)
         db.session.commit()
 

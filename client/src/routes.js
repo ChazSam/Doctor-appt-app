@@ -12,6 +12,7 @@ import Admin from "./pages/Admin"
 import EditPatient from './pages/EditPatient'
 import EditAppointment from './pages/EditAppointment'
 import Review from "./pages/Review"
+import EditReview from "./pages/EditReview"
 
 const routes = [
 
@@ -40,7 +41,7 @@ const routes = [
             
             },
             {
-                path: "/appt",
+                path: "/appointment",
                 element: <Appointment />,
         
             },
@@ -58,6 +59,11 @@ const routes = [
             {
                 path: "/account/appointment",
                 element: <EditAppointment />,
+            
+            },
+            {
+                path: "/account/edit-review",
+                element: <EditReview />,
             
             },
             {

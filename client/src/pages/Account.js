@@ -51,11 +51,12 @@ function Account(){
                     <button id="edit-account" onClick={()=>navigate("/account/settings")}>Change Account Details</button>
                         <p></p>
                         
-                    <button id="edit-appointment" onClick={()=>navigate("/account/appointment")}>Change An Appointment</button>
+                    <button id="edit-appointment" onClick={()=>navigate("/account/appointment")} disabled={user.appointments.length === 0}>Change An Appointment</button>
                         <p></p>
-                    <button id="review" onClick={()=>navigate("/account/reviews")}>Reviews</button>
+                    <button id="review" onClick={()=>navigate("/account/reviews")}>Add a Review</button>
                         <p></p>
-                    
+                    <button id="edit-review" onClick={()=>navigate("/account/edit-review")}disabled={user.reviews.length === 0}>Edit Reviews</button>
+                        <p></p>
                         <button id='logout' onClick={handleLogout} >Log out</button>
                     
                         <p></p>

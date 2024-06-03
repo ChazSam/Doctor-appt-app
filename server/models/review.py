@@ -12,7 +12,7 @@ class Review(db.Model, SerializerMixin):
     score = db.Column(db.Integer, nullable = False)
     review = db.Column(db.String, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'), unique = True)
     # extra_column = db.Column(db.String, nullable=True)
     
     doctor = db.relationship("Doctor", back_populates = "reviews")

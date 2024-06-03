@@ -37,7 +37,7 @@ function NavBar({isLoggedIn, user}){
 
                 <>
                 <NavLink
-                    to="/appt"
+                    to="/appointment"
                     className="nav-link"
                     >Appointments
                 </NavLink>

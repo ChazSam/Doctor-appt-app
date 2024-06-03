@@ -4,12 +4,9 @@ import * as yup from 'yup';
 import { useState } from "react";
 
 function Review(){
-
-    const {user, setUser, setIsLoggedIn, listDoctors} = useOutletContext()
+    const {user, setUser, listDoctors} = useOutletContext()
     const navigate = useNavigate()
     const numbers=[1,2,3,4,5]
-    const [selectReview, setSelectReview] = useState("")
-    console.log(user)
 
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
@@ -18,42 +15,6 @@ function Review(){
         review: yup.string().required("Please tell us your review of the doctor."),
       });
 
-    function editReview(){
-        const review = user.reviews[selectReview-1]
-        console.log(review)
-        formik.setValues({
-            user_id:user.id,
-            doctor_id:review.doctor_id,
-            score:review.score,
-            review:review.review,
-        })
-    }
-
-
-    // function handleDelete(e){
-        
-    
-    //     fetch(`/appointment/${user.reviews[selectReview].id}`, {
-    //         method: "DELETE"
-    //     }).then((r)=>{
-    //         if(r.ok){
-    //             setUser((prevUser) => ({
-    //                  ...prevUser,
-                    
-    //                 reviews: prevUser.reviews.filter(
-    //                     (appt, index) => index !== parseInt(selectReview)
-    //                 )
-    //             }))
-            
-    //             // setSelectAppt(null);
-    //             // setIsChangeSelected(false);
-    //             navigate("/account")
-    //         } else {
-                
-    //             console.error("Failed to delete appointment")
-    //         }
-    //     });
-    // }
     const formik = useFormik({
 
         initialValues:{
@@ -67,7 +28,7 @@ function Review(){
 
         onSubmit: (values) => {
             values.score = parseInt(values.score)
-            debugger
+       
             fetch('/reviews', {
                 method:"POST",
                 headers:{
@@ -93,13 +54,14 @@ function Review(){
 
     
     if (!user) {
-        return <div>Loading...</div>;
-      }
+        return <div>Loading...</div>}
+
     return (
         <>
 
         <h1>Review Page</h1>
-
+        <h2>Add a Review</h2>
+{/* 
         <div>
             {user.reviews.map((review)=>(
                     <div key={review.id}>
@@ -108,11 +70,11 @@ function Review(){
                         <p>Review: {review.review}</p>
                     </div>
                 ))}
-            <button>Add a Review</button>
-        </div>
+            
+        </div> */}
 
         <form onSubmit={formik.handleSubmit}>
-
+            <p>Select a doctor</p>
             <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
                 <option id='' value="">--</option>
                 {listDoctors.map((doctor)=> (
@@ -121,7 +83,7 @@ function Review(){
             </select>
             <p style={{ color: "red" }}> {formik.errors.doctor_id}</p>
 
-            <p>score</p>
+            <p>Score</p>
                 <select id="score" onChange={formik.handleChange} value={formik.values.score}>
                     <option id ="" value="">--</option>
                         {numbers.map((x)=>(
@@ -134,26 +96,6 @@ function Review(){
                     <p></p>
                 <button type='Submit'>Submit</button>
         </form>
-        <p></p>
-        <div>
-                <select onChange={(e)=>setSelectReview(e.target.value)}>
-                    <option key="0" value="">Choose a review</option>
-                    
-                {user.reviews.map((review)=>(
-                    <option key={review.id} value={review.id}>{review.doctor.name}</option>
-                ))}
-                </select>
-
-                <button onClick={editReview} >Edit a Review</button>
-            <p></p>
-            <select>
-            {user.reviews.map((review)=>(
-                    <option key={review.id} value={review.id}>{review.doctor.name}</option>
-                ))}
-                </select>
-            <button>Delete a Review</button>
-        </div>
-        
         
         </>
     )
