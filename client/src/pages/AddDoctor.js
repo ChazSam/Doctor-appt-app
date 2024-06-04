@@ -53,14 +53,19 @@ function AddDoctor(){
         <form onSubmit={formik.handleSubmit}> 
             <p>Enter an Name:</p>
             <input id='name' value={formik.values.name} onChange={formik.handleChange}></input>
+            <p style={{ color: "red" }}> {formik.errors.name}</p>
             <p>Enter an image url:</p>
             <input id='image_url' value={formik.values.image_url} onChange={formik.handleChange}></input>
+            
             <p>Enter an Department Name:</p>
             <input id='department'value={formik.values.department} onChange={formik.handleChange}></input>
+            <p style={{ color: "red" }}> {formik.errors.department}</p>
             <p>Enter an doctors biograpy:</p>
             <input id='bio' value={formik.values.bio} onChange={formik.handleChange}></input>
+            
             <p>Enter an doctors tagline:</p>
             <input id='tagline' value={formik.values.tagline} onChange={formik.handleChange}></input>
+            
             <p></p>
             <button type='submit'>submit</button>
         </form>

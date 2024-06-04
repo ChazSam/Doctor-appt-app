@@ -1,11 +1,12 @@
-
-import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { Outlet, useOutletContext, useNavigate} from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
 
 function Login(){
     const {user, setUser, setIsLoggedIn} = useOutletContext()
     const navigate = useNavigate()
+    const [errors, setErrors] = useState([])
    
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),
@@ -35,7 +36,7 @@ function Login(){
                     .then(setIsLoggedIn(true))
                     .then(navigate('/'))
                 }else{
-                    r.json().then((err) => console.log(err.error))
+                    r.json().then((err) => setErrors([err.error]))
                     .then(navigate('/login'))
                 }})
             
@@ -59,9 +60,9 @@ function Login(){
                 </div>
                 <p></p>
                 <button type='Submit'>Submit</button>
-                {/* {errors.map((err) => (
+                {errors?.map((err) => (
                     <p style={{ color: "red" }} key={err}> {err}</p>
-                ))} */}
+                ))}
             </form>
 
         </>

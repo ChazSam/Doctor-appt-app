@@ -82,10 +82,12 @@ function Appointment(){
                             
                             <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
                         ))}
+                        <p style={{ color: "red" }}> {formik.errors.doctor_id}</p>
                     </select>
                     <p></p>
                     <Calendar value={formik.values.date} 
                      onChange={(date) => formik.setFieldValue('date', date)}></Calendar>
+                     <p style={{ color: "red" }}> {formik.errors.date}</p>
                 </div>
                 <p></p>
                 <button type='Submit'>Add Appointment</button>

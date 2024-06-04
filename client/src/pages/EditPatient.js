@@ -92,7 +92,7 @@ function Signup () {
     }
 
     const dayInMonth = checkLeapYear(birthday.month, birthday.year)
-    // console.log(birthday)
+    
     return(
         <div>
             <h1>Account Information</h1>

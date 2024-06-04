@@ -239,23 +239,7 @@ class CreateAppointment(Resource):
 class AppointmentDetails(Resource):
     
     def patch(self, id):
-        # # print(id)
-        # record = Appointment.query.filter(Appointment.id == id).first()
-        # # breakpoint()
-        # for attr in request.form:
-        #     setattr(record, attr, request.form[attr])
-            
-        
-        # db.session.add(record)
-        # db.session.commit()
 
-        # response_dict = record.to_dict()
-
-        # response = make_response(
-        #     response_dict,
-        #     200
-        # )
-        # return response
         record = Appointment.query.get(id)
         if not record:
             return {"error": "Appointment not found"}, 404
@@ -318,6 +302,8 @@ class AddReview(Resource):
             user_id = request.get_json().get('user_id'),
             doctor_id = request.get_json().get('doctor_id')
         )
+
+
         try:
             db.session.add(review)
             db.session.commit(), 201

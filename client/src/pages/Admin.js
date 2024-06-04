@@ -23,7 +23,7 @@ function Admin(){
         });
     }
     
-    console.log(selectDoctor)
+    
 
     function handleLogout() {
         fetch("/logout", {
@@ -36,19 +36,21 @@ function Admin(){
     return (
         <div>
             <h1>Admin Page</h1>
-            {!user.id ===1 &&(
+            {!user.id === 1 &&(
                 <div>
                     <h2>Unauthorized</h2>
                 </div>
             )}
-            {user.id===1&&(
+            {user.id === 1 &&(
 
                 <div>
 
                 <button onClick={()=>navigate('/admin/add-doctor')}>Add Doctor</button>
-    
+                    <p></p>
          
                 <button onClick={()=>navigate('/admin/edit-doctor')}>Edit Doctor</button> 
+                    <p></p>
+
                 <select id="doctor_id" onChange={(e)=>setSelectDoctor(e.target.value)} >
                             <option id='' value="">--Select a Doctor--</option>
                             {listDoctors.map((doctor)=> (
@@ -57,6 +59,7 @@ function Admin(){
                             ))}
                         </select>
                 <button id="delete" onClick={handleDelete}>Delete Doctor</button>  
+                    <p></p>
 
                 <button onClick={handleLogout}>Log Out</button>  
             </div>

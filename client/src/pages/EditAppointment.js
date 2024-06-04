@@ -132,11 +132,13 @@ function EditAppointment(){
                             <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
                         ))}
                     </select>
+                    <p style={{ color: "red" }}> {formik.errors.doctor_id}</p>
                     <p></p>
                     <Calendar value={calendar} 
                     onChange={(date) => formik.setFieldValue('date', date)}>
                         
                     </Calendar>
+                    <p style={{ color: "red" }}> {formik.errors.date}</p>
                 </div>
                 <p></p>
                 <button type='Submit'>Change Appointment</button>

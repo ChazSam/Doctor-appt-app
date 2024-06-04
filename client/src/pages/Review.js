@@ -90,10 +90,11 @@ function Review(){
                             <option key={x} value={x} onChange={formik.handleChange}>{x}</option>
                                 ))}
                 </select>
-
+                <p style={{ color: "red" }}> {formik.errors.score}</p>                        
             <p>Enter your review</p>
                 <input id='review' onChange={formik.handleChange} value={formik.values.review}></input>
                     <p></p>
+                <p style={{ color: "red" }}> {formik.errors.review}</p>
                 <button type='Submit'>Submit</button>
         </form>
         

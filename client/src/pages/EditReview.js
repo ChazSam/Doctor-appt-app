@@ -9,6 +9,7 @@ function EditReview(){
     const navigate = useNavigate()
     const numbers=[1,2,3,4,5]
     const [selectReview, setSelectReview] = useState("")
+    const [error, setError] = useState("")
     
 
     const formSchema = yup.object().shape({
@@ -19,6 +20,11 @@ function EditReview(){
       });
 
     function editReview(){
+        if (selectReview === ""){
+            return setError("Please select a review")
+        }
+
+        setError("")
         const review = user.reviews.find((x) => x.id === parseInt(selectReview))
 
         formik.setValues({
@@ -35,6 +41,7 @@ function EditReview(){
         
         fetch(`/reviews/${value}`, {
             method: "DELETE"
+
         }).then((r)=>{
             if(r.ok){
                 setUser((prevUser) => ({
@@ -44,8 +51,8 @@ function EditReview(){
                     )
                 }))
             
-                window.alert("Review deleted")
                 navigate("/account")
+                window.alert("Review deleted")
             } else {
                 
                 console.error("Failed to delete appointment")
@@ -97,39 +104,31 @@ function EditReview(){
     if (!user) {
         return <div>Loading...</div>;
       }
-      console.log(formik.values)
+   
     return (
         <>
 
         <h1>Edit Review Page</h1>
 
-        {/* <div>
-            {user.reviews.map((review)=>(
-                    <div key={review.id}>
-                        <p>Doctor: {review.doctor.name}</p>
-                        <p>Score: {review.score}</p>
-                        <p>Review: {review.review}</p>
-                    </div>
-                ))}
-     
-        </div> */}
         <h2>Select a review</h2>
+
         <form onSubmit={formik.handleSubmit}>
         
-        <div>
-                <select onChange={(e)=>setSelectReview(e.target.value)}>
-                    <option key="" value="">Choose a review</option>
-                    
-                {user.reviews.map((review)=>(
-                    <option key={review.id} value={review.id}>{review.doctor.name}</option>
-                ))}
-                </select>
+            <div>
+                    <select onChange={(e)=>setSelectReview(e.target.value)}>
+                        <option key="" value="">Choose a review</option>
+                        
+                    {user.reviews.map((review)=>(
+                        <option key={review.id} value={review.id}>{review.doctor.name}</option>
+                    ))}
+                    </select>
 
-                <button type="button" onClick={editReview} disabled={user.reviews.length === 0}>Edit Review</button>
-            <p></p>
-        </div>
-        <div>
+                    <button type="button" onClick={editReview} disabled={user.reviews.length === 0}>Edit Review</button>
+                <p></p>
+            </div>
 
+        <div>
+                <p style={{ color: "red" }}>{error}</p>
             <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
                 <option id='' value="">--</option>
                 {listDoctors.map((doctor)=> (
@@ -145,10 +144,11 @@ function EditReview(){
                             <option key={num} value={num} onChange={formik.handleChange}>{num}</option>
                         ))}
                 </select>
-
+                <p style={{ color: "red" }}> {formik.errors.score}</p>            
             <p>Enter your review</p>
                 <input id='review' onChange={formik.handleChange} value={formik.values.review}></input>
                     <p></p>
+                <p style={{ color: "red" }}> {formik.errors.review}</p>
                 <button type='Submit'>Submit</button>
         </div>
         <p></p>
