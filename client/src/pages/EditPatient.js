@@ -4,14 +4,25 @@ import { useOutletContext, useNavigate } from "react-router-dom"
 import * as yup from 'yup';
 
 
-function Signup () {
+
+function EditPatient () {
     const { user, setUser } = useOutletContext()
     const navigate = useNavigate()
 
+    const date = new Date(user.birthdate)
+ 
+
+    const {year, month, day} = {
+        year: date.getFullYear(),
+        month: date.getMonth(), 
+        day: date.getDate(),
+    }
+
+
     const [birthday, setBirthday] =  useState({
-        day:"",
-        month:"",
-        year:""
+        day:day,
+        month:month+1,
+        year:year
     })
     
 
@@ -118,15 +129,15 @@ function Signup () {
                         <p>Birthday</p>
                             <select name="month" value={birthday.month} onChange={handleChange}>
                                 <option value="">---</option>
-                                <option id="Jan" value='01' >Jan</option>
-                                <option id="Feb" value="02" >Feb</option>
-                                <option id="Mar" value="03" >Mar</option>
-                                <option id="Apr" value="04" >Apr</option>
-                                <option id="May" value="05" >May</option>
-                                <option id="Jun" value="06" >Jun</option>
-                                <option id="Jul" value="07" >Jul</option>
-                                <option id="Aug" value="08" >Aug</option>
-                                <option id="Sep" value="09" >Sep</option>
+                                <option id="Jan" value='1' >Jan</option>
+                                <option id="Feb" value="2" >Feb</option>
+                                <option id="Mar" value="3" >Mar</option>
+                                <option id="Apr" value="4" >Apr</option>
+                                <option id="May" value="5" >May</option>
+                                <option id="Jun" value="6" >Jun</option>
+                                <option id="Jul" value="7" >Jul</option>
+                                <option id="Aug" value="8" >Aug</option>
+                                <option id="Sep" value="9" >Sep</option>
                                 <option id="Oct" value="10" >Oct</option>
                                 <option id="Nov" value="11" >Nov</option>
                                 <option id="Dec" value="12" >Dec</option>
@@ -168,4 +179,4 @@ function Signup () {
     )
 }
 
-export default Signup
+export default EditPatient

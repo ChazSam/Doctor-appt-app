@@ -23,7 +23,7 @@ function Account(){
                 .then(navigate('/'))
         }
     }
-    
+    console.log(user.appointments[0].date)
     return (
         <>           
         <h1>Account Page</h1>
