@@ -14,7 +14,7 @@ function AddDoctor(){
         if (e.target.value === ""){
             return
         }
-        
+
         const selectedDoctorId = e.target.value
         const doctor = listDoctors[selectedDoctorId-1]
         
@@ -50,6 +50,7 @@ function AddDoctor(){
 
         validationSchema: formSchema,
         onSubmit: (values) => {
+            
             console.log(values)
             fetch(`/doctor/${selectDoctor.id}`, {
                 method:"PATCH",

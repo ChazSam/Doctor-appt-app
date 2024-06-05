@@ -6,13 +6,13 @@ import * as yup from 'yup';
 
 function Signup () {
     const {setUser, setIsLoggedIn} = useOutletContext()
+    const navigate = useNavigate()
     const [birthday, setbirthday] =  useState({
         day:"",
         month:"",
         year:""
     })
 
-    const navigate = useNavigate()
     
     const formSchema = yup.object().shape({
         username: yup.string().required("Uesrname must be at least 8 characters long").min(8),

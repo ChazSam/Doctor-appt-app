@@ -23,7 +23,24 @@ function Account(){
                 .then(navigate('/'))
         }
     }
-    console.log(user.appointments[0].date)
+
+    
+    function setDate(e){
+        const date = new Date(e)
+
+
+        const {year, month, day} = {
+            year: date.getFullYear(),
+            month: date.getMonth(), 
+            day: date.getDate(),
+        }
+        return `${month+1}-${day}-${year}`
+    }
+
+    if (!user) {
+        return <div>Loading...</div>}
+
+    
     return (
         <>           
         <h1>Account Page</h1>
@@ -42,8 +59,9 @@ function Account(){
                             {user?.appointments.map((appointment, index) => (
                                 <li key={index}>
                                     <strong>Doctor:</strong> {appointment.doctor.name}<br />
-                                    <strong>Date:</strong> {appointment.date}<br />
+                                    <strong>Apointment Date:</strong> {setDate(appointment.date)}<br />
                                     <strong>Department:</strong> {appointment.doctor.department}
+                                    <p></p>
                                 </li>
                             ))}
                         </ul>

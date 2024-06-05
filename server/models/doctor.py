@@ -10,7 +10,7 @@ class Doctor(db.Model, SerializerMixin):
     serialize_rules = ('-appointments.doctor','-reviews.doctor')
 
     id = db.Column(db.Integer, primary_key =True)
-    name = db.Column(db.Integer, unique=True, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     image_url = db.Column(db.String, default='https://cdn2.hubspot.net/hubfs/2027031/Lanermc_January2018/Images/8FF28DC9-155D-D235-071E832BE4180B45.jpeg')
     department = db.Column(db.String, nullable=False)
     bio = db.Column(db.String, default='Doctor of Medicine.')
@@ -22,4 +22,4 @@ class Doctor(db.Model, SerializerMixin):
     patients = association_proxy("appointments", 'user')
 
     def __repr__(self):
-        return f'<Doctor {self.id}: {self.name}'
+        return f'<Doctor {self.id}: {self.name}>'

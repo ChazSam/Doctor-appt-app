@@ -7,14 +7,17 @@ import Calendar from 'react-calendar'
 
 function EditAppointment(){
     const {user, setUser, listDoctors} = useOutletContext()
-    const [selectAppt, setSelectAppt] = useState()
+    const [selectAppt, setSelectAppt] = useState("")
     const [calendar, setCalendar] = useState(new Date())
     const [isChangeSelcted, setIsChangeSelected] = useState(false)
+    const [error, setError] = useState(null)
     const navigate = useNavigate()
 
     
     function handleDelete(e){
-        
+        if (selectAppt === ""){
+           return  setError("Please select an appointment")
+        }
     
         fetch(`/appointment/${user.appointments[selectAppt].id}`, {
             method: "DELETE"
@@ -39,8 +42,12 @@ function EditAppointment(){
     }
     
     function handleSelect(){
+        if (selectAppt === ""){
+            return  setError("Please select an appointment")
+         }
+
         setIsChangeSelected(true)
-    
+        
 
         formik.setValues({
             user_id:user.id,
@@ -63,10 +70,16 @@ function EditAppointment(){
             validationSchema: formSchema,
             
             onSubmit: (values) => {
+                if(values.doctor_id === ""){
+                   return setError("Please select a Doctor")
+                }
+                
                 const selectedDate = new Date(calendar);
                 selectedDate.setHours(0, 0, 0, 0);
                 values.date = selectedDate.toISOString().split('T')[0]
-            
+                
+
+
                 fetch(`/appointment/${user.appointments[selectAppt].id}`, {
                     method: "PATCH",
                     headers: {
@@ -104,6 +117,9 @@ function EditAppointment(){
             setCalendar(formik.values.date);
         }, [formik.values.date]);
 
+        if (!user) {
+            return <div>Loading...</div>}
+
     return(
         <>
         
@@ -114,9 +130,9 @@ function EditAppointment(){
                     <option key={appt.id} id={appt.id} value={index} >{appt.doctor.name} - {appt.date}</option>
                 ))}
             </select>
-            <p></p>
+            <p style={{ color: "red" }}>{error}</p>
                 <button onClick={handleSelect}>Change Appointment</button>
-                <p></p>
+               
                     {!isChangeSelcted &&(
                         <button onClick={handleDelete}>Delete Appointment</button>
             )}
