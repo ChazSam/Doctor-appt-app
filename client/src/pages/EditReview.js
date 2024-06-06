@@ -19,12 +19,17 @@ function EditReview(){
         review: yup.string().required("Please tell us your review of the doctor."),
       });
 
+      const getDoctorName = (doctorId) => {
+        const doctor = listDoctors.find(doc => doc.id === doctorId)
+        return doctor ? doctor.name : 'Unknown Doctor'
+      }
+      
     function editReview(){
         if (selectReview === ""){
             return setError("Please select a review")
         }
-
         setError("")
+
         const review = user.reviews.find((x) => x.id === parseInt(selectReview))
 
         formik.setValues({
@@ -119,7 +124,7 @@ function EditReview(){
                         <option key="" value="">Choose a review</option>
                         
                     {user.reviews.map((review)=>(
-                        <option key={review.id} value={review.id}>{review.doctor.name}</option>
+                        <option key={review.id} value={review.id}>{review.id ? getDoctorName(review.id): "error"} -- {review.score}</option>
                     ))}
                     </select>
 
@@ -161,7 +166,7 @@ function EditReview(){
             <select onChange={(e)=>setSelectReview(e.target.value)}>
                 <option value="">Select a Review</option>
                 {user.reviews.map((review, index)=>(
-                    <option key={index} value={review.id}>{review.doctor.name}</option>
+                    <option key={index} value={review.id}>{review.id ? getDoctorName(review.id): "error"} -- {review.score}</option>
                 ))}
                     </select>
 

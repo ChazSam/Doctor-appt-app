@@ -12,7 +12,11 @@ function EditAppointment(){
     const [isChangeSelcted, setIsChangeSelected] = useState(false)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
-
+    
+    const getDoctorName = (doctorId) => {
+        const doctor = listDoctors.find(doc => doc.id === doctorId);
+        return doctor ? doctor.name : 'Unknown Doctor';
+      }
     
     function handleDelete(e){
         if (selectAppt === ""){
@@ -125,9 +129,9 @@ function EditAppointment(){
         
             <h1>Patient Appointments</h1>
             <select id='appt-id' onChange={(e)=>setSelectAppt(e.target.value)}>
-                <option key="-" value="">--Select Appointment--</option>
-                {user.appointments.map((appt, index)=>(
-                    <option key={appt.id} id={appt.id} value={index} >{appt.doctor.name} - {appt.date}</option>
+                <option key="" value="">--Select Appointment--</option>
+                {user.appointments.map((appointment, index)=>(
+                    <option key={appointment.id} id={appointment.id} value={index} >{appointment.doctor_id ? getDoctorName(appointment.doctor_id): "error" } - {appointment.date}</option>
                 ))}
             </select>
             <p style={{ color: "red" }}>{error}</p>
@@ -150,10 +154,13 @@ function EditAppointment(){
                     </select>
                     <p style={{ color: "red" }}> {formik.errors.doctor_id}</p>
                     <p></p>
-                    <Calendar value={calendar} 
-                    onChange={(date) => formik.setFieldValue('date', date)}>
+                    <Calendar 
+                    value={calendar} 
+                    onChange = {(date) => formik.setFieldValue('date', date)}
+                    minDate = {new Date()}
+                    />
                         
-                    </Calendar>
+                    
                     <p style={{ color: "red" }}> {formik.errors.date}</p>
                 </div>
                 <p></p>

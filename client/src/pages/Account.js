@@ -3,8 +3,9 @@ import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 
 
 function Account(){
-    const {user, setUser, setIsLoggedIn} = useOutletContext()
+    const {user, setUser, setIsLoggedIn, listDoctors} = useOutletContext()
     const navigate = useNavigate()
+    console.log(user, listDoctors)
 
     function handleLogout() {
         fetch("/logout", {
@@ -36,6 +37,11 @@ function Account(){
         }
         return `${month+1}-${day}-${year}`
     }
+    
+    const getDoctorName = (doctorId) => {
+        const doctor = listDoctors.find(doc => doc.id === doctorId);
+        return doctor ? doctor.name : 'Unknown Doctor';
+      }
 
     if (!user) {
         return <div>Loading...</div>}
@@ -55,12 +61,12 @@ function Account(){
                 <div>
                     <h2>Name: {user.username}</h2>
                     <h3>Upcoming Appointments:</h3>
+                    
                     <ul>
                             {user?.appointments.map((appointment, index) => (
                                 <li key={index}>
-                                    <strong>Doctor:</strong> {appointment.doctor.name}<br />
+                                    <strong>Doctor:</strong> {appointment.doctor_id ? getDoctorName(appointment.doctor_id): "error" }<br />
                                     <strong>Apointment Date:</strong> {setDate(appointment.date)}<br />
-                                    <strong>Department:</strong> {appointment.doctor.department}
                                     <p></p>
                                 </li>
                             ))}

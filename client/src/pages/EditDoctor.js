@@ -7,12 +7,13 @@ import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 function AddDoctor(){
     const [selectDoctor, setSelectDoctor] = useState(null)
     const {listDoctors, setListDoctors} = useOutletContext()
+    const [error, setError] = useState("")
     const navigate = useNavigate()
 
     function handleSelectDoctor(e){
         
         if (e.target.value === ""){
-            return
+            return setSelectDoctor(null)
         }
 
         const selectedDoctorId = e.target.value
@@ -50,7 +51,9 @@ function AddDoctor(){
 
         validationSchema: formSchema,
         onSubmit: (values) => {
-            
+            if (selectDoctor===null){
+                return setError("Select a doctor before submitting")
+            }
             console.log(values)
             fetch(`/doctor/${selectDoctor.id}`, {
                 method:"PATCH",
@@ -90,8 +93,8 @@ function AddDoctor(){
                                 <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
                             ))}
                         </select>
-     
-        <p></p>
+                            
+        <p style={{color: "red"}}>{error}</p>
 
         <form onSubmit={formik.handleSubmit}> 
             <p>Enter an Name:</p>

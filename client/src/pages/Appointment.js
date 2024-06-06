@@ -86,7 +86,9 @@ function Appointment(){
                     </select>
                     <p></p>
                     <Calendar value={formik.values.date} 
-                     onChange={(date) => formik.setFieldValue('date', date)}></Calendar>
+                     onChange = {(date) => formik.setFieldValue('date', date)}
+                     minDate = {new Date()}
+                     />
                      <p style={{ color: "red" }}> {formik.errors.date}</p>
                 </div>
                 <p></p>
