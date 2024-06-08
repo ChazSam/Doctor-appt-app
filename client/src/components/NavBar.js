@@ -5,6 +5,9 @@ function NavBar({isLoggedIn, user}){
 
     return (
         <nav className="navbar">
+            <img  className="navbar-logo" src="https://i.pinimg.com/736x/30/7e/69/307e6906c251d91bb6202b3dd4736d7a.jpg"></img>
+            <p className='navbar-text'>Doctor Medical System</p>
+
             <NavLink
                 to="/"
                 className="nav-link"

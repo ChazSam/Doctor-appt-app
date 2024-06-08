@@ -95,7 +95,7 @@ function Signup () {
     const dayInMonth = checkLeapYear(birthday.month, birthday.year)
     
     return(
-        <div>
+        <div className='signup'>
             <h1>Signup page</h1>
                 <form onSubmit={formik.handleSubmit}>
 

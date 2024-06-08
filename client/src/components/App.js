@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
+import "./NavBar.css";
 
 function App() {
   const [listDoctors, setListDoctors] = useState([])
@@ -29,7 +30,7 @@ function App() {
     }, []);
 
   return(
-    <div>
+    <div className="main-container">
       <header>
         <NavBar user={user}  isLoggedIn={isLoggedIn}/>
       </header>
