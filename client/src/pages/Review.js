@@ -15,6 +15,10 @@ function Review(){
         review: yup.string().required("Please tell us your review of the doctor."),
       });
 
+    function checkIfReviewExists(doctorId){
+        return user.reviews.some(review => review.doctor_id === doctorId)
+    }
+
     const formik = useFormik({
 
         initialValues:{
@@ -28,7 +32,8 @@ function Review(){
 
         onSubmit: (values) => {
             values.score = parseInt(values.score)
-       
+            // values.doctor_id = parseInt(values.doctor_id)
+            
             fetch('/reviews', {
                 method:"POST",
                 headers:{
@@ -52,7 +57,7 @@ function Review(){
         }
     })
 
-    
+    console.log(formik.values)
     if (!user) {
         return <div>Loading...</div>}
 
@@ -61,24 +66,14 @@ function Review(){
 
         <h1>Review Page</h1>
         <h2>Add a Review</h2>
-{/* 
-        <div>
-            {user.reviews.map((review)=>(
-                    <div key={review.id}>
-                        <p>Doctor: {review.doctor.name}</p>
-                        <p>Score: {review.score}</p>
-                        <p>Review: {review.review}</p>
-                    </div>
-                ))}
-            
-        </div> */}
+
 
         <form onSubmit={formik.handleSubmit}>
             <p>Select a doctor</p>
             <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
                 <option id='' value="">--</option>
                 {listDoctors.map((doctor)=> (
-                    <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
+                    <option key={doctor.id} value={doctor.id} disabled={checkIfReviewExists(doctor.id)}>{doctor.name} - {doctor.department}</option>
                 ))}
             </select>
             <p style={{ color: "red" }}> {formik.errors.doctor_id}</p>

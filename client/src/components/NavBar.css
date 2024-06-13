@@ -28,13 +28,13 @@
     font-size: min(14vw, 20px) ;
     font-family: Arial, Helvetica, sans-serif;
     color: black;
-    border: 2px  solid rgb(53, 178, 176) ;
+    border: 2px  solid rgb(100, 188, 220) ;
   
     
     
 }
 .navbar > a:hover {
-    background-color: rgba(53, 178, 176, 0.2); /* Optional: hover effect */
+    background-color: rgba(100, 188, 220, 0.2); 
 }
 a.active {
     background:rgba(0, 0, 0, 0.9);

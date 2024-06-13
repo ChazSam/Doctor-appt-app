@@ -11,6 +11,10 @@ function EditReview(){
     const [selectReview, setSelectReview] = useState("")
     const [error, setError] = useState("")
     
+    
+    function checkIfReviewExists(doctorId){
+        return user.reviews.some(review => review.doctor_id === doctorId  && doctorId !== formik.values.doctor_id)
+    }
 
     const formSchema = yup.object().shape({
         user_id: yup.number().required("Please log in"),
@@ -19,7 +23,7 @@ function EditReview(){
         review: yup.string().required("Please tell us your review of the doctor."),
       });
 
-      const getDoctorName = (doctorId) => {
+      const getDoctorName = (doctorId) => {     
         const doctor = listDoctors.find(doc => doc.id === doctorId)
         return doctor ? doctor.name : 'Unknown Doctor'
       }
@@ -39,7 +43,6 @@ function EditReview(){
             review:review.review,
         })
     }
-
 
     function handleDelete(){
         const value = parseInt(selectReview)
@@ -124,7 +127,7 @@ function EditReview(){
                         <option key="" value="">Choose a review</option>
                         
                     {user.reviews.map((review)=>(
-                        <option key={review.id} value={review.id}>{review.id ? getDoctorName(review.id): "error"} -- {review.score}</option>
+                        <option key={review.id} value={review.id}>{review.id ? getDoctorName(review.doctor_id): "error"} -- {review.score}</option>
                     ))}
                     </select>
 
@@ -137,7 +140,7 @@ function EditReview(){
             <select id="doctor_id" onChange={formik.handleChange} value={formik.values.doctor_id}>
                 <option id='' value="">--</option>
                 {listDoctors.map((doctor)=> (
-                    <option key={doctor.id} value={doctor.id}>{doctor.name} - {doctor.department}</option>
+                    <option key={doctor.id} value={doctor.id} disabled={checkIfReviewExists(doctor.id)}>{doctor.name} - {doctor.department}</option>
                 ))}
             </select>
             <p style={{ color: "red" }}> {formik.errors.doctor_id}</p>
@@ -166,7 +169,7 @@ function EditReview(){
             <select onChange={(e)=>setSelectReview(e.target.value)}>
                 <option value="">Select a Review</option>
                 {user.reviews.map((review, index)=>(
-                    <option key={index} value={review.id}>{review.id ? getDoctorName(review.id): "error"} -- {review.score}</option>
+                    <option key={index} value={review.id}>{review.id ? getDoctorName(review.doctor_id): "error"} -- {review.score}</option>
                 ))}
                     </select>
 

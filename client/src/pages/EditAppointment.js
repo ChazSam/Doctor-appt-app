@@ -158,6 +158,7 @@ function EditAppointment(){
                     value={calendar} 
                     onChange = {(date) => formik.setFieldValue('date', date)}
                     minDate = {new Date()}
+                    calendarType="gregory"
                     />
                         
                     
