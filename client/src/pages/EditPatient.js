@@ -110,9 +110,9 @@ function EditPatient () {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div>
-                        <p>User Name</p>
-                            <input id='username' name='username' onChange={formik.handleChange} value={formik.values.username}/>
-                                <p style={{ color: "red" }}> {formik.errors.username}</p>
+                        <h2>User Name: {user.username}</h2>
+                            {/* <input id='username' name='username' onChange={formik.handleChange} value={formik.values.username}/>
+                                <p style={{ color: "red" }}> {formik.errors.username}</p> */}
 
                         <p>Password</p>
                             <input id='password' name='password' onChange={formik.handleChange} value={formik.values.password}/>

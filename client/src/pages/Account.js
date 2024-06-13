@@ -58,7 +58,7 @@ function Account(){
 
         {user && (
 
-                <div>
+                <div className="Account">
                     <h2>Name: {user.first_name} {user.last_name}</h2>
                     <h3>Upcoming Appointments:</h3>
                     

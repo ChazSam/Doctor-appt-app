@@ -149,7 +149,7 @@ function EditReview(){
 
         <form onSubmit={formik.handleSubmit}>
         
-            <div>
+            <div className="EditReview">
                     <select onChange={(e)=>setSelectReview(e.target.value)}>
                         <option key="" value="">Choose a review</option>
                         
@@ -190,7 +190,7 @@ function EditReview(){
 
                 </form>
 
-        <div>
+        <div className="DeleteReview">
 
             <h2>Delete a Review</h2>
             <select onChange={(e)=>setSelectReview(e.target.value)}>
