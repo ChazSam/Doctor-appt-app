@@ -1,10 +1,10 @@
 import { Outlet, useOutletContext, useNavigate } from "react-router-dom"
 import {Formik, useFormik} from 'formik'
 import * as yup from 'yup';
-import { useState } from "react";
+
 
 function Review(){
-    const {user, setUser, listDoctors} = useOutletContext()
+    const {user, setUser, listDoctors, setListDoctors} = useOutletContext()
     const navigate = useNavigate()
     const numbers=[1,2,3,4,5]
 
@@ -48,7 +48,22 @@ function Review(){
                             ...prevUser,
                             reviews: [...prevUser.reviews, newReview]
                         }))
+
+                        setListDoctors((prevDoc) => {
+                            const newListDoctors = prevDoc.map(doctor => {
+                                if (doctor.id === newReview.doctor_id) {
+                                    return {
+                                        ...doctor,
+                                        reviews: [...doctor.reviews, newReview]
+                                    }
+                                }
+                                return doctor;
+                            })
+                            return newListDoctors;
+                        })
+
                         navigate('/account')
+                        window.alert("review added")
                     })
                 } else {
                     r.json().then((err) => console.log(err.error));
@@ -57,7 +72,7 @@ function Review(){
         }
     })
 
-    console.log(formik.values)
+
     if (!user) {
         return <div>Loading...</div>}
 

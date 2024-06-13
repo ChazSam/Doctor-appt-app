@@ -21,7 +21,7 @@ function ListDoctors(){
                 {listDoctors.map((doctor)=>(
                     <div key={doctor.id} className="doctor-card">
                         <h2>{doctor.name}</h2>
-                        <img src={doctor.image_url}></img>
+                        <img src={doctor.image_url} alt=""></img>
                         <h3>Department: {doctor.department}</h3>
                         <p>{doctor.bio}</p>
                         <p>Doctor Score: {scores(doctor.reviews)}</p>

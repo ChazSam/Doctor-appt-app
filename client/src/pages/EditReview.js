@@ -5,12 +5,12 @@ import { useState } from "react";
 
 function EditReview(){
 
-    const {user, setUser, listDoctors} = useOutletContext()
+    const {user, setUser, listDoctors, setListDoctors} = useOutletContext()
     const navigate = useNavigate()
     const numbers=[1,2,3,4,5]
     const [selectReview, setSelectReview] = useState("")
     const [error, setError] = useState("")
-    
+
     
     function checkIfReviewExists(doctorId){
         return user.reviews.some(review => review.doctor_id === doctorId  && doctorId !== formik.values.doctor_id)
@@ -46,7 +46,7 @@ function EditReview(){
 
     function handleDelete(){
         const value = parseInt(selectReview)
-        
+        const review = user.reviews.find((x) => x.id === parseInt(selectReview))
         fetch(`/reviews/${value}`, {
             method: "DELETE"
 
@@ -58,7 +58,18 @@ function EditReview(){
                         (review) => review.id !== parseInt(value)
                     )
                 }))
-            
+
+                setListDoctors((prevDoc) => {
+                    const newListDoctors = [...prevDoc];
+                    newListDoctors[review.doctor_id - 1] = {
+                        ...newListDoctors[review.doctor_id - 1],
+                        reviews: newListDoctors[review.doctor_id - 1].reviews.filter(
+                            (review) => review.id !== value
+                        ),
+                    };
+                    return newListDoctors;
+                })
+
                 navigate("/account")
                 window.alert("Review deleted")
             } else {
@@ -67,6 +78,7 @@ function EditReview(){
             }
         });
     }
+
     const formik = useFormik({
 
         initialValues:{
@@ -93,26 +105,41 @@ function EditReview(){
                     r.json().then((updateReview) => {
                         const updatedReviews = user.reviews.map((review) =>
                             review.id === reviewId ? updateReview : review
-                        );
+                        )
 
                         setUser((prevUser) => ({
                             ...prevUser,
                             reviews: updatedReviews
-                        }));
+                        }))
 
-                        navigate("/account");
-                    }).catch((err) => console.log(err));
+                        const updatedDocReviews = listDoctors[formik.values.doctor_id - 1].reviews.map((review) =>
+                            review.id === reviewId ? updateReview : review
+                        )
+            
+                        setListDoctors((prevDoc) => {
+                            const newListDoctors = [...prevDoc]
+                            newListDoctors[formik.values.doctor_id - 1] = {
+                                ...newListDoctors[formik.values.doctor_id - 1],
+                                reviews: updatedDocReviews,
+                            }
+                            return newListDoctors;
+                        })
+ 
+
+                        navigate("/account")
+                        window.alert("Review changed")
+                    }).catch((err) => console.log(err))
                 } else {
-                    r.json().then((err) => console.log(err.error));
+                    r.json().then((err) => console.log(err.error))
                 }
             });
         }
     });
     
     if (!user) {
-        return <div>Loading...</div>;
+        return <div>Loading...</div>
       }
-   
+    
     return (
         <>
 
