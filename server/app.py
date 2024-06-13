@@ -53,8 +53,6 @@ class GetUsers(Resource):
 
 class UserDetails(Resource):
     def get(self, id):
-        if not session["user_id"]:
-            return {"error":"401: unauthorized"}, 401
         user = User.query.filter(User.id == id).first()
         return user.to_dict(), 200
     
@@ -270,7 +268,6 @@ class AddReview(Resource):
             user_id = request.get_json().get('user_id'),
             doctor_id = request.get_json().get('doctor_id')
         )
-
 
         try:
             db.session.add(review)
